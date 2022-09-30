@@ -35,8 +35,8 @@ sonarqube {
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.organization", "isuc"
         property "sonar.login", "120537998e2c122476f30cade8d4a25865210fa6"
-        property "sonar.projectKey", "App-Gasolineras-2022"
-        property "sonar.projectName", "App-Gasolineras-2022"
+        property "sonar.projectKey", "App-Gasolineras-Grupo4"
+        property "sonar.projectName", "App-Gasolineras-Grupo4"
 
         // I need this property to avoid the error where sonarqube does not close some files and
         // prevents a clean afterwards
