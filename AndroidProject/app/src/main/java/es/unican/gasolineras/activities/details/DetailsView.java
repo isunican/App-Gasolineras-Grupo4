@@ -18,6 +18,7 @@ import org.parceler.Parcels;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
+import lombok.ToString;
 
 /**
  * View that shows the details of one gas station. Since this view does not have business logic,
@@ -50,6 +51,12 @@ public class DetailsView extends AppCompatActivity {
         ImageView ivRotulo = findViewById(R.id.ivRotulo);
         TextView tvRotulo = findViewById(R.id.tvRotulo);
         TextView tvMunicipio = findViewById(R.id.tvMunicipio);
+        TextView tvDireccion = findViewById(R.id.tvDireccion);
+        TextView tvHorario = findViewById(R.id.tvHorario);
+        TextView tvPrecio95 = findViewById(R.id.tvPrecio95);
+        TextView tvPrecioDiesel = findViewById(R.id.tvPrecioDiesel);
+        TextView tvPrecioSumario = findViewById(R.id.tvPrecioSumario);
+
 
         // Get Gas Station from the intent that triggered this activity
         Gasolinera gasolinera = Parcels.unwrap(getIntent().getExtras().getParcelable(INTENT_STATION));
@@ -62,6 +69,14 @@ public class DetailsView extends AppCompatActivity {
         // Set Texts
         tvRotulo.setText(gasolinera.getRotulo());
         tvMunicipio.setText(gasolinera.getMunicipio());
+        tvDireccion.setText(gasolinera.getDireccion());
+        tvHorario.setText(gasolinera.getHorario());
+        String precio95 = String.valueOf(gasolinera.getGasolina95E5());
+        tvPrecio95.setText(String.format("%.2f",precio95));
+        String precioDiesel = String.valueOf(gasolinera.getGasoleoA());
+        tvPrecioDiesel.setText(String.format("%.2f",precioDiesel));
+        tvPrecioSumario.setText(gasolinera.getPrecioSumario());
+
     }
 
     /**
