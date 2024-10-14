@@ -72,9 +72,11 @@
         android:id="@+id/tvPrecio95"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:text="Precio 95"
-        app:layout_constraintTop_toBottomOf="@+id/tvHorario"
-        tools:layout_editor_absoluteX="181dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHorario" />
 
     <TextView
         android:id="@+id/tvPrecioDiesel"
