@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
 
 import org.parceler.Parcels;
 
@@ -24,6 +25,7 @@ import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -53,6 +55,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // instantiate presenter and launch initial business logic
         presenter = new MainPresenter();
         presenter.init(this);
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database-name").build();
     }
 
     /**
