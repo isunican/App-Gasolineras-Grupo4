@@ -8,6 +8,7 @@
     <string name="loadError">Ha habido un error cargando las gasolineras</string>
     <string name="info_text">Aplicación creada para el Proyecto Integrado Curso 2024-2025</string>
     <string name="historial_pagos">Historial de pagos</string>
+    <string name="btn_addPago">+</string>
 
     <string-array name="opcionesSpinner">
         <item>Precio Biodiesel</item>

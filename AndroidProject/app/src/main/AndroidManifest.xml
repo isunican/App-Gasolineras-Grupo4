@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gasolineras"
         tools:targetApi="31">
+        <!--<activity
+            android:name=".activities.paymentHistory.PaymentHistoryView"
+            android:exported="false" />-->
+        <activity
+            android:name=".activities.registerPayment.RegisterPaymentView"
+            android:exported="false" />
         <activity
             android:name=".activities.info.InfoView"
             android:exported="false" />
@@ -22,7 +28,7 @@
             android:name=".activities.details.DetailsView"
             android:exported="false" />
         <activity
-            android:name=".activities.main.MainView"
+            android:name=".activities.paymentHistory.PaymentHistoryView"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
