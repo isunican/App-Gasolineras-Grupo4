@@ -2,9 +2,14 @@ package es.unican.gasolineras.model;
 
 import androidx.room.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Pago {
     // Cherry
     @PrimaryKey(autoGenerate = true)
@@ -14,7 +19,7 @@ public class Pago {
     public String stationName;
 
     @ColumnInfo(name = "date")
-    public Date date;
+    public LocalDate date;
 
     @ColumnInfo(name= "fuel_type")
     public String fuelType;

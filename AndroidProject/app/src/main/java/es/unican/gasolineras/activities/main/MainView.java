@@ -27,6 +27,7 @@ import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
  * The main view of the application. It shows a list of gas stations.
@@ -56,9 +57,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         presenter = new MainPresenter();
         presenter.init(this);
 
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").build();
-        // Cherry
+
     }
 
     /**
@@ -171,4 +170,5 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Intent intent = new Intent(this, PaymentHistoryView.class);
         startActivity(intent);
     }
+
 }
