@@ -1,10 +1,13 @@
 package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.activities.filtros.FiltrosView;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.model.Gasolinera;
@@ -52,6 +56,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // instantiate presenter and launch initial business logic
         presenter = new MainPresenter();
         presenter.init(this);
+
+        ImageView imgEmbudo = findViewById(R.id.imgEmbudo);
+        imgEmbudo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainView.this, FiltrosView.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
