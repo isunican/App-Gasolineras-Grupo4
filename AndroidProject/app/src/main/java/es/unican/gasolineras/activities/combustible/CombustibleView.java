@@ -1,4 +1,4 @@
-package es.unican.gasolineras.activities.main;
+package es.unican.gasolineras.activities.combustible;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,34 +15,32 @@ import androidx.appcompat.widget.Toolbar;
 
 import org.parceler.Parcels;
 
+import java.io.Console;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
-/**
- * The main view of the application. It shows a list of gas stations.
- */
 @AndroidEntryPoint
-public class MainView extends AppCompatActivity implements IMainContract.View {
+public class CombustibleView extends AppCompatActivity implements ICombustibleContract.View {
 
     /** The presenter of this view */
-    private MainPresenter presenter;
+    private CombustiblePresenter presenter;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
     IGasolinerasRepository repository;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_filtro);
 
         // The default theme does not include a toolbar.
         // In this app the toolbar is explicitly declared in the layout
@@ -51,7 +49,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         setSupportActionBar(toolbar);
 
         // instantiate presenter and launch initial business logic
-        presenter = new MainPresenter();
+        presenter = new CombustiblePresenter();
         presenter.init(this);
     }
 
@@ -84,9 +82,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * @see IMainContract.View#init()
-     */
+
     @Override
     public void init() {
         // initialize on click listeners (when clicking on a station in the list)
@@ -97,47 +93,30 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
     }
 
-    /**
-     * @see IMainContract.View#getGasolinerasRepository()
-     * @return the repository to access the data
-     */
+
     @Override
     public IGasolinerasRepository getGasolinerasRepository() {
         return repository;
     }
 
-    /**
-     * @see IMainContract.View#showStations(List) 
-     * @param stations the list of charging stations
-     */
     @Override
     public void showStations(List<Gasolinera> stations) {
         ListView list = findViewById(R.id.lvStations);
-        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations);
+        CombustibleArrayAdapter adapter = new CombustibleArrayAdapter(this, stations);
         list.setAdapter(adapter);
     }
 
-    /**
-     * @see IMainContract.View#showLoadCorrect(int)
-     * @param stations
-     */
     @Override
     public void showLoadCorrect(int stations) {
         Toast.makeText(this, "Cargadas " + stations + " gasolineras", Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * @see IMainContract.View#showLoadError()
-     */
     @Override
     public void showLoadError() {
         Toast.makeText(this, "Error cargando las gasolineras", Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * @see IMainContract.View#showStationDetails(Gasolinera)
-     * @param station the charging station
-     */
+
     @Override
     public void showStationDetails(Gasolinera station) {
         Intent intent = new Intent(this, DetailsView.class);
@@ -145,9 +124,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         startActivity(intent);
     }
 
-    /**
-     * @see IMainContract.View#showInfoActivity()
-     */
     @Override
     public void showInfoActivity() {
         Intent intent = new Intent(this, InfoView.class);
