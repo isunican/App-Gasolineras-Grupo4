@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -78,6 +79,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         int itemId = item.getItemId();
         if (itemId == R.id.menuItemInfo) {
             presenter.onMenuInfoClicked();
+            return true;
+        }else if(itemId == R.id.historialPagos){
+            presenter.onMenuHistoryClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -150,6 +154,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void showInfoActivity() {
         Intent intent = new Intent(this, InfoView.class);
+        startActivity(intent);
+    }
+
+    /**
+     * @see IMainContract.View#showHistoryActivity()
+     */
+    @Override
+    public void showHistoryActivity() {
+        Intent intent = new Intent(this, PaymentHistoryView.class);
         startActivity(intent);
     }
 }

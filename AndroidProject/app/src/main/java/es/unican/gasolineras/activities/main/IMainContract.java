@@ -37,6 +37,12 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+        /**
+         * The presenter is informed that the Payment History item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuHistoryClicked();
+
     }
 
     /**
@@ -97,6 +103,8 @@ public interface IMainContract {
          * Only the Presenter should call this method
          */
         public void showInfoActivity();
+
+        public void showHistoryActivity();
 
     }
 }

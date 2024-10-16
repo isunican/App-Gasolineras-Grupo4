@@ -44,6 +44,15 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
+     * @see IMainContract.Presenter#onMenuHistoryClicked() ()
+     */
+    @Override
+    public void onMenuHistoryClicked(){
+        view.showHistoryActivity();
+    }
+
+
+    /**
      * Loads the gas stations from the repository, and sends them to the view
      */
     private void load() {
