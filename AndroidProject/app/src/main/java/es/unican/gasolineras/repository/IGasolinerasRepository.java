@@ -12,4 +12,5 @@ public interface IGasolinerasRepository {
          */
         public void requestGasolineras(ICallBack cb, String ccaa);
 
+        public void requestGasolinerasCombustible(ICallBack cb, String ccaa, String combustible);
 }

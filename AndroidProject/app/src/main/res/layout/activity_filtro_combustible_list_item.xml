@@ -41,9 +41,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        tools:text="Label 95"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
-        app:layout_constraintStart_toEndOf="@+id/ivLogo" />
+        app:layout_constraintStart_toEndOf="@+id/ivLogo"
+        tools:text="Label Combustible" />
 
     <TextView
         android:id="@+id/tvPrecioCombustible"
@@ -52,25 +52,7 @@
         android:layout_marginStart="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
         app:layout_constraintStart_toEndOf="@+id/tvCombustible"
-        tools:text="Precio 95" />
-
-    <TextView
-        android:id="@+id/tvDieselALabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        tools:text="Label Diesel"
-        app:layout_constraintBottom_toBottomOf="@+id/tvPrecioCombustible"
-        app:layout_constraintStart_toEndOf="@+id/tvPrecioCombustible" />
-
-    <TextView
-        android:id="@+id/tvDieselA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDieselALabel"
-        app:layout_constraintStart_toEndOf="@+id/tvDieselALabel"
-        tools:text="Precio Diesel" />
+        tools:text="Precio Combustible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
