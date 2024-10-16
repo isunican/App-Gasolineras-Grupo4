@@ -76,7 +76,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menuItemAddPago) {
+        if (itemId == R.id.menuItemInfo) {
             presenter.onMenuInfoClicked();
             return true;
         }
