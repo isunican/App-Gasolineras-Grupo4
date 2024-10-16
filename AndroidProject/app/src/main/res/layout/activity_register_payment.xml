@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/tvNombreGasolinera"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvNombreGasolinera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvNombreGasolinera" />
 
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="@+id/tvPrecioPorLitro"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvPrecioPorLitro"
         app:layout_constraintStart_toStartOf="@+id/etNombreGasolinera" />
 
     <EditText
@@ -95,6 +95,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="@+id/tvCantidad"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvCantidad"
         app:layout_constraintStart_toStartOf="@+id/editTextNumberDecimal" />
 </androidx.constraintlayout.widget.ConstraintLayout>
