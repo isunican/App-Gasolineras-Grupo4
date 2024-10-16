@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
 
 import org.parceler.Parcels;
 
@@ -22,7 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -46,12 +49,16 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // The default theme does not include a toolbar.
         // In this app the toolbar is explicitly declared in the layout
         // Set this toolbar as the activity ActionBar
-        Toolbar toolbar = findViewById(R.id.toolbarRegister);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // instantiate presenter and launch initial business logic
         presenter = new MainPresenter();
         presenter.init(this);
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database-name").build();
+        // Cherry
     }
 
     /**
@@ -76,8 +83,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menuItemAddPago) {
+        if (itemId == R.id.menuItemInfo) {
             presenter.onMenuInfoClicked();
+            return true;
+        }else if(itemId == R.id.historialPagos){
+            presenter.onMenuHistoryClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -150,6 +160,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void showInfoActivity() {
         Intent intent = new Intent(this, InfoView.class);
+        startActivity(intent);
+    }
+
+    /**
+     * @see IMainContract.View#showHistoryActivity()
+     */
+    @Override
+    public void showHistoryActivity() {
+        Intent intent = new Intent(this, PaymentHistoryView.class);
         startActivity(intent);
     }
 }
