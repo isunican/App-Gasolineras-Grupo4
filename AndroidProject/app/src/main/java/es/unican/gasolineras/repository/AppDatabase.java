@@ -8,4 +8,5 @@ import es.unican.gasolineras.model.Pago;
 @Database(entities = {Pago.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract IPagoDAO pagoDAO();
+    // Cherry
 }

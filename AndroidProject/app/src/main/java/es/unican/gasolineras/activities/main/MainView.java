@@ -58,6 +58,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name").build();
+        // Cherry
     }
 
     /**

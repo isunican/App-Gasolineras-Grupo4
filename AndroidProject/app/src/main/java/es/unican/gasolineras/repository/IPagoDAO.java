@@ -25,5 +25,5 @@ public interface IPagoDAO {
 
     @Delete
     void delete(Pago pago);
-
+    // Cherry
 }

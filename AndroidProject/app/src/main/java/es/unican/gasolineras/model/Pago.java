@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 public class Pago {
-
+    // Cherry
     @PrimaryKey(autoGenerate = true)
     public int pid;
 
