@@ -10,6 +10,7 @@ import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 public interface IPaymentHistoryContract {
+    // Cherry
     public interface Presenter{
         public void init(View view);
     }

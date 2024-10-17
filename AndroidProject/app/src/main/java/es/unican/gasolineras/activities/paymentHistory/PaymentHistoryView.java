@@ -20,7 +20,7 @@ import es.unican.gasolineras.repository.IPagoDAO;
  * View
  */
 public class PaymentHistoryView extends AppCompatActivity implements IPaymentHistoryContract.View{
-
+    //Cherry
     private AppDatabase db;
 
     @Override

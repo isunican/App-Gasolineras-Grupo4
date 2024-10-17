@@ -7,7 +7,7 @@ import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presenter{
-
+    // Cherry
     /** The view that is controlled by this presenter */
     private IPaymentHistoryContract.View view;
 
