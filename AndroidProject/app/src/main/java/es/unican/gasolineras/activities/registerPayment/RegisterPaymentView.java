@@ -8,20 +8,27 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
 
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.main.MainPresenter;
+import es.unican.gasolineras.activities.paymentHistory.IPaymentHistoryContract;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
+import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.IPagoDAO;
 
 public class RegisterPaymentView extends AppCompatActivity implements IRegisterPaymentContract.View{
 
     private RegisterPaymentPresenter presenter;
 
+    private AppDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         presenter = new RegisterPaymentPresenter();
         presenter.init(this);
+
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database-name").build();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_payment);
@@ -60,5 +67,14 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
     public void showRegisterHistory(){
         Intent intent = new Intent(this, PaymentHistoryView.class);
         startActivity(intent);
+    }
+
+    /**
+     * @see IPaymentHistoryContract.View#getPagoDAO()
+     * @return IPagoDAO de la base de datos
+     */
+    @Override
+    public IPagoDAO getPagoDAO() {
+        return db.pagoDAO();
     }
 }

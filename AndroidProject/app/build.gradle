@@ -133,4 +133,10 @@ dependencies {
 
     // Roboelectric (to get a proper Context object in unit tests)
     testImplementation libs.roboelectric
+
+    // Libreria room
+    def room_version = "2.6.1"
+    // Cherry
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }

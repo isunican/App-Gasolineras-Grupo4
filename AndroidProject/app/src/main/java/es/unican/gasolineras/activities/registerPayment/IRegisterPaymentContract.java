@@ -1,6 +1,7 @@
 package es.unican.gasolineras.activities.registerPayment;
 
 import es.unican.gasolineras.activities.main.IMainContract;
+import es.unican.gasolineras.repository.IPagoDAO;
 
 public interface IRegisterPaymentContract {
 
@@ -37,5 +38,6 @@ public interface IRegisterPaymentContract {
          */
         public void showRegisterHistory();
 
+        IPagoDAO getPagoDAO();
     }
 }
