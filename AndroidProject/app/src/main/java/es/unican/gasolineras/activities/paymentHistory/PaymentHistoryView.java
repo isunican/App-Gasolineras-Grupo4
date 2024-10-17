@@ -42,14 +42,14 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_history);
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name")
+                        AppDatabase.class, "database-name")
                 .allowMainThreadQueries()
                 .build();
 
         // instantiate presenter and launch initial business logic
         presenter = new PaymentHistoryPresenter();
         presenter.init(this);
-
+    }
 
     /**
      * No tiene uso ya que no vamos a usar un on click listener
