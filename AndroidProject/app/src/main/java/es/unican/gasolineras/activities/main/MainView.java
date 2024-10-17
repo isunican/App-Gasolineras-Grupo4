@@ -50,7 +50,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // The default theme does not include a toolbar.
         // In this app the toolbar is explicitly declared in the layout
         // Set this toolbar as the activity ActionBar
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarRegister);
         setSupportActionBar(toolbar);
 
         // instantiate presenter and launch initial business logic

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Pago {
-    // Cherr
+
     @PrimaryKey(autoGenerate = true)
     public int pid;
 
