@@ -14,6 +14,14 @@ public interface IRegisterPaymentContract {
          */
         public void init(IRegisterPaymentContract.View view);
 
+        /**
+         * Register the payment in the database.
+         * @param tipoGasolina A string that represents the type of fuel.
+         * @param nombreGasolinera A string that represents the name of the gas station.
+         * @param precioPorLitro A double that represents the price per litre of the fuel.
+         * @param cantidad A double that represents the amount of fuel.
+         */
+        public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, double precioPorLitro, double cantidad);
     }
 
     public interface View {
@@ -24,6 +32,9 @@ public interface IRegisterPaymentContract {
          */
         public void init();
 
+        /**
+         * Show the paymnent history view.
+         */
         public void showRegisterHistory();
 
     }

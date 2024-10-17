@@ -11,9 +11,15 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
         this.view.init();
     }
 
+    @Override
     public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, double precioPorLitro, double cantidad){
+        //Creo el objeto de tipo Pago
 
 
+        //Persito el objeto en la base de datos
+
+
+        //Vuelvo al historial de pagos
         view.showRegisterHistory();
     }
 }
