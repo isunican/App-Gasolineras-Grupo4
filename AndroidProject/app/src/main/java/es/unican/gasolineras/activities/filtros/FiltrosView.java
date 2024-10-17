@@ -24,9 +24,67 @@ public class FiltrosView extends AppCompatActivity {
         Button btnConfirmar = findViewById(R.id.btnConfirmar);
 
         btnConfirmar.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CombustibleView.class);
-            intent.putExtra("tipoCombustible", TipoCombustible.GASES_LICUADOS_DEL_PETROLEO.toString()); //Cambiar a valor del spiner
-            startActivity(intent);
+            // Obtener el valor seleccionado del Spinner
+            String seleccion = spinner.getSelectedItem().toString();
+
+            // Asignar el valor del enumerado basado en la selección
+            TipoCombustible tipoCombustible = null;
+
+            switch (seleccion) {
+                case "Biodiesel":
+                    tipoCombustible = TipoCombustible.BIODIESEL;
+                    break;
+                case "Bioetanol":
+                    tipoCombustible = TipoCombustible.BIOETANOL;
+                    break;
+                case "Gas Natural Comprimido":
+                    tipoCombustible = TipoCombustible.GAS_NATURAL_COMPRIMIDO;
+                    break;
+                case "Gas Natural Licuado":
+                    tipoCombustible = TipoCombustible.GAS_NATURAL_LICUADO;
+                    break;
+                case "Gases licuados del petróleo":
+                    tipoCombustible = TipoCombustible.GASES_LICUADOS_DEL_PETROLEO;
+                    break;
+                case "Gasoleo A":
+                    tipoCombustible = TipoCombustible.GASOLEO_A_HABITUAL;
+                    break;
+                case "Gasoleo B":
+                    tipoCombustible = TipoCombustible.GASOLEO_B;
+                    break;
+                case "Gasoleo Premium":
+                    tipoCombustible = TipoCombustible.GASOLEO_PREMIUM;
+                    break;
+                case "Gasolina 95 E10":
+                    tipoCombustible = TipoCombustible.GASOLINA_95_E10;
+                    break;
+                case "Gasolina 95 E5":
+                    tipoCombustible = TipoCombustible.GASOLINA_95_E5;
+                    break;
+                case "Gasolina 95 E5 Premium":
+                    tipoCombustible = TipoCombustible.GASOLINA_95_E5_PREMIUM;
+                    break;
+                case "Gasolina 98 E10":
+                    tipoCombustible = TipoCombustible.GASOLINA_98_E10;
+                    break;
+                case "Gasolina 98 E5":
+                    tipoCombustible = TipoCombustible.GASOLINA_98_E5;
+                    break;
+                case "Hidrogeno":
+                    tipoCombustible = TipoCombustible.HIDROGENO;
+                    break;
+
+                default:
+                    // Manejar caso en que no haya una opción válida (opcional)
+                    break;
+            }
+
+            if (tipoCombustible != null) {
+                // Pasar el valor del enumerado en el Intent
+                Intent intent = new Intent(this, CombustibleView.class);
+                intent.putExtra("tipoCombustible", tipoCombustible.toString());
+                startActivity(intent);
+            }
         });
     }
 
