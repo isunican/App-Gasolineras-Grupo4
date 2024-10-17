@@ -1,5 +1,6 @@
 package es.unican.gasolineras.activities.paymentHistory;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import es.unican.gasolineras.activities.main.IMainContract;

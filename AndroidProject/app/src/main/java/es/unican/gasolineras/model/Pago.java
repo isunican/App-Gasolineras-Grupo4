@@ -19,7 +19,7 @@ public class Pago {
     public String stationName;
 
     @ColumnInfo(name = "date")
-    public LocalDate date;
+    public String date;
 
     @ColumnInfo(name= "fuel_type")
     public String fuelType;
