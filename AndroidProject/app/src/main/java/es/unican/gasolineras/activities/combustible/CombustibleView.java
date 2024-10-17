@@ -25,6 +25,7 @@ import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.TipoCombustible;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @AndroidEntryPoint
@@ -50,7 +51,11 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
 
         // instantiate presenter and launch initial business logic
         presenter = new CombustiblePresenter();
-        presenter.init(this);
+
+        //Cambiar tipo combustible
+        String tipoCombustibleStr = getIntent().getStringExtra("tipoCombustible");
+        TipoCombustible tipoCombustible = TipoCombustible.valueOf(tipoCombustibleStr);
+        presenter.init(this, tipoCombustible);
     }
 
     /**

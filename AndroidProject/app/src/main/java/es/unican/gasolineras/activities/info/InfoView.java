@@ -21,10 +21,5 @@ public class InfoView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_view);
 
-        Button boton = findViewById(R.id.button);
-        boton.setOnClickListener(v -> {
-                Intent intent = new Intent(this, CombustibleView.class);
-                startActivity(intent);
-            });
         }
     }

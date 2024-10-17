@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.TipoCombustible;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 public interface ICombustibleContract {
@@ -18,8 +19,9 @@ public interface ICombustibleContract {
          * Links the presenter with its view.
          * Only the View should call this method
          * @param view
+         * @param tipoCombustible
          */
-        public void init(ICombustibleContract.View view);
+        public void init(ICombustibleContract.View view, TipoCombustible tipoCombustible);
 
         /**
          * The presenter is informed that a gas station has been clicked

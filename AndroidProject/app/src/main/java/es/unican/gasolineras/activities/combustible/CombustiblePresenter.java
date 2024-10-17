@@ -18,10 +18,12 @@ public class CombustiblePresenter implements ICombustibleContract.Presenter{
 
     /** The view that is controlled by this presenter */
     private ICombustibleContract.View view;
+    private TipoCombustible tipoCombustible;
 
 
     @Override
-    public void init(ICombustibleContract.View view) {
+    public void init(ICombustibleContract.View view, TipoCombustible tipoCombustible) {
+        this.tipoCombustible = tipoCombustible;
         this.view = view;
         this.view.init();
         load();
@@ -58,7 +60,7 @@ public class CombustiblePresenter implements ICombustibleContract.Presenter{
                 view.showLoadError();
             }
         };
-            repository.requestGasolinerasCombustible(callBack, IDCCAAs.CANTABRIA.id, TipoCombustible.GLP.id);
+            repository.requestGasolinerasCombustible(callBack, IDCCAAs.CANTABRIA.id, tipoCombustible.id);
 
 
 
