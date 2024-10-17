@@ -16,6 +16,7 @@ public interface IPaymentHistoryContract {
 
     public interface View{
         public void init();
+
         public IPagoDAO getPagoDAO();
 
         /**

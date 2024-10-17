@@ -23,7 +23,13 @@ public class PagosArrayAdapter extends BaseAdapter {
     private final Context context;
 
     @Override
+    public int getCount() { return pagos.size();}
+
+    @Override
     public Object getItem(int position){ return pagos.get(position);}
+
+    @Override
+    public long getItemId(int position) {return position;}
 
     public PagosArrayAdapter(Context context, List<Pago> pagos){
         this.pagos = pagos;
@@ -41,7 +47,33 @@ public class PagosArrayAdapter extends BaseAdapter {
         // Fecha
         {
             TextView tv = convertView.findViewById(R.id.Fecha);
-            tv.setText(toString(pago.getDate().toString());
+            tv.setText(pago.getDate().toString());
         }
+        // Nombre
+        {
+            TextView tv = convertView.findViewById(R.id.Estacion);
+            tv.setText(pago.getStationName());
+        }
+        // Tipo combustible
+        {
+            TextView tv = convertView.findViewById(R.id.TipoCombustible);
+            tv.setText(pago.getFuelType());
+        }
+        // Cantidad
+        {
+            TextView tv = convertView.findViewById(R.id.Cantidad);
+            tv.setText(String.valueOf(pago.getQuantity()));
+        }
+        // Importe total
+        {
+            TextView tv = convertView.findViewById(R.id.ImporteTotal);
+            tv.setText(String.valueOf(pago.getFinalPrice()));
+        }
+        // Precio
+        {
+            TextView tv = convertView.findViewById(R.id.Precio);
+            tv.setText(String.valueOf(pago.pricePerLitre));
+        }
+        return convertView;
     }
 }
