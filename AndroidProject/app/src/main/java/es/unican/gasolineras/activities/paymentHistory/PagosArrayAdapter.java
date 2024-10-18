@@ -17,7 +17,7 @@ import es.unican.gasolineras.model.Pago;
 
 
 public class PagosArrayAdapter extends BaseAdapter {
-    // Cherry
+
     private final List<Pago> pagos;
 
     /** Context of the application */

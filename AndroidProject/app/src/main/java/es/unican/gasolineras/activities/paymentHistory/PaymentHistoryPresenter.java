@@ -29,6 +29,9 @@ public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presente
     public void load(){
         IPagoDAO dao = view.getPagoDAO();
         List<Pago> pagos = dao.getAll();
+        Pago p = new Pago();
+        p.setQuantity(1.0);
+        dao.insertAll(p);
         view.showPagos(pagos);
     }
 

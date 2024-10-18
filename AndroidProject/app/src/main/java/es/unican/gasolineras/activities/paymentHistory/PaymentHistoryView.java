@@ -1,6 +1,7 @@
 package es.unican.gasolineras.activities.paymentHistory;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,13 +12,14 @@ import java.util.List;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
  * View
  */
 public class PaymentHistoryView extends AppCompatActivity implements IPaymentHistoryContract.View{
-    //Cherry
+
     private AppDatabase db;
     private PaymentHistoryPresenter presenter;
 
@@ -25,10 +27,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_history);
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name")
-                .allowMainThreadQueries()
-                .build();
+        db = DataBase.getAppDatabase(getApplicationContext());
 
         // instantiate presenter and launch initial business logic
         presenter = new PaymentHistoryPresenter();
@@ -37,7 +36,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
 
 
     /**
-     * No tiene uso ya que no vamos a usar un on click listener
+     * Creacion de la lista de pagos
      */
     @Override
     public void init() {
