@@ -21,4 +21,6 @@ public interface IGasolinerasAPI {
     @GET("EstacionesTerrestres/FiltroCCAA/{IDCCAA}")
     Call<GasolinerasResponse> gasolineras(@Path("IDCCAA") String ccaa);
 
+    @GET("EstacionesTerrestres/FiltroCCAAProducto/{IDCCAA}/{IDPRODUCTO}")
+    Call<GasolinerasResponse> gasolinerasCombustible(@Path("IDCCAA") String ccaa, @Path("IDPRODUCTO") String combustible );
 }

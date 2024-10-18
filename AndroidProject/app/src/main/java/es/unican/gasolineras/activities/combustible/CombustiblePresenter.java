@@ -1,63 +1,51 @@
-package es.unican.gasolineras.activities.main;
+package es.unican.gasolineras.activities.combustible;
 
+import android.util.Log;
+import android.view.View;
+
+import java.io.Console;
 import java.util.List;
+
 
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
+import es.unican.gasolineras.model.TipoCombustible;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
-/**
- * The presenter of the main activity of the application. It controls {@link MainView}
- */
-public class MainPresenter implements IMainContract.Presenter {
+public class CombustiblePresenter implements ICombustibleContract.Presenter{
+
 
     /** The view that is controlled by this presenter */
-    private IMainContract.View view;
+    private ICombustibleContract.View view;
+    private TipoCombustible tipoCombustible;
 
-    /**
-     * @see IMainContract.Presenter#init(IMainContract.View)
-     * @param view the view to control
-     */
+
     @Override
-    public void init(IMainContract.View view) {
+    public void init(ICombustibleContract.View view, TipoCombustible tipoCombustible) {
+        this.tipoCombustible = tipoCombustible;
         this.view = view;
         this.view.init();
         load();
     }
 
-    /**
-     * @see IMainContract.Presenter#onStationClicked(Gasolinera)
-     * @param station the station that has been clicked
-     */
+
     @Override
     public void onStationClicked(Gasolinera station) {
         view.showStationDetails(station);
     }
 
-    /**
-     * @see IMainContract.Presenter#onMenuInfoClicked()
-     */
+
     @Override
     public void onMenuInfoClicked() {
         view.showInfoActivity();
     }
 
     /**
-     * @see IMainContract.Presenter#onMenuHistoryClicked() ()
-     */
-    @Override
-    public void onMenuHistoryClicked(){
-        view.showHistoryActivity();
-    }
-
-
-    /**
      * Loads the gas stations from the repository, and sends them to the view
      */
     private void load() {
         IGasolinerasRepository repository = view.getGasolinerasRepository();
-
         ICallBack callBack = new ICallBack() {
 
             @Override
@@ -72,6 +60,6 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-        repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
+            repository.requestGasolinerasCombustible(callBack, IDCCAAs.CANTABRIA.id, tipoCombustible.id);
     }
 }

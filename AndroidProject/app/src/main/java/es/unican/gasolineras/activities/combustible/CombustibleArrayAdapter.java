@@ -1,7 +1,8 @@
-package es.unican.gasolineras.activities.main;
+package es.unican.gasolineras.activities.combustible;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +18,13 @@ import java.util.List;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.TipoCombustible;
 
-/**
- * Adapter that renders the gas stations in each row of a ListView
- */
-public class GasolinerasArrayAdapter extends BaseAdapter {
+public class CombustibleArrayAdapter extends BaseAdapter {
 
     /** The list of gas stations to render */
     private final List<Gasolinera> gasolineras;
+    private final TipoCombustible tipoCombustible;
 
     /** Context of the application */
     private final Context context;
@@ -34,10 +34,11 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
      * @param context the application context
      * @param objects the list of gas stations
      */
-    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects) {
+    public CombustibleArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects, @NonNull TipoCombustible tipoCombustible) {
         // we know the parameters are not null because of the @NonNull annotation
         this.gasolineras = objects;
         this.context = context;
+        this.tipoCombustible = tipoCombustible;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context)
-                    .inflate(R.layout.activity_main_list_item, parent, false);
+                    .inflate(R.layout.activity_filtro_combustible_list_item, parent, false);
         }
 
         // logo
@@ -99,24 +100,14 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
             tv.setText(gasolinera.getDireccion());
         }
 
-        // gasolina 95 price
+        // combustible price
         {
             TextView tvLabel = convertView.findViewById(R.id.tvCombustible);
-            String label = context.getResources().getString(R.string.gasolina95label);
-            tvLabel.setText(String.format("%s:", label));
+            //String label = context.getResources().getString(R.string.gasolina95label);
+            tvLabel.setText(String.format("%s:", tipoCombustible));
 
             TextView tv = convertView.findViewById(R.id.tvPrecioCombustible);
-            tv.setText(String.valueOf(gasolinera.getGasolina95E5()));
-        }
-
-        // diesel A price
-        {
-            TextView tvLabel = convertView.findViewById(R.id.tvDieselALabel);
-            String label = context.getResources().getString(R.string.dieselAlabel);
-            tvLabel.setText(String.format("%s:", label));
-
-            TextView tv = convertView.findViewById(R.id.tvDieselA);
-            tv.setText(String.valueOf(gasolinera.getGasoleoA()));
+            tv.setText(String.valueOf(gasolinera.getPrecioProducto()));
         }
 
         return convertView;

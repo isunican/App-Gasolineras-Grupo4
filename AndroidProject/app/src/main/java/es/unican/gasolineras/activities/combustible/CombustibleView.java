@@ -1,77 +1,62 @@
-package es.unican.gasolineras.activities.main;
+package es.unican.gasolineras.activities.combustible;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
 
 import org.parceler.Parcels;
 
+import java.io.Console;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.filtros.FiltrosView;
-import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
-import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
+import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.model.TipoCombustible;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.IPagoDAO;
 
-/**
- * The main view of the application. It shows a list of gas stations.
- */
 @AndroidEntryPoint
-public class MainView extends AppCompatActivity implements IMainContract.View {
+public class CombustibleView extends AppCompatActivity implements ICombustibleContract.View {
 
     /** The presenter of this view */
-    private MainPresenter presenter;
+    private CombustiblePresenter presenter;
+    private TipoCombustible tipoCombustible;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
     IGasolinerasRepository repository;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_filtro);
 
         // The default theme does not include a toolbar.
         // In this app the toolbar is explicitly declared in the layout
         // Set this toolbar as the activity ActionBar
-        Toolbar toolbar = findViewById(R.id.toolbarRegister);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // instantiate presenter and launch initial business logic
-        presenter = new MainPresenter();
-        presenter.init(this);
+        presenter = new CombustiblePresenter();
 
-        ImageView imgEmbudo = findViewById(R.id.imgEmbudo);
-        imgEmbudo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainView.this, FiltrosView.class);
-                startActivity(intent);
-            }
-        });
-
-
+        //Cambiar tipo combustible
+        String tipoCombustibleStr = getIntent().getStringExtra("tipoCombustible");
+        tipoCombustible = TipoCombustible.valueOf(tipoCombustibleStr);
+        presenter.init(this, tipoCombustible);
     }
 
     /**
@@ -99,16 +84,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         if (itemId == R.id.menuItemInfo) {
             presenter.onMenuInfoClicked();
             return true;
-        }else if(itemId == R.id.historialPagos){
-            presenter.onMenuHistoryClicked();
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * @see IMainContract.View#init()
-     */
+
     @Override
     public void init() {
         // initialize on click listeners (when clicking on a station in the list)
@@ -119,47 +99,33 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
     }
 
-    /**
-     * @see IMainContract.View#getGasolinerasRepository()
-     * @return the repository to access the data
-     */
+
     @Override
     public IGasolinerasRepository getGasolinerasRepository() {
         return repository;
     }
 
-    /**
-     * @see IMainContract.View#showStations(List) 
-     * @param stations the list of charging stations
-     */
     @Override
     public void showStations(List<Gasolinera> stations) {
+        if (stations.isEmpty()) {
+            Toast.makeText(this, "No se han localizado gasolineras con el combustible: " + tipoCombustible, Toast.LENGTH_SHORT).show();
+        }
         ListView list = findViewById(R.id.lvStations);
-        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations);
+        CombustibleArrayAdapter adapter = new CombustibleArrayAdapter(this, stations, tipoCombustible);
         list.setAdapter(adapter);
     }
 
-    /**
-     * @see IMainContract.View#showLoadCorrect(int)
-     * @param stations
-     */
     @Override
     public void showLoadCorrect(int stations) {
         Toast.makeText(this, "Cargadas " + stations + " gasolineras", Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * @see IMainContract.View#showLoadError()
-     */
     @Override
     public void showLoadError() {
         Toast.makeText(this, "Error cargando las gasolineras", Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * @see IMainContract.View#showStationDetails(Gasolinera)
-     * @param station the charging station
-     */
+
     @Override
     public void showStationDetails(Gasolinera station) {
         Intent intent = new Intent(this, DetailsView.class);
@@ -167,22 +133,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         startActivity(intent);
     }
 
-    /**
-     * @see IMainContract.View#showInfoActivity()
-     */
     @Override
     public void showInfoActivity() {
         Intent intent = new Intent(this, InfoView.class);
         startActivity(intent);
     }
-
-    /**
-     * @see IMainContract.View#showHistoryActivity()
-     */
-    @Override
-    public void showHistoryActivity() {
-        Intent intent = new Intent(this, PaymentHistoryView.class);
-        startActivity(intent);
-    }
-
 }

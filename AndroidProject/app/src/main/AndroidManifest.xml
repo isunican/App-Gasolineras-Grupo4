@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gasolineras"
         tools:targetApi="31">
+        <activity android:name=".activities.filtros.FiltrosView" />
+        <activity
+            android:name=".activities.registerPayment.RegisterPaymentView"
+            android:exported="false" />
         <activity
             android:name=".activities.info.InfoView"
             android:exported="false" />
@@ -25,11 +29,15 @@
             android:name=".activities.paymentHistory.PaymentHistoryView"
             android:exported="false" />
         <activity
+            android:name=".activities.combustible.CombustibleView"
+            android:exported="false" />
+        <!--
+        -->
+        <activity
             android:name=".activities.main.MainView"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

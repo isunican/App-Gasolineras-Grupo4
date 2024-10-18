@@ -19,15 +19,27 @@ public class GasolinerasRepository implements IGasolinerasRepository {
     /** Singleton pattern with private constructor */
     private GasolinerasRepository() {}
 
-    /**
-     * Request gas stations from the Gasolineras real API.
-     * @see IGasolinerasRepository#requestGasolineras(ICallBack, String)
-     * @param cb the callback that will asynchronously process the returned gas stations
-     * @param ccaa id of the "comunidad autonoma"
-     */
     @Override
     public void requestGasolineras(ICallBack cb, String ccaa) {
         Call<GasolinerasResponse> call = GasolinerasService.api.gasolineras(ccaa);
+        call.enqueue(new Callback<GasolinerasResponse>() {
+            @Override
+            public void onResponse(@Nonnull Call<GasolinerasResponse> call, @Nonnull Response<GasolinerasResponse> response) {
+                GasolinerasResponse body = response.body();
+                assert body != null;  // to avoid warning in the following line
+                cb.onSuccess(body.getGasolineras());
+            }
+
+            @Override
+            public void onFailure(@Nonnull Call<GasolinerasResponse> call, @Nonnull Throwable t) {
+                cb.onFailure(t);
+            }
+        });
+    }
+
+    @Override
+    public void requestGasolinerasCombustible(ICallBack cb, String ccaa, String combustible) {
+        Call<GasolinerasResponse> call = GasolinerasService.api.gasolinerasCombustible(ccaa, combustible);
         call.enqueue(new Callback<GasolinerasResponse>() {
             @Override
             public void onResponse(@Nonnull Call<GasolinerasResponse> call, @Nonnull Response<GasolinerasResponse> response) {
