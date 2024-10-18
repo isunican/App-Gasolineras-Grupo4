@@ -1,5 +1,6 @@
 package es.unican.gasolineras.activities.registerPayment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -7,6 +8,7 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -51,8 +53,8 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
         btnRegistrarPago.setOnClickListener(onClickListener -> {
             String tipoGasolina = spinner.getSelectedItem().toString();
             String nombreGasolinera = ((TextView) findViewById(R.id.etNombreGasolinera)).getText().toString();
-            double precioPorLitro = Double.parseDouble(((TextView) findViewById(R.id.editTextNumberDecimal)).getText().toString());
-            double cantidad = Double.parseDouble(((TextView) findViewById(R.id.editTextNumberDecimal2)).getText().toString());
+            String precioPorLitro = ((TextView) findViewById(R.id.editTextNumberDecimal)).getText().toString();
+            String cantidad = ((TextView) findViewById(R.id.editTextNumberDecimal2)).getText().toString();
 
             presenter.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad);
 
@@ -68,6 +70,27 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
     public void showRegisterHistory(){
         Intent intent = new Intent(this, PaymentHistoryView.class);
         startActivity(intent);
+    }
+
+
+    @Override
+    public void showErrorDialog(String message, String title) {
+        // 1. Instantiate an AlertDialog.Builder with its constructor.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // 2. Chain together various setter methods to set the dialog characteristics.
+        builder.setMessage(message)
+                .setTitle(title);
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User taps OK button.
+            }
+        });
+
+        // 3. Get the AlertDialog.
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /**
