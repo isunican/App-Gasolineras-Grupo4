@@ -15,10 +15,23 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.Gasolineras.Toolbar"
         app:layout_constraintBottom_toTopOf="@+id/lvStations"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <!-- Imagen clickeable en el Toolbar -->
+        <ImageView
+            android:id="@+id/imgFlecha"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            app:srcCompat="@drawable/flecha_retroceder"
+            tools:layout_editor_absoluteX="339dp"
+            tools:layout_editor_absoluteY="17dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <ListView
         android:id="@+id/lvStations"

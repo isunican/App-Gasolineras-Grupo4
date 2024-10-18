@@ -42,19 +42,25 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/rbAscendente"
-                android:layout_width="0dp"
+            <RadioGroup
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/orden_ascendente" />
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/rbDescendente"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/orden_descendente" />
+                <RadioButton
+                    android:id="@+id/rbAscendente"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/orden_ascendente" />
+
+                <RadioButton
+                    android:id="@+id/rbDescendente"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/orden_descendente" />
+            </RadioGroup>
 
         </LinearLayout>
 
