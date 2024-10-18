@@ -7,8 +7,11 @@ import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
+/**
+ * The presenter of the payment history. It controls {@link PaymentHistoryView}
+ */
 public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presenter{
-    // Cherry
+
     /** The view that is controlled by this presenter */
     private IPaymentHistoryContract.View view;
 
@@ -29,9 +32,6 @@ public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presente
     public void load(){
         IPagoDAO dao = view.getPagoDAO();
         List<Pago> pagos = dao.getAll();
-        Pago p = new Pago();
-        p.setQuantity(1.0);
-        dao.insertAll(p);
         view.showPagos(pagos);
     }
 

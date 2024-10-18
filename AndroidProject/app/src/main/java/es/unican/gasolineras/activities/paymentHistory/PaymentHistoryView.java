@@ -16,11 +16,14 @@ import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
- * View
+ * View of the history of payments. It shows a list of the history of payments register in the app
  */
 public class PaymentHistoryView extends AppCompatActivity implements IPaymentHistoryContract.View{
 
+    /** Database of the payments **/
     private AppDatabase db;
+
+    /** The presenter of this view */
     private PaymentHistoryPresenter presenter;
 
     @Override
@@ -36,10 +39,11 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
 
 
     /**
-     * Creacion de la lista de pagos
+     * @see IPaymentHistoryContract.View#init()
      */
     @Override
     public void init() {
+        // Initialize the list view of payments
         ListView list = findViewById(R.id.lvPagos);
         list.setOnItemClickListener((parent, view, position, id) -> {
             Pago pago = (Pago) parent.getItemAtPosition(position);
@@ -57,7 +61,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
 
     /**
      * @see IPaymentHistoryContract.View#showPagos(List)
-     * @param pagos la lista de registro de pagos
+     * @param pagos la lista de pagos
      */
     @Override
     public void showPagos(List<Pago> pagos) {
