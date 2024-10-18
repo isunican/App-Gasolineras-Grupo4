@@ -28,7 +28,8 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
         presenter.init(this);
 
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").build();
+                AppDatabase.class, "database-name").allowMainThreadQueries().build();
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_payment);
