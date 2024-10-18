@@ -63,7 +63,6 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-
         repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
     }
 }

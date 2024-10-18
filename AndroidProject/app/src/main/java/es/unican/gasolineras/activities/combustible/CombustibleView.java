@@ -33,6 +33,7 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
 
     /** The presenter of this view */
     private CombustiblePresenter presenter;
+    private TipoCombustible tipoCombustible;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
@@ -54,7 +55,7 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
 
         //Cambiar tipo combustible
         String tipoCombustibleStr = getIntent().getStringExtra("tipoCombustible");
-        TipoCombustible tipoCombustible = TipoCombustible.valueOf(tipoCombustibleStr);
+        tipoCombustible = TipoCombustible.valueOf(tipoCombustibleStr);
         presenter.init(this, tipoCombustible);
     }
 
@@ -106,8 +107,11 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
 
     @Override
     public void showStations(List<Gasolinera> stations) {
+        if (stations.isEmpty()) {
+            Toast.makeText(this, "No se han localizado gasolineras con el combustible: " + tipoCombustible, Toast.LENGTH_SHORT).show();
+        }
         ListView list = findViewById(R.id.lvStations);
-        CombustibleArrayAdapter adapter = new CombustibleArrayAdapter(this, stations);
+        CombustibleArrayAdapter adapter = new CombustibleArrayAdapter(this, stations, tipoCombustible);
         list.setAdapter(adapter);
     }
 

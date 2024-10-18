@@ -18,11 +18,13 @@ import java.util.List;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.TipoCombustible;
 
 public class CombustibleArrayAdapter extends BaseAdapter {
 
     /** The list of gas stations to render */
     private final List<Gasolinera> gasolineras;
+    private final TipoCombustible tipoCombustible;
 
     /** Context of the application */
     private final Context context;
@@ -32,10 +34,11 @@ public class CombustibleArrayAdapter extends BaseAdapter {
      * @param context the application context
      * @param objects the list of gas stations
      */
-    public CombustibleArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects) {
+    public CombustibleArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects, @NonNull TipoCombustible tipoCombustible) {
         // we know the parameters are not null because of the @NonNull annotation
         this.gasolineras = objects;
         this.context = context;
+        this.tipoCombustible = tipoCombustible;
     }
 
     @Override
@@ -101,7 +104,7 @@ public class CombustibleArrayAdapter extends BaseAdapter {
         {
             TextView tvLabel = convertView.findViewById(R.id.tvCombustible);
             //String label = context.getResources().getString(R.string.gasolina95label);
-            tvLabel.setText(String.format("%s:", "Combustible:"));
+            tvLabel.setText(String.format("%s:", tipoCombustible + ": "));
 
             TextView tv = convertView.findViewById(R.id.tvPrecioCombustible);
             tv.setText(String.valueOf(gasolinera.getPrecioProducto()));

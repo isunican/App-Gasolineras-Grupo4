@@ -61,8 +61,5 @@ public class CombustiblePresenter implements ICombustibleContract.Presenter{
             }
         };
             repository.requestGasolinerasCombustible(callBack, IDCCAAs.CANTABRIA.id, tipoCombustible.id);
-
-
-
     }
 }
