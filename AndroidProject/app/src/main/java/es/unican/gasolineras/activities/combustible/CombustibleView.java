@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,7 +25,9 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.activities.filtros.FiltrosView;
 import es.unican.gasolineras.activities.info.InfoView;
+import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.TipoCombustible;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
@@ -57,6 +61,15 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
         String tipoCombustibleStr = getIntent().getStringExtra("tipoCombustible");
         tipoCombustible = TipoCombustible.valueOf(tipoCombustibleStr);
         presenter.init(this, tipoCombustible);
+
+        ImageView imgFlecha = findViewById(R.id.imgFlecha);
+        imgFlecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CombustibleView.this, MainView.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
