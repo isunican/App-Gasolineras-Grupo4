@@ -2,44 +2,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.main.MainView">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarRegister"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.Gasolineras.Toolbar"
-        app:layout_constraintBottom_toTopOf="@+id/lvStations"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <!-- Imagen clickeable en el Toolbar -->
-        <ImageView
-            android:id="@+id/imgEmbudo"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="end"
-            app:srcCompat="@drawable/embudo"
-            tools:layout_editor_absoluteX="339dp"
-            tools:layout_editor_absoluteY="17dp" />
-
-    </androidx.appcompat.widget.Toolbar>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Historial de pagos"
+        app:titleTextColor="#FFFFFF" />
 
     <ListView
-        android:id="@+id/lvStations"
+        android:id="@+id/lvPagos"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:nextFocusUp="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarRegister" />
-
+    <!--hola -->
 </androidx.constraintlayout.widget.ConstraintLayout>

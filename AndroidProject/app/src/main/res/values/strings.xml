@@ -32,4 +32,25 @@
     <string name ="orden_ascendente">Orden Ascendente</string>
     <string name ="confirmar">Confirmar</string>
 
+    <string name="historial_pagos">Historial de pagos</string>
+    <string name="btn_addPago">+</string>
+
+    <string-array name="opcionesSpinner">
+        <item>Precio Biodiesel</item>
+        <item>Precio Bioetanol</item>
+        <item>Precio Gas Natural Comprimido</item>
+        <item>Precio Gas Natural Licuado</item>
+        <item>Precio Gases licuados del petróleo</item>
+        <item>Precio Gasoleo A</item>
+        <item>Precio Gasoleo B</item>
+        <item>Precio Gasoleo Premium</item>
+        <item>Precio Gasolina 95 E10</item>
+        <item>Precio Gasolina 95 E5</item>
+        <item>Precio Gasolina 95 E5 Premium</item>
+        <item>Precio Gasolina 98 E10</item>
+        <item>Precio Gasolina 98 E5</item>
+        <item>Precio Hidrogeno</item>
+    </string-array>
+
+
 </resources>
