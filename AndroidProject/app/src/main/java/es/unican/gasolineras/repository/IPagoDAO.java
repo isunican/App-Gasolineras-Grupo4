@@ -11,7 +11,7 @@ import es.unican.gasolineras.model.Pago;
 
 @Dao
 public interface IPagoDAO {
-    @Query("SELECT * FROM pago")
+    @Query("SELECT * FROM pago ORDER BY pid DESC")
     List<Pago> getAll();
 
     @Query("SELECT * FROM pago WHERE pid IN (:pagoIds)")
