@@ -20,6 +20,9 @@ import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.TipoCombustible;
 
+/**
+ * Adapter that renders the gas stations in each row of a ListView
+ */
 public class CombustibleArrayAdapter extends BaseAdapter {
 
     /** The list of gas stations to render */
