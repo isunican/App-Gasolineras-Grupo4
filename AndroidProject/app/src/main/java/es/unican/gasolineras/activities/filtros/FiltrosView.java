@@ -79,12 +79,20 @@ public class FiltrosView extends AppCompatActivity {
                     break;
             }
 
-            if (tipoCombustible != null) {
-                // Pasar el valor del enumerado en el Intent
-                Intent intent = new Intent(this, CombustibleView.class);
-                intent.putExtra("tipoCombustible", tipoCombustible.toString());
-                startActivity(intent);
+            // Pasar el valor del enumerado en el Intent
+            Intent intent = new Intent(this, CombustibleView.class);
+            intent.putExtra("tipoCombustible", tipoCombustible.toString());
+            //0-mayor a menor 1-menor a mayor 2-nada
+            String order = "";
+            if (rbAscendente.isChecked()) {
+                order = "1";
+            } else if (rbDescendente.isChecked()) {
+                order = "0";
+            } else {
+                order = "2";
             }
+            intent.putExtra("order", order);
+            startActivity(intent);
         });
     }
 

@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import org.parceler.Parcels;
 
 import java.io.Console;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,6 +39,7 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
     /** The presenter of this view */
     private CombustiblePresenter presenter;
     private TipoCombustible tipoCombustible;
+    private int order;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
@@ -61,6 +63,9 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
         String tipoCombustibleStr = getIntent().getStringExtra("tipoCombustible");
         tipoCombustible = TipoCombustible.valueOf(tipoCombustibleStr);
         presenter.init(this, tipoCombustible);
+
+        String orderStr = getIntent().getStringExtra("order");
+        order = Integer.parseInt(orderStr);
 
         ImageView imgFlecha = findViewById(R.id.imgFlecha);
         imgFlecha.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +128,7 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
         if (stations.isEmpty()) {
             Toast.makeText(this, "No se han localizado gasolineras con el combustible: " + tipoCombustible, Toast.LENGTH_SHORT).show();
         }
+        orderStations(order, stations);
         ListView list = findViewById(R.id.lvStations);
         CombustibleArrayAdapter adapter = new CombustibleArrayAdapter(this, stations, tipoCombustible);
         list.setAdapter(adapter);
@@ -151,4 +157,21 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
         Intent intent = new Intent(this, InfoView.class);
         startActivity(intent);
     }
+
+    public void orderStations(int orden, List<Gasolinera> stations) {
+        if (orden == 1) {
+            // Orden ascendente
+            stations.sort(Comparator.comparingDouble(g -> g.getPrecioProducto()));
+        } else if (orden == 0) {
+            // Orden descendente
+            stations.sort((g1, g2) -> Double.compare(
+                    g2.getPrecioProducto(),
+                    g1.getPrecioProducto()
+            ));
+        } else {
+            return; //valor 2 es que no se ha puesto nada
+
+        }
+    }
+
 }
