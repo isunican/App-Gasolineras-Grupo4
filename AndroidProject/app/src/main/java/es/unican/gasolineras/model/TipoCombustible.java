@@ -1,5 +1,10 @@
 package es.unican.gasolineras.model;
 
+/**
+ * Static collection of Productos Petroliferos ID's, as used by the REST API.
+ * The values of these ID's can be fetched from a dedicated
+ * <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/Listados/ProductosPetroliferos/">endpoint</a>
+ */
 public enum TipoCombustible {
 
 

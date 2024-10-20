@@ -7,17 +7,22 @@ import java.io.Console;
 import java.util.List;
 
 
+import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.model.TipoCombustible;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
+/**
+ * The presenter of the "filtro combustible"" activity of the application.
+ */
 public class CombustiblePresenter implements ICombustibleContract.Presenter{
 
 
     /** The view that is controlled by this presenter */
     private ICombustibleContract.View view;
+
     private TipoCombustible tipoCombustible;
 
 

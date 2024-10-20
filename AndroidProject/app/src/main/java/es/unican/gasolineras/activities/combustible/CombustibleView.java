@@ -28,6 +28,10 @@ import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.TipoCombustible;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
+/**
+ * The "filtro combustible"" view of the application. It shows a list of gas stations
+ * which sell a specific fuel.
+ */
 @AndroidEntryPoint
 public class CombustibleView extends AppCompatActivity implements ICombustibleContract.View {
 
@@ -53,7 +57,7 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
         // instantiate presenter and launch initial business logic
         presenter = new CombustiblePresenter();
 
-        //Cambiar tipo combustible
+        //type of fuel
         String tipoCombustibleStr = getIntent().getStringExtra("tipoCombustible");
         tipoCombustible = TipoCombustible.valueOf(tipoCombustibleStr);
         presenter.init(this, tipoCombustible);
