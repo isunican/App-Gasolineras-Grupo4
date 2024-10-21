@@ -16,6 +16,7 @@ import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.paymentHistory.IPaymentHistoryContract;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 public class RegisterPaymentView extends AppCompatActivity implements IRegisterPaymentContract.View{
@@ -29,9 +30,7 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
         presenter = new RegisterPaymentPresenter();
         presenter.init(this);
 
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").allowMainThreadQueries().build();
-
+        db = DataBase.getAppDatabase(getApplicationContext());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_payment);
