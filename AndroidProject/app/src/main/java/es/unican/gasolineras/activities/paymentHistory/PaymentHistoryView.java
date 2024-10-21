@@ -26,6 +26,7 @@ import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
@@ -41,10 +42,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_history);
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "database-name")
-                .allowMainThreadQueries()
-                .build();
+        db = DataBase.getAppDatabase(getApplicationContext());
 
         // instantiate presenter and launch initial business logic
         presenter = new PaymentHistoryPresenter();
