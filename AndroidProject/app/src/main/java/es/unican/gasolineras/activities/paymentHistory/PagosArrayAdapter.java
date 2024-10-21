@@ -48,7 +48,7 @@ public class PagosArrayAdapter extends BaseAdapter {
         // Fecha
         {
             TextView tv = convertView.findViewById(R.id.Fecha);
-            tv.setText(pago.getDate().toString());
+            tv.setText(pago.getDate());
         }
         // Nombre
         {

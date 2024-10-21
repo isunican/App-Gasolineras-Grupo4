@@ -31,7 +31,7 @@ public interface IPagoDAO {
      * @return Lista de pagos que se han hecho en la gasolinera pasada como argumento
      */
     @Query("SELECT * FROM pago WHERE station_name LIKE :stationName")
-    Pago findByName(String stationName);
+    List<Pago> findByName(String stationName);
 
     /**
      * Inserta un objeto de la clase Pago en la base de datos
@@ -46,5 +46,4 @@ public interface IPagoDAO {
      */
     @Delete
     void delete(Pago pago);
-    // Cher
 }
