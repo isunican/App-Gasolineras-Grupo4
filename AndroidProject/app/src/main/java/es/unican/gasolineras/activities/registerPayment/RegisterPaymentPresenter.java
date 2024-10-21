@@ -17,22 +17,38 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
     }
 
     @Override
-    public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, double precioPorLitro, double cantidad){
-        //Creo el objeto de tipo Pago
-        Pago pago = new Pago();
-        pago.fuelType = tipoGasolina;
-        pago.stationName = nombreGasolinera;
-        pago.pricePerLitre = precioPorLitro;
-        pago.quantity = cantidad;
-        double finalPrice = precioPorLitro * cantidad;
-        pago.finalPrice = finalPrice;
-        pago.date = LocalDate.now().toString();
+    public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad){
 
-        //Persito el objeto en la base de datos
-        IPagoDAO db = view.getPagoDAO();
-        db.insertAll(pago);
+        if (tipoGasolina.isEmpty()) {
+            view.showErrorDialog("Debes seleccionar un tipo de combustible", "Error en el tipo de combustible");
 
-        //Vuelvo al historial de pagos
-        view.showRegisterHistory();
+        } else if (nombreGasolinera.isEmpty()) {
+            view.showErrorDialog("Debes introducir un nombre de gasolinera", "Error en el nombre de gasolinera");
+
+        } else if (precioPorLitro.isEmpty()) {
+            view.showErrorDialog("Debes introducir un precio", "Error en el precio por litro");
+
+        } else if (cantidad.isEmpty()) {
+            view.showErrorDialog("Debes introducir una cantidad de combustible", "Error en la cantidad");
+
+        } else {
+
+            //Creo el objeto de tipo Pago
+            Pago pago = new Pago();
+            pago.fuelType = tipoGasolina;
+            pago.stationName = nombreGasolinera;
+            pago.pricePerLitre = Double.parseDouble(precioPorLitro);
+            pago.quantity = Double.parseDouble(cantidad);
+            pago.finalPrice = pago.pricePerLitre * pago.quantity;
+            pago.date = LocalDate.now().toString();
+
+            //Persito el objeto en la base de datos
+            IPagoDAO db = view.getPagoDAO();
+            db.insertAll(pago);
+
+            //Vuelvo al historial de pagos
+            view.showRegisterHistory();
+
+        }
     }
 }

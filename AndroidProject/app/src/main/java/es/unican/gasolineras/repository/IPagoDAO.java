@@ -9,16 +9,13 @@ import java.util.List;
 
 import es.unican.gasolineras.model.Pago;
 
-/**
- * Interfaz que implementa pagos DAO
- */
 @Dao
 public interface IPagoDAO {
     /**
      * Hace una consulta a la base de datos para retornar todos los pagos en una lista
      * @return Lista de pagos almacenados en una base de datos
      */
-    @Query("SELECT * FROM pago")
+    @Query("SELECT * FROM pago ORDER BY pid DESC")
     List<Pago> getAll();
 
     /**
@@ -35,7 +32,7 @@ public interface IPagoDAO {
      * @return Lista de pagos que se han hecho en la gasolinera pasada como argumento
      */
     @Query("SELECT * FROM pago WHERE station_name LIKE :stationName")
-    List<Pago> findByName(String stationName);
+    Pago findByName(String stationName);
 
     /**
      * Inserta un objeto de la clase Pago en la base de datos
