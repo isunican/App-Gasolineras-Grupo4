@@ -54,6 +54,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
      */
     @Override
     public void init() {
+        //Create the toolbar
         Toolbar toolbar = findViewById(R.id.toolbarRegister);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Historial de pagos");
