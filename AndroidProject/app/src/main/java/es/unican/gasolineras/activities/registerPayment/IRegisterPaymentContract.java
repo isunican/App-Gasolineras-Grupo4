@@ -22,7 +22,7 @@ public interface IRegisterPaymentContract {
          * @param precioPorLitro A double that represents the price per litre of the fuel.
          * @param cantidad A double that represents the amount of fuel.
          */
-        public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, double precioPorLitro, double cantidad);
+        public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad);
     }
 
     public interface View {
@@ -38,6 +38,8 @@ public interface IRegisterPaymentContract {
          */
         public void showRegisterHistory();
 
-        IPagoDAO getPagoDAO();
+        public IPagoDAO getPagoDAO();
+
+        public void showErrorDialog(String message, String title);
     }
 }
