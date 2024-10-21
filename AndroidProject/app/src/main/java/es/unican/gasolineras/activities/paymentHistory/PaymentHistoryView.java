@@ -1,7 +1,6 @@
 package es.unican.gasolineras.activities.paymentHistory;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.widget.ListView;
 
 import android.content.Intent;
@@ -31,14 +30,12 @@ import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
- * View of the history of payments. It shows a list of the history of payments register in the app
+ * View
  */
 public class PaymentHistoryView extends AppCompatActivity implements IPaymentHistoryContract.View{
-
-    /** Database of the payments **/
+    //Cherry
     private AppDatabase db;
 
-    /** The presenter of this view */
     private PaymentHistoryPresenter presenter;
 
     @Override
@@ -52,18 +49,45 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
         presenter.init(this);
     }
 
-
     /**
-     * @see IPaymentHistoryContract.View#init()
+     * No tiene uso ya que no vamos a usar un on click listener
      */
     @Override
     public void init() {
-        // Initialize the list view of payments
+        //Create the toolbar
+        Toolbar toolbar = findViewById(R.id.toolbarRegister);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Historial de pagos");
+
         ListView list = findViewById(R.id.lvPagos);
         list.setOnItemClickListener((parent, view, position, id) -> {
             Pago pago = (Pago) parent.getItemAtPosition(position);
         });
+
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_history, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menuItemAddPago) {
+            Intent intent = new Intent(this, RegisterPaymentView.class);
+            startActivity(intent);
+            return true;
+        } else if (itemId == R.id.menuItemInfo) {
+            Intent intent = new Intent(this, InfoView.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     /**
      * @see IPaymentHistoryContract.View#getPagoDAO()
@@ -76,7 +100,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
 
     /**
      * @see IPaymentHistoryContract.View#showPagos(List)
-     * @param pagos la lista de pagos
+     * @param pagos la lista de registro de pagos
      */
     @Override
     public void showPagos(List<Pago> pagos) {
