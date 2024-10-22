@@ -44,11 +44,20 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
-     * @see IMainContract.Presenter#onMenuHistoryClicked() ()
+     * @see IMainContract.Presenter#onMenuHistoryClicked()
      */
     @Override
     public void onMenuHistoryClicked(){
         view.showHistoryActivity();
+    }
+
+
+    /**
+     * @see IMainContract.Presenter#onMenuFiltrosClicked()
+     */
+    @Override
+    public void onMenuFiltrosClicked(){
+        view.showFiltrosActivity();
     }
 
 

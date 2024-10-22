@@ -1,14 +1,10 @@
 package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,9 +26,7 @@ import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
  * The main view of the application. It shows a list of gas stations.
@@ -62,16 +56,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         presenter = new MainPresenter();
         presenter.init(this);
 
-        ImageView imgEmbudo = findViewById(R.id.imgEmbudo);
-        imgEmbudo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainView.this, FiltrosView.class);
-                startActivity(intent);
-            }
-        });
-
-
     }
 
     /**
@@ -99,8 +83,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         if (itemId == R.id.menuItemInfo) {
             presenter.onMenuInfoClicked();
             return true;
-        }else if(itemId == R.id.historialPagos){
+        } else if (itemId == R.id.menuItemHistorialPagos) {
             presenter.onMenuHistoryClicked();
+            return true;
+        } else if (itemId == R.id.menuItemFiltros) {
+            presenter.onMenuFiltrosClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -182,6 +169,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void showHistoryActivity() {
         Intent intent = new Intent(this, PaymentHistoryView.class);
+        startActivity(intent);
+    }
+
+    /**
+     * @see IMainContract.View#showFiltrosActivity()
+     */
+    @Override
+    public void showFiltrosActivity() {
+        Intent intent = new Intent(this, FiltrosView.class);
         startActivity(intent);
     }
 

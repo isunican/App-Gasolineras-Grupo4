@@ -3,13 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menuItemAddPago"
-        android:icon="@drawable/icono_mas"
-        android:title=""
-        android:visible="true"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/menuItemBackArrow"
         android:icon="@drawable/flecha_retroceder"
         android:title=""

@@ -2,12 +2,9 @@ package es.unican.gasolineras.activities.combustible;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,7 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import org.parceler.Parcels;
 
-import java.io.Console;
 import java.util.Comparator;
 import java.util.List;
 
@@ -26,7 +22,6 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.details.DetailsView;
-import es.unican.gasolineras.activities.filtros.FiltrosView;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.Gasolinera;
@@ -70,15 +65,6 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
 
         String orderStr = getIntent().getStringExtra("order");
         order = Integer.parseInt(orderStr);
-
-        ImageView imgFlecha = findViewById(R.id.imgFlecha);
-        imgFlecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CombustibleView.this, MainView.class);
-                startActivity(intent);
-            }
-        });
     }
 
     /**
@@ -90,7 +76,7 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
+        menuInflater.inflate(R.menu.menu_combustible, menu);
         return true;
     }
 
@@ -103,13 +89,13 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menuItemInfo) {
-            presenter.onMenuInfoClicked();
+
+        if (itemId == R.id.menuItemBackArrow) {
+            presenter.onMenuBackArrowClick();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void init() {
@@ -157,8 +143,8 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
     }
 
     @Override
-    public void showInfoActivity() {
-        Intent intent = new Intent(this, InfoView.class);
+    public void showMainActivity() {
+        Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
     }
 

@@ -7,6 +7,7 @@ import java.io.Console;
 import java.util.List;
 
 
+import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
@@ -15,7 +16,7 @@ import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
- * The presenter of the "filtro combustible"" activity of the application.
+ * The presenter of the "filtro combustible" activity of the application. It controls {@link CombustibleView}
  */
 public class CombustiblePresenter implements ICombustibleContract.Presenter{
 
@@ -25,7 +26,11 @@ public class CombustiblePresenter implements ICombustibleContract.Presenter{
 
     private TipoCombustible tipoCombustible;
 
-
+    /**
+     * @see ICombustibleContract.Presenter#init(ICombustibleContract.View, TipoCombustible)
+     * @param view the view to control
+     * @param tipoCombustible the type of fuel of the gas station
+     */
     @Override
     public void init(ICombustibleContract.View view, TipoCombustible tipoCombustible) {
         this.tipoCombustible = tipoCombustible;
@@ -34,17 +39,20 @@ public class CombustiblePresenter implements ICombustibleContract.Presenter{
         load();
     }
 
-
+    /**
+     * @see ICombustibleContract.Presenter#onStationClicked(Gasolinera)
+     * @param station the station that has been clicked
+     */
     @Override
     public void onStationClicked(Gasolinera station) {
         view.showStationDetails(station);
     }
 
-
+    /**
+     * @see ICombustibleContract.Presenter#onMenuBackArrowClick()
+     */
     @Override
-    public void onMenuInfoClicked() {
-        view.showInfoActivity();
-    }
+    public void onMenuBackArrowClick() {view.showMainActivity();}
 
     /**
      * Loads the gas stations from the repository, and sends them to the view

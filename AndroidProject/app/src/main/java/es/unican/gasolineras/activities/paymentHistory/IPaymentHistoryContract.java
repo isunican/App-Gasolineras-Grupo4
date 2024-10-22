@@ -29,6 +29,12 @@ public interface IPaymentHistoryContract {
     }
 
     /**
+     * The presenter is informed that the Back Arrow item in the menu has been clicked
+     * Only the View should call this method
+     */
+    public void onMenuBackArrowClick();
+
+    /**
      * Methods that must be implemented in the PaymentHistory View.
      * Only the Presenter should call these methods.
      */
@@ -51,6 +57,12 @@ public interface IPaymentHistoryContract {
          * Only the Presenter should call this method
          */
         public void showPagos(List<Pago> pagos);
+
+        /**
+         * The view is requested to open the main activity.
+         * Only the Presenter should call this method
+         */
+        public void showMainActivity();
     }
 }
 

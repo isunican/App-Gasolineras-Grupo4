@@ -3,16 +3,22 @@ package es.unican.gasolineras.activities.registerPayment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
 
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.activities.paymentHistory.IPaymentHistoryContract;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.repository.AppDatabase;
@@ -58,6 +64,39 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
             presenter.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad);
 
         });
+
+        Toolbar toolbar = findViewById(R.id.tbRegistroPagos);
+        setSupportActionBar(toolbar);
+    }
+
+    /**
+     * This creates the menu that is shown in the action bar (the upper toolbar)
+     * @param menu The options menu in which you place your items.
+     *
+     * @return true because we are defining a new menu
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_combustible, menu);
+        return true;
+    }
+
+    /**
+     * This is called when an item in the action bar menu is selected.
+     * @param item The menu item that was selected.
+     *
+     * @return true if we have handled the selection
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.menuItemBackArrow) {
+            presenter.onMenuBackArrowClick();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -71,6 +110,10 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
         startActivity(intent);
     }
 
+    public void showPaymentHistoryActivity() {
+        Intent intent = new Intent(this, PaymentHistoryView.class);
+        startActivity(intent);
+    }
 
     @Override
     public void showErrorDialog(String message, String title) {

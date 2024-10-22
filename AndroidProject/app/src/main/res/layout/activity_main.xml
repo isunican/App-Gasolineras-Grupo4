@@ -18,19 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <!-- Imagen clickeable en el Toolbar -->
-        <ImageView
-            android:id="@+id/imgEmbudo"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="end"
-            app:srcCompat="@drawable/embudo"
-            tools:layout_editor_absoluteX="339dp"
-            tools:layout_editor_absoluteY="17dp" />
-
-    </androidx.appcompat.widget.Toolbar>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <ListView
         android:id="@+id/lvStations"

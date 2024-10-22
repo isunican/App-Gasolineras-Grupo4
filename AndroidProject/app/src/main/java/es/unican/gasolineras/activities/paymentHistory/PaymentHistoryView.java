@@ -12,6 +12,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import es.unican.gasolineras.activities.info.InfoView;
+import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,9 +81,8 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
             Intent intent = new Intent(this, RegisterPaymentView.class);
             startActivity(intent);
             return true;
-        } else if (itemId == R.id.menuItemInfo) {
-            Intent intent = new Intent(this, InfoView.class);
-            startActivity(intent);
+        } else if (itemId == R.id.menuItemBackArrow) {
+            presenter.onMenuBackArrowClick();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -107,6 +107,12 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
         ListView list = findViewById(R.id.lvPagos);
         PagosArrayAdapter adapter = new PagosArrayAdapter(this, pagos);
         list.setAdapter(adapter);
+    }
+
+    @Override
+    public void showMainActivity() {
+        Intent intent = new Intent(this, MainView.class);
+        startActivity(intent);
     }
 
 

@@ -35,10 +35,10 @@ public interface ICombustibleContract {
         public void onStationClicked(Gasolinera station);
 
         /**
-         * The presenter is informed that the Info item in the menu has been clicked
+         * The presenter is informed that the Back Arrow item in the menu has been clicked
          * Only the View should call this method
          */
-        public void onMenuInfoClicked();
+        public void onMenuBackArrowClick();
 
     }
 
@@ -96,10 +96,10 @@ public interface ICombustibleContract {
         public void showStationDetails(Gasolinera station);
 
         /**
-         * The view is requested to open the info activity.
+         * The view is requested to open the main activity.
          * Only the Presenter should call this method
          */
-        public void showInfoActivity();
+        public void showMainActivity();
 
     }
 }

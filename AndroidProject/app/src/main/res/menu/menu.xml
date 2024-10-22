@@ -3,12 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menuItemAddPago"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/menuItemFiltros"
+        android:icon="@drawable/embudo"
+        android:title=""
+        android:visible="true"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuItemInfo"
         android:title="@string/info" />
     <item
-        android:id="@+id/historialPagos"
+        android:id="@+id/menuItemHistorialPagos"
         android:title="@string/historial_pagos" />
-    <!--hola-->
 </menu>

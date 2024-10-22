@@ -3,6 +3,7 @@ package es.unican.gasolineras.activities.paymentHistory;
 import java.time.LocalDate;
 import java.util.List;
 
+import es.unican.gasolineras.activities.combustible.ICombustibleContract;
 import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
@@ -25,6 +26,12 @@ public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presente
         this.view.init();
         load();
     }
+
+    /**
+     * @see ICombustibleContract.Presenter#onMenuBackArrowClick()
+     */
+
+    public void onMenuBackArrowClick() {view.showMainActivity();}
 
     /**
      * Loads the payments from the database, and sends them to the view

@@ -23,6 +23,12 @@ public interface IRegisterPaymentContract {
          * @param cantidad A double that represents the amount of fuel.
          */
         public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad);
+
+        /**
+         * The presenter is informed that the Back Arrow item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuBackArrowClick();
     }
 
     public interface View {
@@ -41,5 +47,11 @@ public interface IRegisterPaymentContract {
         public IPagoDAO getPagoDAO();
 
         public void showErrorDialog(String message, String title);
+
+        /**
+         * The view is requested to open the main activity.
+         * Only the Presenter should call this method
+         */
+        public void showPaymentHistoryActivity();
     }
 }
