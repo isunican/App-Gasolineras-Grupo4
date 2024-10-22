@@ -140,4 +140,9 @@ dependencies {
     // Cherry
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // Mockito
+    def mockito_version= ' latest.release '
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 }
