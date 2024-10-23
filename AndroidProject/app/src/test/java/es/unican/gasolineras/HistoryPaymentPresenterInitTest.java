@@ -4,6 +4,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.database.sqlite.SQLiteException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
@@ -29,10 +32,16 @@ public class HistoryPaymentPresenterInitTest {
     PaymentHistoryView mockPaymentView2;
 
     @Mock
+    PaymentHistoryView mockPaymentView3;
+
+    @Mock
     IPagoDAO mockPaymentDAO;
 
     @Mock
     IPagoDAO mockPaymentDAO2;
+
+    @Mock
+    IPagoDAO mockPaymentDAO3;
 
     private PaymentHistoryPresenter sut;
 
@@ -62,8 +71,10 @@ public class HistoryPaymentPresenterInitTest {
         // Prepare the return of the mocks
         when(mockPaymentDAO.getAll()).thenReturn(pagos);
         when(mockPaymentDAO2.getAll()).thenReturn(pagosVacio);
+        when(mockPaymentDAO3.getAll()).thenThrow(SQLiteException.class);
         when(mockPaymentView.getPagoDAO()).thenReturn(mockPaymentDAO);
         when(mockPaymentView2.getPagoDAO()).thenReturn(mockPaymentDAO2);
+        when(mockPaymentView3.getPagoDAO()).thenReturn(mockPaymentDAO3);
 
         // Create the sut
         sut = new PaymentHistoryPresenter();
@@ -73,16 +84,25 @@ public class HistoryPaymentPresenterInitTest {
     public void testPresenterInitExitoListaConPagos(){
         sut.init(mockPaymentView);
         verify(mockPaymentView,times(1)).getPagoDAO();
-        verify(mockPaymentDAO,times(2)).getAll();
+        verify(mockPaymentDAO,times(1)).getAll();
         verify(mockPaymentView, times(1)).showPagos(pagos);
     }
 
     @Test
     public void testPresenterInitExitoListaVacia() {
         sut.init(mockPaymentView2);
-        verify(mockPaymentView,times(1)).getPagoDAO();
-        verify(mockPaymentDAO2,times(2)).getAll();
+        verify(mockPaymentView2,times(1)).getPagoDAO();
+        verify(mockPaymentDAO2,times(1)).getAll();
         verify(mockPaymentView2, times(1)).showPagos(pagosVacio);
+    }
+
+    @Test
+    public void testPresenterInitErrorAccesoBD(){
+        sut.init(mockPaymentView3);
+        verify(mockPaymentView3, times(1)).getPagoDAO();
+        verify(mockPaymentDAO3,times(1)).getAll();
+        verify(mockPaymentView3,times(0)).showPagos(pagos);
+        verify(mockPaymentView3,times(1)).showErrorBD();
     }
 
 }

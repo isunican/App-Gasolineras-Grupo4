@@ -70,5 +70,10 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
         list.setAdapter(adapter);
     }
 
+    @Override
+    public void showErrorBD(){
+
+    }
+
 
 }

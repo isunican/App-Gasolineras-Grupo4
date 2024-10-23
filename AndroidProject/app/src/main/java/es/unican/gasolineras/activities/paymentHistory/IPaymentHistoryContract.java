@@ -40,7 +40,7 @@ public interface IPaymentHistoryContract {
         public void init();
 
         /**
-         * Return the interface pagoDAO which can return the data from the data base.
+         * Return the interface pagoDAO which can return the data from the database.
          * Only the Presenter should call this method
          * @return IPagoDAO interface of the data base
          */
@@ -51,6 +51,12 @@ public interface IPaymentHistoryContract {
          * Only the Presenter should call this method
          */
         public void showPagos(List<Pago> pagos);
+
+        /**
+         * The view is requested to display when an error in the database.
+         * Only the Presenter should call this method
+         */
+        public void showErrorBD();
     }
 }
 

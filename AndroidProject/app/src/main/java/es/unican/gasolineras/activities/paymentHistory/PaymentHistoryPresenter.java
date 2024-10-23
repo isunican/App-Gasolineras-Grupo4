@@ -1,5 +1,8 @@
 package es.unican.gasolineras.activities.paymentHistory;
 
+import android.database.sqlite.SQLiteException;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,8 +34,14 @@ public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presente
      */
     public void load(){
         IPagoDAO dao = view.getPagoDAO();
-        List<Pago> pagos = dao.getAll();
-        view.showPagos(pagos);
+        try{
+            List<Pago> pagos = dao.getAll();
+            view.showPagos(pagos);
+        } catch (SQLiteException e){
+            view.showErrorBD();
+        }
+
+
     }
 
 }
