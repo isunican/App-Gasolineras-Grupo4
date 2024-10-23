@@ -62,7 +62,7 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
 
     @Override
     public void init() {
-
+        //Este metodo esta vacio porque no hay necesidad de inicializar nada
     }
 
     @Override

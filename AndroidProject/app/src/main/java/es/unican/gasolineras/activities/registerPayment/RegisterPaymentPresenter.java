@@ -48,9 +48,6 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
             IPagoDAO db = view.getPagoDAO();
             db.insertAll(pago);
 
-            //Muestro mensaje de pago correcto
-            view.showAlertDialog("Pago registrado correctamente", "Pago registrado");
-
             //Vuelvo al historial de pagos
             view.showSuccesDialog();
         }
