@@ -89,7 +89,6 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-
         if (itemId == R.id.menuItemBackArrow) {
             presenter.onMenuBackArrowClick();
             return true;
@@ -118,7 +117,7 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
         if (stations.isEmpty()) {
             Toast.makeText(this, "No se han localizado gasolineras con el combustible: " + tipoCombustible, Toast.LENGTH_SHORT).show();
         }
-        orderStations(order, stations);
+        presenter.orderStations(order, stations);
         ListView list = findViewById(R.id.lvStations);
         CombustibleArrayAdapter adapter = new CombustibleArrayAdapter(this, stations, tipoCombustible);
         list.setAdapter(adapter);
@@ -146,22 +145,6 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
     public void showMainActivity() {
         Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
-    }
-
-    public void orderStations(int orden, List<Gasolinera> stations) {
-        if (orden == 1) {
-            // Orden ascendente
-            stations.sort(Comparator.comparingDouble(g -> g.getPrecioProducto()));
-        } else if (orden == 0) {
-            // Orden descendente
-            stations.sort((g1, g2) -> Double.compare(
-                    g2.getPrecioProducto(),
-                    g1.getPrecioProducto()
-            ));
-        } else {
-            return; //valor 2 es que no se ha puesto nada
-
-        }
     }
 
 }

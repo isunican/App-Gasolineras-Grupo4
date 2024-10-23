@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 
 import java.io.Console;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -20,10 +21,8 @@ import es.unican.gasolineras.repository.IGasolinerasRepository;
  */
 public class CombustiblePresenter implements ICombustibleContract.Presenter{
 
-
     /** The view that is controlled by this presenter */
     private ICombustibleContract.View view;
-
     private TipoCombustible tipoCombustible;
 
     /**
@@ -74,5 +73,25 @@ public class CombustiblePresenter implements ICombustibleContract.Presenter{
             }
         };
             repository.requestGasolinerasCombustible(callBack, IDCCAAs.CANTABRIA.id, tipoCombustible.id);
+    }
+
+    /**
+     * Ordena las gasolineras segun el precio del producto en base al orden pasado
+     * @param orden orden ascendente, descendento o nulo
+     * @param stations lista de gasolineras a ordenar
+     */
+    public void orderStations(int orden, List<Gasolinera> stations) {
+        if (orden == 1) {
+            // Orden ascendente
+            stations.sort(Comparator.comparingDouble(g -> g.getPrecioProducto()));
+        } else if (orden == 0) {
+            // Orden descendente
+            stations.sort((g1, g2) -> Double.compare(
+                    g2.getPrecioProducto(),
+                    g1.getPrecioProducto()
+            ));
+        } else {
+            return; //valor 2 es que no se ha puesto nada
+        }
     }
 }
