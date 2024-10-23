@@ -137,7 +137,7 @@ dependencies {
 
     // Libreria room
     def room_version = "2.6.1"
-    // Cherry
+
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
