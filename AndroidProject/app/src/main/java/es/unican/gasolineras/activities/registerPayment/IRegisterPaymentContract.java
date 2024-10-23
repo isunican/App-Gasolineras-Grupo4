@@ -46,12 +46,15 @@ public interface IRegisterPaymentContract {
 
         public IPagoDAO getPagoDAO();
 
-        public void showErrorDialog(String message, String title);
+
 
         /**
          * The view is requested to open the main activity.
          * Only the Presenter should call this method
          */
         public void showPaymentHistoryActivity();
+        public void showAlertDialog(String message, String title);
+
+        public void showSuccesDialog();
     }
 }
