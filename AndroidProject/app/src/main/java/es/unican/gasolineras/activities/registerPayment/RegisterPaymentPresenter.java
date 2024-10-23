@@ -1,5 +1,7 @@
 package es.unican.gasolineras.activities.registerPayment;
 
+import android.os.Handler;
+
 import java.time.LocalDate;
 
 import es.unican.gasolineras.activities.main.IMainContract;
@@ -23,16 +25,16 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
     public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad){
 
         if (tipoGasolina.isEmpty()) {
-            view.showErrorDialog("Debes seleccionar un tipo de combustible", "Error en el tipo de combustible");
+            view.showAlertDialog("Debes seleccionar un tipo de combustible", "Error en el tipo de combustible");
 
         } else if (nombreGasolinera.isEmpty()) {
-            view.showErrorDialog("Debes introducir un nombre de gasolinera", "Error en el nombre de gasolinera");
+            view.showAlertDialog("Debes introducir un nombre de gasolinera", "Error en el nombre de gasolinera");
 
         } else if (precioPorLitro.isEmpty()) {
-            view.showErrorDialog("Debes introducir un precio", "Error en el precio por litro");
+            view.showAlertDialog("Debes introducir un precio", "Error en el precio por litro");
 
         } else if (cantidad.isEmpty()) {
-            view.showErrorDialog("Debes introducir una cantidad de combustible", "Error en la cantidad");
+            view.showAlertDialog("Debes introducir una cantidad de combustible", "Error en la cantidad");
 
         } else {
 
@@ -49,9 +51,11 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
             IPagoDAO db = view.getPagoDAO();
             db.insertAll(pago);
 
-            //Vuelvo al historial de pagos
-            view.showRegisterHistory();
+            //Muestro mensaje de pago correcto
+            view.showAlertDialog("Pago registrado correctamente", "Pago registrado");
 
+            //Vuelvo al historial de pagos
+            view.showSuccesDialog();
         }
     }
 }
