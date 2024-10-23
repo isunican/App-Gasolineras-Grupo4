@@ -90,8 +90,6 @@ public class CombustiblePresenter implements ICombustibleContract.Presenter{
                     g2.getPrecioProducto(),
                     g1.getPrecioProducto()
             ));
-        } else {
-            return; //valor 2 es que no se ha puesto nada
         }
     }
 }

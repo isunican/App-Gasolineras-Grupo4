@@ -22,7 +22,6 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.details.DetailsView;
-import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.TipoCombustible;
