@@ -48,7 +48,7 @@ public class PagosArrayAdapter extends BaseAdapter {
         // Fecha
         {
             TextView tv = convertView.findViewById(R.id.Fecha);
-            tv.setText(pago.getDate());
+            tv.setText("Fecha: " + pago.getDate());
         }
         // Nombre
         {
@@ -58,22 +58,22 @@ public class PagosArrayAdapter extends BaseAdapter {
         // Tipo combustible
         {
             TextView tv = convertView.findViewById(R.id.TipoCombustible);
-            tv.setText(pago.getFuelType());
+            tv.setText("Combustible: " + pago.getFuelType());
         }
         // Cantidad
         {
             TextView tv = convertView.findViewById(R.id.Cantidad);
-            tv.setText(String.valueOf(pago.getQuantity()));
+            tv.setText("Cantidad: " + String.valueOf(pago.getQuantity()));
         }
         // Importe total
         {
             TextView tv = convertView.findViewById(R.id.ImporteTotal);
-            tv.setText(String.valueOf(pago.getFinalPrice()));
+            tv.setText("Importe: " + String.valueOf(pago.getFinalPrice()));
         }
         // Precio
         {
             TextView tv = convertView.findViewById(R.id.Precio);
-            tv.setText(String.valueOf(pago.pricePerLitre));
+            tv.setText("Precio: " + String.valueOf(pago.pricePerLitre));
         }
         return convertView;
     }
