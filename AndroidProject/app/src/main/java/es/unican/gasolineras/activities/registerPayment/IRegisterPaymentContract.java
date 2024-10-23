@@ -40,6 +40,8 @@ public interface IRegisterPaymentContract {
 
         public IPagoDAO getPagoDAO();
 
-        public void showErrorDialog(String message, String title);
+        public void showAlertDialog(String message, String title);
+
+        public void showSuccesDialog();
     }
 }
