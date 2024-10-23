@@ -74,22 +74,7 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
 
     @Override
     public void showAlertDialog(String message, String title) {
-        // 1. Instantiate an AlertDialog.Builder with its constructor.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // 2. Chain together various setter methods to set the dialog characteristics.
-        builder.setMessage(message)
-                .setTitle(title);
-
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User taps OK button.
-            }
-        });
-
-        // 3. Get the AlertDialog.
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        Utils.showAlertDialog(message, title, this);
     }
 
     @Override
