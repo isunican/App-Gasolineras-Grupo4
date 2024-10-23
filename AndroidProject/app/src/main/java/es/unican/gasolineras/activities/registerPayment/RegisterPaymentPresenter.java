@@ -1,12 +1,8 @@
 package es.unican.gasolineras.activities.registerPayment;
 
-import android.os.Handler;
-
 import java.time.LocalDate;
 
-import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.model.Pago;
-import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presenter{
@@ -50,9 +46,6 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
             //Persito el objeto en la base de datos
             IPagoDAO db = view.getPagoDAO();
             db.insertAll(pago);
-
-            //Muestro mensaje de pago correcto
-            view.showAlertDialog("Pago registrado correctamente", "Pago registrado");
 
             //Vuelvo al historial de pagos
             view.showSuccesDialog();

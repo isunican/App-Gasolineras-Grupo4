@@ -3,6 +3,9 @@ package es.unican.gasolineras.common;
 import static es.unican.gasolineras.repository.GasolinerasService.deserializer;
 
 import android.content.Context;
+import android.content.DialogInterface;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -39,5 +42,24 @@ public class Utils {
                 .fromJson(reader, typeToken);
         List<Gasolinera> gasolineras = response.getGasolineras();
         return gasolineras;
+    }
+
+    public void showAlertDialog(String message, String title, Context context) {
+        // 1. Instantiate an AlertDialog.Builder with its constructor.
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        // 2. Chain together various setter methods to set the dialog characteristics.
+        builder.setMessage(message)
+                .setTitle(title);
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User taps OK button.
+            }
+        });
+
+        // 3. Get the AlertDialog.
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

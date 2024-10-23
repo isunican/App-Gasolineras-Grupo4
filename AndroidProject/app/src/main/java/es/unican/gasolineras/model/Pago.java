@@ -3,6 +3,7 @@ package es.unican.gasolineras.model;
 import androidx.room.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,5 +33,18 @@ public class Pago {
 
     @ColumnInfo(name= "price_per_litre")
     public Double pricePerLitre;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pago)) return false;
+        Pago pago = (Pago) o;
+        return Objects.equals(stationName, pago.stationName) && Objects.equals(date, pago.date) && Objects.equals(fuelType, pago.fuelType) && Objects.equals(quantity, pago.quantity) && Objects.equals(finalPrice, pago.finalPrice) && Objects.equals(pricePerLitre, pago.pricePerLitre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stationName, date, fuelType, quantity, finalPrice, pricePerLitre);
+    }
 
 }
