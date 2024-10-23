@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.combustible.CombustiblePresenter;
 import es.unican.gasolineras.activities.combustible.CombustibleView;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.TipoCombustible;
@@ -21,6 +20,7 @@ public class FiltrosView extends AppCompatActivity implements IFiltrosContract.V
 
     private FiltrosPresenter presenter;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros_gasolinera_view);
@@ -139,10 +139,9 @@ public class FiltrosView extends AppCompatActivity implements IFiltrosContract.V
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void init() {
 
-    }
+    @Override
+    public void init() {}
 
     public void showMainActivity() {
         Intent intent = new Intent(this, MainView.class);

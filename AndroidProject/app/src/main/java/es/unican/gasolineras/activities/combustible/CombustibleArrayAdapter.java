@@ -106,7 +106,6 @@ public class CombustibleArrayAdapter extends BaseAdapter {
         // combustible price
         {
             TextView tvLabel = convertView.findViewById(R.id.tvCombustible);
-            //String label = context.getResources().getString(R.string.gasolina95label);
             tvLabel.setText(String.format("%s:", tipoCombustible));
 
             TextView tv = convertView.findViewById(R.id.tvPrecioCombustible);

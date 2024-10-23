@@ -8,7 +8,6 @@ import android.content.Context;
 
 import java.util.List;
 
-import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;

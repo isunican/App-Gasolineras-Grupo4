@@ -16,11 +16,8 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.model.TipoCombustible;
-import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 import static org.mockito.Mockito.verify;

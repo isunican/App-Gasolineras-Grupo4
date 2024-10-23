@@ -1,14 +1,9 @@
 package es.unican.gasolineras.activities.filtros;
 
-import java.util.List;
-
-import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.model.TipoCombustible;
-import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
- * The Presenter-View contract for the "filtro combustible" activity.
- * The "filtro combustible" activity shows a list of gas stations which sell a specific fuel
+ * The Presenter-View contract for the "filtros" activity.
+ *
  */
 public interface IFiltrosContract {
 

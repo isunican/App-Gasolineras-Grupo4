@@ -1,14 +1,8 @@
 package es.unican.gasolineras.activities.filtros;
 
-import java.util.List;
 
 import es.unican.gasolineras.activities.combustible.CombustibleView;
 import es.unican.gasolineras.activities.combustible.ICombustibleContract;
-import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.model.IDCCAAs;
-import es.unican.gasolineras.model.TipoCombustible;
-import es.unican.gasolineras.repository.ICallBack;
-import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
  * The presenter of the "filtro combustible" activity of the application. It controls {@link CombustibleView}
