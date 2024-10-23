@@ -25,7 +25,7 @@ import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
-@UninstallModules(RepositoriesModule.class)
+@UninstallModules(RepositoriesModule  .class)
 @HiltAndroidTest
 public class ExampleUITest {
 
