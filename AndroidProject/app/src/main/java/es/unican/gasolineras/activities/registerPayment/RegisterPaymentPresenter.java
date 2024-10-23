@@ -1,12 +1,8 @@
 package es.unican.gasolineras.activities.registerPayment;
 
-import android.os.Handler;
-
 import java.time.LocalDate;
 
-import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.model.Pago;
-import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presenter{
