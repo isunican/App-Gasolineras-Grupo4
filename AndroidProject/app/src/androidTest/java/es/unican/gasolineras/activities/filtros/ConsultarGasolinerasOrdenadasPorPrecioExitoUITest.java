@@ -10,9 +10,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static java.util.EnumSet.allOf;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
@@ -85,31 +82,45 @@ public class ConsultarGasolinerasOrdenadasPorPrecioExitoUITest {
     }
 
     @Test
-    public void orderTest() {
+    public void ordenarExitoTest() {
 
-        //Prueba sin ordenar
+        String[] opciones = context.getResources().getStringArray(R.array.opciones_filtro_combustible);
+
+        //Prueba GLP sin ordenar
+        String itemSeleccionado = opciones[4];
+        onView(withId(R.id.spinnerCombustible)).perform(click());
+        onView(withText(itemSeleccionado)).perform(click());
         onView(withId(R.id.btnConfirmar)).perform(click());
+
         //Cambio de interfaz
         //Comprobar el numero de gasolineras
         onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(3)));
         //Primer elemento
         DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraA")));
-        elementoLista1.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("1.00")));
+        elementoLista1.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("1.000")));
+        elementoLista1.onChildView(withId(R.id.tvCombustible)).check(matches(withText("GASES_LICUADOS_DEL_PETROLEO:")));
         //Segundo elemento
         DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
         elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraB")));
-        elementoLista2.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("3.00")));
+        elementoLista2.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("3.000")));
+        elementoLista2.onChildView(withId(R.id.tvCombustible)).check(matches(withText("GASES_LICUADOS_DEL_PETROLEO:")));
         //Tercer elemento
         DataInteraction elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
         elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraC")));
-        elementoLista3.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("2.00")));
+        elementoLista3.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("2.000")));
+        elementoLista3.onChildView(withId(R.id.tvCombustible)).check(matches(withText("GASES_LICUADOS_DEL_PETROLEO:")));
+
 
         //Volver a la vista principal y acceder de nuevo a los filtros
         onView(withId(R.id.menuItemBackArrow)).perform(click());
         onView(withId(R.id.menuItemFiltros)).perform(click());
 
-        //Prueba descendente
+
+        //Prueba GLP descendente
+        itemSeleccionado = opciones[4];
+        onView(withId(R.id.spinnerCombustible)).perform(click());
+        onView(withText(itemSeleccionado)).perform(click());
         onView(withId(R.id.rbDescendente)).perform(click());
         onView(withId(R.id.btnConfirmar)).perform(click());
 
@@ -119,22 +130,28 @@ public class ConsultarGasolinerasOrdenadasPorPrecioExitoUITest {
         //Primer elemento
         elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraB")));
-        elementoLista1.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("3.00")));
+        elementoLista1.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("3.000")));
+        elementoLista1.onChildView(withId(R.id.tvCombustible)).check(matches(withText("GASES_LICUADOS_DEL_PETROLEO:")));
         //Segundo elemento
         elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
         elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraC")));
-        elementoLista2.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("2.00")));
+        elementoLista2.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("2.000")));
+        elementoLista2.onChildView(withId(R.id.tvCombustible)).check(matches(withText("GASES_LICUADOS_DEL_PETROLEO:")));
         //Tercer elemento
         elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
         elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraA")));
-        elementoLista3.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("1.00")));
+        elementoLista3.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("1.000")));
+        elementoLista3.onChildView(withId(R.id.tvCombustible)).check(matches(withText("GASES_LICUADOS_DEL_PETROLEO:")));
 
 
         //Volver a la vista principal y acceder de nuevo a los filtros
         onView(withId(R.id.menuItemBackArrow)).perform(click());
         onView(withId(R.id.menuItemFiltros)).perform(click());
 
-        //Prueba ascendente
+        //Prueba bioetanol ascendente
+        itemSeleccionado = opciones[1];
+        onView(withId(R.id.spinnerCombustible)).perform(click());
+        onView(withText(itemSeleccionado)).perform(click());
         onView(withId(R.id.rbAscendente)).perform(click());
         onView(withId(R.id.btnConfirmar)).perform(click());
 
@@ -144,15 +161,18 @@ public class ConsultarGasolinerasOrdenadasPorPrecioExitoUITest {
         //Primer elemento
         elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraA")));
-        elementoLista1.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("1.00")));
+        elementoLista1.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("1.000")));
+        elementoLista1.onChildView(withId(R.id.tvCombustible)).check(matches(withText("BIOETANOL:")));
         //Segundo elemento
         elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
         elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraC")));
-        elementoLista2.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("2.00")));
+        elementoLista2.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("2.000")));
+        elementoLista2.onChildView(withId(R.id.tvCombustible)).check(matches(withText("BIOETANOL:")));
         //Tercer elemento
         elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
         elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraB")));
-        elementoLista3.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("3.00")));
+        elementoLista3.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("3.000")));
+        elementoLista3.onChildView(withId(R.id.tvCombustible)).check(matches(withText("BIOETANOL:")));
 
     }
 
