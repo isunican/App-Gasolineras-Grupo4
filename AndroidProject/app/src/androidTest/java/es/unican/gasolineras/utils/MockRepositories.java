@@ -7,8 +7,10 @@ import static org.mockito.Mockito.mock;
 import android.content.Context;
 
 import es.unican.gasolineras.common.Utils;
+import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
  * Mock repositories for UI tests.
@@ -31,5 +33,6 @@ public class MockRepositories {
         }).when(mock).requestGasolineras(any(ICallBack.class), any(String.class));
         return mock;
     }
+
 
 }

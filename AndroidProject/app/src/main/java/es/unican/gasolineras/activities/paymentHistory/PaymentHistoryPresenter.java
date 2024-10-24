@@ -2,12 +2,9 @@ package es.unican.gasolineras.activities.paymentHistory;
 
 import android.database.sqlite.SQLiteException;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 
 import es.unican.gasolineras.activities.combustible.ICombustibleContract;
-import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 

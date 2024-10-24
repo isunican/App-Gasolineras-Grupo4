@@ -5,27 +5,21 @@ import es.unican.gasolineras.common.*;
 import android.widget.ListView;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import java.util.List;
-import java.util.Objects;
 
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.main.GasolinerasArrayAdapter;
-import es.unican.gasolineras.activities.main.IMainContract;
-import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DataBase;
@@ -108,6 +102,9 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
      */
     @Override
     public void showPagos(List<Pago> pagos) {
+        if (pagos.isEmpty()) {
+            Toast.makeText(this, "Todavia no hay pagos registrados.\nRegistra tu primer pago", Toast.LENGTH_SHORT).show();
+        }
         ListView list = findViewById(R.id.lvPagos);
         PagosArrayAdapter adapter = new PagosArrayAdapter(this, pagos);
         list.setAdapter(adapter);
