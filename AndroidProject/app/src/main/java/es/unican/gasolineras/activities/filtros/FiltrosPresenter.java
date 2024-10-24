@@ -13,7 +13,7 @@ import es.unican.gasolineras.activities.combustible.ICombustibleContract;
 import es.unican.gasolineras.model.TipoCombustible;
 
 /**
- * The presenter of the "filtro combustible" activity of the application. It controls {@link CombustibleView}
+ * The presenter of the "filtros" activity of the application. It controls {@link FiltrosView}
  */
 public class FiltrosPresenter implements IFiltrosContract.Presenter{
 
