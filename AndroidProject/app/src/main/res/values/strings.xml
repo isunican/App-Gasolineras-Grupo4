@@ -35,6 +35,18 @@
     <string name="historial_pagos">Historial de pagos</string>
     <string name="btn_addPago">+</string>
 
+    <string name="error_tipo_combustible">Debes seleccionar un tipo de combustible</string>
+    <string name="titulo_error_tipo_combustible">Error en el tipo de combustible</string>
+    <string name="error_nombre_gasolinera">Debes introducir un nombre de gasolinera</string>
+    <string name="titulo_error_nombre_gasolinera">Error en el nombre de gasolinera</string>
+    <string name="error_precio_por_litro">Debes introducir un precio</string>
+    <string name="titulo_error_precio_por_litro">Error en el precio por litro</string>
+    <string name="error_cantidad_combustible">Debes introducir una cantidad de combustible</string>
+    <string name="titulo_error_cantidad_combustible">Error en la cantidad</string>
+
+    <string name="succes_reg_pay">El pago se ha registrado de manera correcta en el historial de pagos</string>
+    <string name="title_succes_reg_pay">Registro correcto</string>
+
     <string-array name="opcionesSpinner">
         <item>Biodiesel</item>
         <item>Bioetanol</item>

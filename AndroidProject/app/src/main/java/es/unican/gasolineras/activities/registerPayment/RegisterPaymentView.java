@@ -1,5 +1,6 @@
 package es.unican.gasolineras.activities.registerPayment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
+import es.unican.gasolineras.common.Utils;
 
 public class RegisterPaymentView extends AppCompatActivity implements IRegisterPaymentContract.View{
 
@@ -117,22 +119,7 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
 
     @Override
     public void showAlertDialog(String message, String title) {
-        // 1. Instantiate an AlertDialog.Builder with its constructor.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // 2. Chain together various setter methods to set the dialog characteristics.
-        builder.setMessage(message)
-                .setTitle(title);
-
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User taps OK button.
-            }
-        });
-
-        // 3. Get the AlertDialog.
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        Utils.showAlertDialog(message, title, this);
     }
 
     @Override
@@ -141,8 +128,8 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         // 2. Chain together various setter methods to set the dialog characteristics.
-        builder.setMessage("El pago se ha registrado de manera correcta en el historial de pagos")
-                .setTitle("Registro correcto");
+        builder.setMessage(R.string.succes_reg_pay)
+                .setTitle(R.string.title_succes_reg_pay);
 
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -163,5 +150,10 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
     @Override
     public IPagoDAO getPagoDAO() {
         return db.pagoDAO();
+    }
+
+    @Override
+    public Context getContext() {
+        return this.getApplicationContext();
     }
 }
