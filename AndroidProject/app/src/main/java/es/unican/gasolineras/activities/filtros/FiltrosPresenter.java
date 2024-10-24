@@ -97,6 +97,10 @@ public class FiltrosPresenter implements IFiltrosContract.Presenter{
             case "Hidrogeno":
                 tipoCombustible = TipoCombustible.HIDROGENO;
                 break;
+
+            default:
+                tipoCombustible = TipoCombustible.BIODIESEL;
+                break;
         }
 
         //0-mayor a menor 1-menor a mayor 2-nada
