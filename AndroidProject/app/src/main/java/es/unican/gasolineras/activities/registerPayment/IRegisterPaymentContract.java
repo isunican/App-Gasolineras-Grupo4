@@ -2,7 +2,6 @@ package es.unican.gasolineras.activities.registerPayment;
 
 import android.content.Context;
 
-import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 public interface IRegisterPaymentContract {

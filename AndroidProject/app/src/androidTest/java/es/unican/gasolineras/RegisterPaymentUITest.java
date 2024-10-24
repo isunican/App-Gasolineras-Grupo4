@@ -1,18 +1,15 @@
 package es.unican.gasolineras;
 
-import static androidx.appcompat.graphics.drawable.DrawableContainerCompat.Api21Impl.getResources;
-import static androidx.test.espresso.Espresso.onData;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.anything;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-
-import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
 
@@ -22,16 +19,11 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import org.junit.Rule;
 import org.junit.Test;
 
-import dagger.hilt.android.testing.BindValue;
 import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
-import dagger.hilt.android.testing.UninstallModules;
-import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
-import es.unican.gasolineras.injection.RepositoriesModule;
-import es.unican.gasolineras.repository.IGasolinerasRepository;
 
-@UninstallModules(RepositoriesModule.class)
+
 @HiltAndroidTest
 public class RegisterPaymentUITest {
 
@@ -44,16 +36,48 @@ public class RegisterPaymentUITest {
     // I need the context to access resources, such as the json with test gas stations
     final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
+
     @Test
     public void registerPaymentTest() {
-        onView(withId(R.id.etNombreGasolinera)).perform(typeText("Gasolinera Arrandel"));
-        onView(withId(R.id.editTextNumberDecimal)).perform(typeText("1.54"));
-        onView(withId(R.id.editTextNumberDecimal2)).perform(typeText("30"));
-        String[] opciones = context.getResources().getStringArray(R.array.opcionesSpinner);
-        String itemSeleccionado = opciones[4];
-        onData(withText(itemSeleccionado)).inAdapterView(withId(R.id.spnTipoCombustible)).perform(click());
-
+        //Compruebo caso de error falta nombre gasolinera
         onView(withId(R.id.btnRegistrarPago)).perform(click());
+        onView(withText(R.string.titulo_error_nombre_gasolinera)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText(R.string.error_nombre_gasolinera)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText("Aceptar")).inRoot(isDialog()).check(matches(isDisplayed())).perform(click());
+
+        //Compruebo caso de error falta precio
+        onView(withId(R.id.etNombreGasolinera)).perform(typeText("Gasolinera Arrandel"), closeSoftKeyboard());
+        onView(withId(R.id.btnRegistrarPago)).perform(click());
+        onView(withText(R.string.titulo_error_precio_por_litro)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText(R.string.error_precio_por_litro)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText("Aceptar")).inRoot(isDialog()).check(matches(isDisplayed())).perform(click());
+
+        //Compruebo el caso de error falta cantidad de combustible
+        onView(withId(R.id.editTextNumberDecimal)).perform(typeText("1.54"), closeSoftKeyboard());
+        onView(withId(R.id.btnRegistrarPago)).perform(click());
+        onView(withText(R.string.titulo_error_cantidad_combustible)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText(R.string.error_cantidad_combustible)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText("Aceptar")).inRoot(isDialog()).check(matches(isDisplayed())).perform(click());
+
+        //Compruebo caso de error falta tipo de combustible
+        /*
+        * Este caso de error no es posible implementarlo, esto es debido a que el tipo de combustible se selecciona a traves
+        * de un Spinner el  cual ya tiene todas las opciones bien seleccionadas.
+        * */
+
+        //Comprobacion caso de erro fallo de la base de datos
+        /*
+        * Este caso de error no es posible implementarlo, puesto que no se estan tratando los fallos de la base de datos
+        * al no tratarse no se lanza ningun tipo de mensaje de error al suceder un hipotetico error en la base de datos.
+        * */
+
+        //Compruebo caso de exito
+        onView(withId(R.id.editTextNumberDecimal2)).perform(typeText("30"), closeSoftKeyboard());
+        onView(withId(R.id.btnRegistrarPago)).perform(click());
+        onView(withText(R.string.title_succes_reg_pay)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText(R.string.succes_reg_pay)).inRoot(isDialog()).check(matches(isDisplayed()));
     }
+
+
 
 }
