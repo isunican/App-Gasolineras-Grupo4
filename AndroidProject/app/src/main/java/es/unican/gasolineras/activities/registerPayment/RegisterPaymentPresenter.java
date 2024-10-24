@@ -2,6 +2,7 @@ package es.unican.gasolineras.activities.registerPayment;
 
 import java.time.LocalDate;
 
+import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
@@ -18,17 +19,25 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
     public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad){
 
         if (tipoGasolina.isEmpty()) {
-            view.showAlertDialog("Debes seleccionar un tipo de combustible", "Error en el tipo de combustible");
-
+            view.showAlertDialog(
+                    view.getContext().getString(R.string.error_tipo_combustible),
+                    view.getContext().getString(R.string.titulo_error_tipo_combustible)
+            );
         } else if (nombreGasolinera.isEmpty()) {
-            view.showAlertDialog("Debes introducir un nombre de gasolinera", "Error en el nombre de gasolinera");
-
+            view.showAlertDialog(
+                    view.getContext().getString(R.string.error_nombre_gasolinera),
+                    view.getContext().getString(R.string.titulo_error_nombre_gasolinera)
+            );
         } else if (precioPorLitro.isEmpty()) {
-            view.showAlertDialog("Debes introducir un precio", "Error en el precio por litro");
-
+            view.showAlertDialog(
+                    view.getContext().getString(R.string.error_precio_por_litro),
+                    view.getContext().getString(R.string.titulo_error_precio_por_litro)
+            );
         } else if (cantidad.isEmpty()) {
-            view.showAlertDialog("Debes introducir una cantidad de combustible", "Error en la cantidad");
-
+            view.showAlertDialog(
+                    view.getContext().getString(R.string.error_cantidad_combustible),
+                    view.getContext().getString(R.string.titulo_error_cantidad_combustible)
+            );
         } else {
 
             //Creo el objeto de tipo Pago

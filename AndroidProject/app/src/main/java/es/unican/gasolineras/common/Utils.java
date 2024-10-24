@@ -44,7 +44,7 @@ public class Utils {
         return gasolineras;
     }
 
-    public void showAlertDialog(String message, String title, Context context) {
+    public static void showAlertDialog(String message, String title, Context context) {
         // 1. Instantiate an AlertDialog.Builder with its constructor.
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
