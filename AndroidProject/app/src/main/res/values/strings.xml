@@ -27,7 +27,7 @@
     </string-array>
 
     <string name ="elige_combustible">Elige el tipo de Combustible</string>
-    <string name ="elige_orden">Elige el orden de Precio</string>
+    <string name ="elige_orden">Elige el orden de precio</string>
     <string name ="orden_descendente">Orden Descendente</string>
     <string name ="orden_ascendente">Orden Ascendente</string>
     <string name ="confirmar">Confirmar</string>
@@ -36,20 +36,20 @@
     <string name="btn_addPago">+</string>
 
     <string-array name="opcionesSpinner">
-        <item>Precio Biodiesel</item>
-        <item>Precio Bioetanol</item>
-        <item>Precio Gas Natural Comprimido</item>
-        <item>Precio Gas Natural Licuado</item>
-        <item>Precio Gases licuados del petróleo</item>
-        <item>Precio Gasoleo A</item>
-        <item>Precio Gasoleo B</item>
-        <item>Precio Gasoleo Premium</item>
-        <item>Precio Gasolina 95 E10</item>
-        <item>Precio Gasolina 95 E5</item>
-        <item>Precio Gasolina 95 E5 Premium</item>
-        <item>Precio Gasolina 98 E10</item>
-        <item>Precio Gasolina 98 E5</item>
-        <item>Precio Hidrogeno</item>
+        <item>Biodiesel</item>
+        <item>Bioetanol</item>
+        <item>Gas Natural Comprimido</item>
+        <item>Gas Natural Licuado</item>
+        <item>Gases licuados del petróleo</item>
+        <item>Gasoleo A</item>
+        <item>Gasoleo B</item>
+        <item>Gasoleo Premium</item>
+        <item>Gasolina 95 E10</item>
+        <item>Gasolina 95 E5</item>
+        <item>Gasolina 95 E5 Premium</item>
+        <item>Gasolina 98 E10</item>
+        <item>Gasolina 98 E5</item>
+        <item>Hidrogeno</item>
     </string-array>
 
 

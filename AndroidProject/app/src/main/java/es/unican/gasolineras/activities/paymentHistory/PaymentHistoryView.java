@@ -1,7 +1,7 @@
 package es.unican.gasolineras.activities.paymentHistory;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import es.unican.gasolineras.common.*;
 import android.widget.ListView;
 
 import android.content.Intent;
@@ -121,7 +121,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
 
     @Override
     public void showErrorBD(){
-
+        Utils.showAlertDialog("Error en el acceso a la base de datos","Error base de datos", this);
     }
 
 
