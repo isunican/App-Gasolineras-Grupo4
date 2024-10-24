@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Pago;
 
 /** The list of gas stations to render */

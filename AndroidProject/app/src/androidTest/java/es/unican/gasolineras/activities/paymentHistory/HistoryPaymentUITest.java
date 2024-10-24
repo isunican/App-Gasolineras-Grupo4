@@ -1,49 +1,41 @@
-package es.unican.gasolineras;
+package es.unican.gasolineras.activities.paymentHistory;
+import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.*;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.Espresso.pressBackUnconditionally;
 import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
 import static org.hamcrest.CoreMatchers.anything;
-import static org.junit.Assert.assertEquals;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
 import android.os.SystemClock;
+import android.view.View;
 
-import androidx.room.Database;
 import androidx.room.Room;
-import androidx.test.core.app.ApplicationProvider;
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.DataInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import dagger.hilt.android.testing.BindValue;
 import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
-import es.unican.gasolineras.activities.main.MainView;
-import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -60,22 +52,42 @@ public class HistoryPaymentUITest {
     // I need the context to access resources, such as the json with test gas stations
     final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-    // Mock repository that provides data from a JSON file instead of downloading it from the internet.
     @BindValue
     final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
 
     private AppDatabase db;
     private IPagoDAO pagoDAO;
     private Pago p1,p2,p3,p4;
+    private View decorView;
 
     @Before
     public void setUp(){
+        // Create the database
         db = Room.databaseBuilder(context,
                         AppDatabase.class, "payments")
                 .allowMainThreadQueries()
                 .build();
         pagoDAO = db.pagoDAO();
+    }
 
+    /**
+     * This test checks if the list of payments is empty.
+     */
+    @Test
+    public void showHistoryPaymentsNoPaymentsTest() {
+
+        // Checks that the list of payments is empty because 0 childs and it is visible to check
+        onView(withId(R.id.lvPagos)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
+        SystemClock.sleep(5000);
+
+    }
+
+    /**
+     * This test checks if the shown view has all the payments that we previously introduce in the database.
+     */
+    @Test
+    public void showHistoryPaymentsWithPaymentsTest(){
+        // Insert of payments
         // First payment
         p1 = new Pago();
         p1.setStationName("Gasolinera Arrandel");
@@ -116,25 +128,14 @@ public class HistoryPaymentUITest {
         p4.setFinalPrice(48.28);
         pagoDAO.insertAll(p4);
 
+        // Need it for update the view after insert the payments
+        pressBackUnconditionally();
+        activityRule.getScenario().close();
+        ActivityScenario.launch(PaymentHistoryView.class);
+
         // Wait for 5 seconds
         SystemClock.sleep(5000);
 
-    }
-
-    /**
-     * This test checks if the list of payments is empty.
-     */
-    @Test
-    public void showHistoryPaymentsNoPaymentsTest() {
-        // Checks that the list of payments is empty because 0 childs and it is visible to check
-        onView(withId(R.id.lvPagos)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
-    }
-
-    /**
-     * This test checks if the shown view has all the payments that we previously introduce in the database.
-     */
-    @Test
-    public void showHistoryPaymentsWithPaymentsTest(){
         // Check if the listView has 4 elements
         onView(withId(R.id.lvPagos)).check(matches(isDisplayed())).check(matches(hasChildCount(4)));
 
@@ -176,8 +177,6 @@ public class HistoryPaymentUITest {
         pago4.onChildView(withId(R.id.TipoCombustible)).check(matches(withText("Combustible: Bioetanol")));
         pago4.onChildView(withId(R.id.ImporteTotal)).check(matches(withText("Importe: 24.8")));
         pago4.onChildView(withId(R.id.Cantidad)).check(matches(withText("Cantidad: 20.0")));
-
-
 
     }
 }

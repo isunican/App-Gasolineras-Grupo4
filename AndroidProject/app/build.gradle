@@ -73,7 +73,7 @@ android {
         versionName "1.0"
 
         // I need a custom test runner to support Hilt
-        // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "es.unican.gasolineras.utils.CustomTestRunner"
     }
 
@@ -148,7 +148,6 @@ dependencies {
 
     // Espresso
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    androidTestImplementation 'androidx.test:runner:1.6.1'
-    androidTestImplementation 'androidx.test:rules:1.6.1'
+
 
 }

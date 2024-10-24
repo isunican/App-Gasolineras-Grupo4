@@ -1,4 +1,4 @@
-package es.unican.gasolineras;
+package es.unican.gasolineras.activities.paymentHistory;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -13,17 +13,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryPresenter;
-import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 @RunWith(RobolectricTestRunner.class)
-public class HistoryPaymentPresenterInitTest {
+public class HistoryPaymentPresenterTest {
 
     @Mock
     PaymentHistoryView mockPaymentView;
