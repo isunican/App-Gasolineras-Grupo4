@@ -19,7 +19,7 @@ public final class DataBase {
     public static AppDatabase getAppDatabase(Context context){
         if(basededatos == null){
             basededatos = Room.databaseBuilder(context,
-                            AppDatabase.class, "database-name")
+                            AppDatabase.class, "payments")
                     .allowMainThreadQueries()
                     .build();
         }
