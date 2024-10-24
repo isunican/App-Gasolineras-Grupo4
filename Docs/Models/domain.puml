@@ -1,5 +1,4 @@
 @startuml
-
 hide empty members
 
 class Gasolinera {
@@ -8,16 +7,54 @@ class Gasolinera {
     - String cp
     - String direccion
     - String municipio
+    - String horario
     - double gasoleoA
     - double gasolina95E5
+    - double precioProducto
 }
 
 class GasolinerasResponse {
     - String fecha
     - String nota
+    - List<Gasolinera> gasolineras
     - String consulta
 }
 
-GasolinerasResponse *-- "*" Gasolinera : gasolineras
+class Pago {
+    - int id
+    - String stationName
+    - String date
+    - String fuelType
+    - double quantity
+    - double finalPrice
+    - pricePerLitre 
+}
 
+enum IDCCAAs {
+    CANTABRIA
+    + String id
+}
+
+enum TipoCombustible {
+     GASOLINA_95_E5
+     GASOLINA_95_E10
+     GASOLINA_95_E5_PREMIUM
+     GASOLINA_98_E5
+     GASOLINA_98_E10
+     GASOLEO_A_HABITUAL
+     GASOLEO_PREMIUM
+     GASOLEO_B
+     GASOLEO_C
+     BIOETANOL
+     BIODIESEL
+     GASES_LICUADOS_DEL_PETROLEO
+     GAS_NATURAL_COMPRIMIDO
+     GAS_NATURAL_LICUADO
+     HIDROGENO
+    + String id
+    - TipoCombustible
+}
+
+
+GasolinerasResponse *-- "*" Gasolinera : gasolineras
 @enduml
