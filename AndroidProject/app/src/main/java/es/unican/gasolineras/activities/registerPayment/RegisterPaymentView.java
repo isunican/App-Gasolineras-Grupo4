@@ -7,25 +7,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
 
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.activities.paymentHistory.IPaymentHistoryContract;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
+import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
-import es.unican.gasolineras.common.Utils;
 
 public class RegisterPaymentView extends AppCompatActivity implements IRegisterPaymentContract.View{
 

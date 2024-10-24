@@ -73,7 +73,7 @@ android {
         versionName "1.0"
 
         // I need a custom test runner to support Hilt
-        // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "es.unican.gasolineras.utils.CustomTestRunner"
     }
 
