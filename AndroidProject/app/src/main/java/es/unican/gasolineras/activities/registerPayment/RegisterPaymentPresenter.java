@@ -40,7 +40,7 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
             pago.stationName = nombreGasolinera;
             pago.pricePerLitre = Double.parseDouble(precioPorLitro);
             pago.quantity = Double.parseDouble(cantidad);
-            pago.finalPrice = pago.pricePerLitre * pago.quantity;
+            pago.finalPrice = Math.round(pago.pricePerLitre * pago.quantity * 100.0) / 100.0;
             pago.date = LocalDate.now().toString();
 
             //Persito el objeto en la base de datos

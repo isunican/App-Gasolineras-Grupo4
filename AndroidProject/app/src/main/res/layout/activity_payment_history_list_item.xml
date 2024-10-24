@@ -19,9 +19,8 @@
         android:id="@+id/Estacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Fecha"
         app:layout_constraintTop_toBottomOf="@+id/Fecha"
         tools:text="Estacion" />
 
@@ -38,9 +37,8 @@
         android:id="@+id/TipoCombustible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Estacion"
         app:layout_constraintTop_toBottomOf="@+id/Estacion"
         tools:text="Tipo de Combustible" />
 
@@ -49,8 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="64dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Cantidad"
         app:layout_constraintTop_toBottomOf="@+id/Cantidad"
         tools:text="Importe total" />
 
@@ -58,8 +55,9 @@
         android:id="@+id/Cantidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/ImporteTotal"
+        app:layout_constraintStart_toEndOf="@+id/Fecha"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Cantidad" />
 </androidx.constraintlayout.widget.ConstraintLayout>
