@@ -1,15 +1,33 @@
-@startuml clases
-
+@startuml
 hide empty members
 skinparam linetype polyline
 skinparam arrowLollipopColor #ADD1B2
 
 MainView -right(0- MainPresenter : IMainContract.Presenter
 MainView -right0)- MainPresenter : IMainContract.View
-MainView -up..-> InfoView : <<use>>
-MainView -down..> DetailsView : <<use>>
 MainPresenter -right(0- GasolinerasRepository : IGasolinerasRepository
+MainView -left..-> InfoView : <<use>>
+MainView -left..-> DetailsView : <<use>>
+MainView -down..-> FiltrosView : <<use>>
+MainView -down..-> CombustibleView : <<use>>
+MainView -up..-> PaymentHistoryView : <<use>>
+MainView -up..-> RegisterPaymentView: <<use>>
 
+
+FiltrosView -right(0- FiltrosPresenter: IFiltrosContract.Presenter
+FiltrosView -right0)- FiltrosPresenter : IFiltrosContract.View
+
+CombustibleView -right(0- CombustiblePresenter: ICombustibleContract.Presenter
+CombustibleView -right0)- CombustiblePresenter : ICombustibleContract.View
+CombustiblePresenter -right(0- GasolinerasRepository : IGasolinerasRepository
+
+
+PaymentHistoryView -right(0- PaymentHistoryPresenter: IPaymentHistoryContract.Presenter
+PaymentHistoryView-right0)- PaymentHistoryPresenter : IPaymentHistoryContract.View
+PaymentHistoryPresenter -right(0- LibreriaRoom: IPagoDAO 
+
+RegisterPaymentView-right(0- RegisterPaymentPresenter: IRegisterPayment.Presenter
+RegisterPaymentView-right0)- RegisterPaymentPresenter : IRegisterPayment.View
 
 class MainPresenter {
     -load()
@@ -23,12 +41,16 @@ interface IMainContract#View {
     + showLoadError()
     + showStationDetails(Gasolinera station)
     + showInfoActivity()
+    + showHistoryActivity()
+    + howFiltrosActivity()
 }
 
 interface IMainContract#Presenter {
     + init(View view)
     + onStationClicked(Gasolinera station)
     + onMenuInfoClicked()
+    + onMenuHistoryClicked()
+    + onMenuFiltrosClicked()
 }
 
 interface IGasolinerasRepository {
@@ -40,5 +62,64 @@ interface ICallBack {
     + onFailure(Throwable e)
 }
 
+interface IFiltrosContract#View {
+    + showMainActivity()
+    + lanzarBusquedaConFiltros()
+}
 
+interface IFiltrosContract#Presenter {
+    + init(View view)
+    + onMenuBackArrowClick()
+    + onButtonConfirmarClick()
+    + seleccionarFiltros(Spinner spinner, RadioButton rbAscendente, RadioButton rbDescendente, Intent intent)
+}
+
+interface ICombustileContract#View {
+    + init()
+    + getGasolinerasRepository()
+    + showStations(List<Gasolinera> stations)
+    + showLoadCorrect(int stations)
+    + showLoadError()
+    + showStationDetails(Gasolinera station)
+    + showMainActivity()
+}
+
+interface ICombustileContract#Presenter {
+    + init(View view, TipoCombustible tipoCombustible)
+    + onStationClicked(Gasolinera station)
+    + onMenuBackArrowClick()
+}
+
+interface IPaymentHistoryContract#View {
+    + init()
+    + getPagoDAO()
+    + showPagos(List<Pagos> pagos)
+    + showMainActivity()
+    + showErrorBD()
+}
+
+interface IPaymentHistoryContract#Presenter {
+    + init(View view)
+    + onMenuBackArrowClick()
+}
+
+interface IPagoDAO {
+    + getAll()
+    + insertAll()
+}
+
+interface IRegisterPaymentContract#View{
+    + init()
+    + showRegisterHistory()
+    + getPagoDAO()
+    + showPaymentHistoryActivity()
+    + showAlertDialog(String message, String title)
+    + showSuccesDialog()
+}
+
+interface IRegisterPaymentContract#Presneter{
+    + init(View view)
+    + onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad)
+    + onMenuBackArrowClick()
+}
 @enduml

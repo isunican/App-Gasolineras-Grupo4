@@ -60,10 +60,11 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
         //type of fuel
         String tipoCombustibleStr = getIntent().getStringExtra("tipoCombustible");
         tipoCombustible = TipoCombustible.valueOf(tipoCombustibleStr);
-        presenter.init(this, tipoCombustible);
 
         String orderStr = getIntent().getStringExtra("order");
         order = Integer.parseInt(orderStr);
+
+        presenter.init(this, tipoCombustible);
     }
 
     /**
