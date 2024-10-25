@@ -1,4 +1,4 @@
-package es.unican.gasolineras;
+package es.unican.gasolineras.activities.registerPayment;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
@@ -13,8 +13,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.time.LocalDate;
 
-import es.unican.gasolineras.activities.registerPayment.RegisterPaymentPresenter;
-import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IPagoDAO;

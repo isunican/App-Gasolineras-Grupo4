@@ -1,4 +1,4 @@
-package es.unican.gasolineras;
+package es.unican.gasolineras.activities.registerPayment;
 
 
 import static androidx.test.espresso.Espresso.onView;
@@ -13,6 +13,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.content.Context;
 
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -21,7 +22,7 @@ import org.junit.Test;
 
 import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
-import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
+import es.unican.gasolineras.R;
 
 
 @HiltAndroidTest
@@ -40,7 +41,7 @@ public class RegisterPaymentUITest {
     @Test
     public void registerPaymentTest() {
         //Compruebo caso de error falta nombre gasolinera
-        onView(withId(R.id.btnRegistrarPago)).perform(click());
+        onView(ViewMatchers.withId(R.id.btnRegistrarPago)).perform(click());
         onView(withText(R.string.titulo_error_nombre_gasolinera)).inRoot(isDialog()).check(matches(isDisplayed()));
         onView(withText(R.string.error_nombre_gasolinera)).inRoot(isDialog()).check(matches(isDisplayed()));
         onView(withText("Aceptar")).inRoot(isDialog()).check(matches(isDisplayed())).perform(click());
