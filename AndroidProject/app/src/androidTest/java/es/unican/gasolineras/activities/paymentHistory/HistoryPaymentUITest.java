@@ -39,6 +39,8 @@ import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
+/** TEST REALIZADO POR
+ * ALEJANDRO ACEBO**/
 @UninstallModules(RepositoriesModule  .class)
 @HiltAndroidTest
 public class HistoryPaymentUITest {

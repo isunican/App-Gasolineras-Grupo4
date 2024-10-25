@@ -19,6 +19,8 @@ import java.util.LinkedList;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
+/** TEST REALIZADO POR
+ * ALEJANDRO ACEBO**/
 @RunWith(RobolectricTestRunner.class)
 public class HistoryPaymentPresenterTest {
 
