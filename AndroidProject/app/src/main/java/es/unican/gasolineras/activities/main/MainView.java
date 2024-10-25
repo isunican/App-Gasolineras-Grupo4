@@ -20,8 +20,10 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.activities.filtros.FiltrosView;
+import es.unican.gasolineras.activities.info.InfoView;
+import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -46,12 +48,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // The default theme does not include a toolbar.
         // In this app the toolbar is explicitly declared in the layout
         // Set this toolbar as the activity ActionBar
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarRegister);
         setSupportActionBar(toolbar);
 
         // instantiate presenter and launch initial business logic
         presenter = new MainPresenter();
         presenter.init(this);
+
     }
 
     /**
@@ -78,6 +81,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         int itemId = item.getItemId();
         if (itemId == R.id.menuItemInfo) {
             presenter.onMenuInfoClicked();
+            return true;
+        } else if (itemId == R.id.menuItemHistorialPagos) {
+            presenter.onMenuHistoryClicked();
+            return true;
+        } else if (itemId == R.id.menuItemFiltros) {
+            presenter.onMenuFiltrosClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -152,4 +161,23 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Intent intent = new Intent(this, InfoView.class);
         startActivity(intent);
     }
+
+    /**
+     * @see IMainContract.View#showHistoryActivity()
+     */
+    @Override
+    public void showHistoryActivity() {
+        Intent intent = new Intent(this, PaymentHistoryView.class);
+        startActivity(intent);
+    }
+
+    /**
+     * @see IMainContract.View#showFiltrosActivity()
+     */
+    @Override
+    public void showFiltrosActivity() {
+        Intent intent = new Intent(this, FiltrosView.class);
+        startActivity(intent);
+    }
+
 }

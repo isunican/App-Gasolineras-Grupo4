@@ -6,19 +6,14 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import org.parceler.Parcels;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
-import lombok.ToString;
 
 /**
  * View that shows the details of one gas station. Since this view does not have business logic,
@@ -41,7 +36,7 @@ public class DetailsView extends AppCompatActivity {
         // The default theme does not include a toolbar.
         // In this app the toolbar is explicitly declared in the layout
         // Set this toolbar as the activity ActionBar
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarRegister);
         setSupportActionBar(toolbar);
         ActionBar bar = getSupportActionBar();
         assert bar != null;  // to avoid warning in the line below

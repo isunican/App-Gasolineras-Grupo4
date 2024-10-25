@@ -44,6 +44,24 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
+     * @see IMainContract.Presenter#onMenuHistoryClicked()
+     */
+    @Override
+    public void onMenuHistoryClicked(){
+        view.showHistoryActivity();
+    }
+
+
+    /**
+     * @see IMainContract.Presenter#onMenuFiltrosClicked()
+     */
+    @Override
+    public void onMenuFiltrosClicked(){
+        view.showFiltrosActivity();
+    }
+
+
+    /**
      * Loads the gas stations from the repository, and sends them to the view
      */
     private void load() {
@@ -63,7 +81,6 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-
         repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
     }
 }

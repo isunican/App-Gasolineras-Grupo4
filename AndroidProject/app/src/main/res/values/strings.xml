@@ -7,4 +7,62 @@
     <string name="loadCorrect">Se han cargado %d gasolineras</string>
     <string name="loadError">Ha habido un error cargando las gasolineras</string>
     <string name="info_text">Aplicación creada para el Proyecto Integrado Curso 2024-2025</string>
+
+
+    <string-array name="opciones_filtro_combustible">
+        <item>Biodiesel</item>
+        <item>Bioetanol</item>
+        <item>Gas Natural Comprimido</item>
+        <item>Gas Natural Licuado</item>
+        <item>Gases licuados del petróleo</item>
+        <item>Gasoleo A</item>
+        <item>Gasoleo B</item>
+        <item>Gasoleo Premium</item>
+        <item>Gasolina 95 E10</item>
+        <item>Gasolina 95 E5</item>
+        <item>Gasolina 95 E5 Premium</item>
+        <item>Gasolina 98 E10</item>
+        <item>Gasolina 98 E5</item>
+        <item>Hidrogeno</item>
+    </string-array>
+
+    <string name ="elige_combustible">Elige el tipo de Combustible</string>
+    <string name ="elige_orden">Elige el orden de precio</string>
+    <string name ="orden_descendente">Orden Descendente</string>
+    <string name ="orden_ascendente">Orden Ascendente</string>
+    <string name ="confirmar">Confirmar</string>
+
+    <string name="historial_pagos">Historial de pagos</string>
+    <string name="btn_addPago">+</string>
+
+    <string name="error_tipo_combustible">Debes seleccionar un tipo de combustible</string>
+    <string name="titulo_error_tipo_combustible">Error en el tipo de combustible</string>
+    <string name="error_nombre_gasolinera">Debes introducir un nombre de gasolinera</string>
+    <string name="titulo_error_nombre_gasolinera">Error en el nombre de gasolinera</string>
+    <string name="error_precio_por_litro">Debes introducir un precio</string>
+    <string name="titulo_error_precio_por_litro">Error en el precio por litro</string>
+    <string name="error_cantidad_combustible">Debes introducir una cantidad de combustible</string>
+    <string name="titulo_error_cantidad_combustible">Error en la cantidad</string>
+
+    <string name="succes_reg_pay">El pago se ha registrado de manera correcta en el historial de pagos</string>
+    <string name="title_succes_reg_pay">Registro correcto</string>
+
+    <string-array name="opcionesSpinner">
+        <item>Biodiesel</item>
+        <item>Bioetanol</item>
+        <item>Gas Natural Comprimido</item>
+        <item>Gas Natural Licuado</item>
+        <item>Gases licuados del petróleo</item>
+        <item>Gasoleo A</item>
+        <item>Gasoleo B</item>
+        <item>Gasoleo Premium</item>
+        <item>Gasolina 95 E10</item>
+        <item>Gasolina 95 E5</item>
+        <item>Gasolina 95 E5 Premium</item>
+        <item>Gasolina 98 E10</item>
+        <item>Gasolina 98 E5</item>
+        <item>Hidrogeno</item>
+    </string-array>
+
+
 </resources>

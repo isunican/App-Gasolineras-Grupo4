@@ -1,14 +1,11 @@
 package es.unican.gasolineras.activities.main;
 
-import static java.util.Collections.emptyList;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -104,11 +101,11 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
 
         // gasolina 95 price
         {
-            TextView tvLabel = convertView.findViewById(R.id.tv95Label);
+            TextView tvLabel = convertView.findViewById(R.id.tvCombustible);
             String label = context.getResources().getString(R.string.gasolina95label);
             tvLabel.setText(String.format("%s:", label));
 
-            TextView tv = convertView.findViewById(R.id.tv95);
+            TextView tv = convertView.findViewById(R.id.tvPrecioCombustible);
             tv.setText(String.valueOf(gasolinera.getGasolina95E5()));
         }
 

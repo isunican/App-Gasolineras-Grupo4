@@ -73,7 +73,7 @@ android {
         versionName "1.0"
 
         // I need a custom test runner to support Hilt
-        // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "es.unican.gasolineras.utils.CustomTestRunner"
     }
 
@@ -98,6 +98,7 @@ dependencies {
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
+    implementation libs.room.common
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -133,4 +134,20 @@ dependencies {
 
     // Roboelectric (to get a proper Context object in unit tests)
     testImplementation libs.roboelectric
+
+    // Libreria room
+    def room_version = "2.6.1"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // Mockito
+    def mockito_version= ' latest.release '
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+
+    // Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+
+
 }

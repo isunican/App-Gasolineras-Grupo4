@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import java.util.Date;
+import java.util.Objects;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,11 +34,30 @@ public class Gasolinera {
 
     @SerializedName("Precio Gasoleo A")             protected double gasoleoA;
     @SerializedName("Precio Gasolina 95 E5")        protected double gasolina95E5;
+
+    @SerializedName("PrecioProducto")               protected double precioProducto;
+
+
     public String getPrecioSumario() {
         double precioCalculado = (gasoleoA + gasolina95E5 * 2) / 3;
 
         return String.format("%.2f", precioCalculado);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Gasolinera other = (Gasolinera) obj;
+        return Objects.equals(id, other.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }

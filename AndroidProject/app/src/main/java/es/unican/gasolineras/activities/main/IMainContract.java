@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
  * The Presenter-View contract for the Main activity.
@@ -36,6 +37,18 @@ public interface IMainContract {
          * Only the View should call this method
          */
         public void onMenuInfoClicked();
+
+        /**
+         * The presenter is informed that the Payment History item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuHistoryClicked();
+
+        /**
+         * The presenter is informed that the filtros item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuFiltrosClicked();
 
     }
 
@@ -97,6 +110,20 @@ public interface IMainContract {
          * Only the Presenter should call this method
          */
         public void showInfoActivity();
+
+
+        /**
+         * The view is requested to open the payment history activity.
+         * Only the Presenter should call this method
+         */
+        public void showHistoryActivity();
+
+        /**
+         * The view is requested to open the filtros activity.
+         * Only the Presenter should call this method
+         */
+        public void showFiltrosActivity();
+
 
     }
 }
