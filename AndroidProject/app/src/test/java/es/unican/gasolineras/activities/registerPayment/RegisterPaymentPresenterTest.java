@@ -4,6 +4,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +39,8 @@ public class RegisterPaymentPresenterTest {
 
         sut = new RegisterPaymentPresenter();
 
+        Context context = ApplicationProvider.getApplicationContext(); 
+        when(viewMock.getContext()).thenReturn(context);
         when(viewMock.getPagoDAO()).thenReturn(pagoDAOmock);
     }
 
