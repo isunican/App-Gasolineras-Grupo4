@@ -34,7 +34,7 @@
         <!--
         -->
         <activity
-            android:name=".activities.main.MainView"
+            android:name=".activities.registerDiscount.RegisterDiscountView"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

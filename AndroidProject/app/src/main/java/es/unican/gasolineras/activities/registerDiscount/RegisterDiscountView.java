@@ -30,7 +30,7 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
     @Override
     public void init() {
         //Setting the content view
-        setContentView(null); //TODO cuando este la interfaz creada
+        setContentView(R.layout.activity_register_discount); //TODO cuando este la interfaz creada
         //Creation of the presenter
         presenter = new RegisterDiscountPresenter();
         presenter.init(this);
