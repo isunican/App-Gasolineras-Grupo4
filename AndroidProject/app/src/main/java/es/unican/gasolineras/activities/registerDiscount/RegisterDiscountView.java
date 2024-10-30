@@ -7,6 +7,7 @@ import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -17,6 +18,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.common.Utils;
@@ -59,6 +63,9 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         //Inicializar el calendario
         initCalendarExpirationDate();
 
+        //Inicializar el spinner
+        initSpinnerCompany();
+
         //Boton de registro
         Button btnCreate = findViewById(R.id.btnCreate);
         btnCreate.setOnClickListener(onClickListener -> {
@@ -70,6 +77,30 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
             String active = ((CheckBox) findViewById(R.id.chkActive)).isChecked() ? "true" : "false";
             presenter.onRegisterDiscountClicked(name,company,discountType,quantity,expirationDate,active);
         });
+    }
+
+    private void initSpinnerCompany() {
+        // Busca el spinner por la id
+        Spinner spinner = findViewById(R.id.spnCompany);
+
+        Set<String> nombresMarcas = Utils.obtenerRotulosUnicos(getResources().openRawResource(R.raw.gasolineras_ccaa_06));
+
+        // Convertir el Set a una lista
+        ArrayList<String> rotulosList = new ArrayList<>(nombresMarcas);
+        rotulosList.sort(String::compareToIgnoreCase);
+
+        // Crear un ArrayAdapter usando la lista y el diseño predeterminado para el Spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item, // Diseño predeterminado para los elementos del Spinner
+                rotulosList
+        );
+
+        // Configurar el diseño desplegable para el Spinner
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Establecer el adaptador en el Spinner
+        spinner.setAdapter(adapter);
     }
 
     private void initCalendarExpirationDate(){
