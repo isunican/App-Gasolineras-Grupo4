@@ -3,13 +3,19 @@ package es.unican.gasolineras.activities.registerDiscount;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import es.unican.gasolineras.model.Descuento;
+import es.unican.gasolineras.repository.IDescuentoDAO;
+
 public class RegisterDiscountPresenter implements IRegisterDiscountContract.Presenter {
 
     private IRegisterDiscountContract.View view;
 
+    public IDescuentoDAO db;
+
     @Override
     public void init(IRegisterDiscountContract.View view) {
         this.view = view;
+        this.db = view.getDescuentoDAO();
     }
 
     @Override
@@ -32,39 +38,61 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
             if (date.isBefore(LocalDate.now())) {
                 view.showAlertDialog("La fecha de expiración no puede ser anterior a la fecha actual", "Error");
             } else {
-                //TODO comprobar que el nombre no esta repetido, hace falta la BD
+                //comprobar que el nombre no esta repetido
+                if (db.findByName(name) == null) {
+                    Descuento descuento = new Descuento();
+                    descuento.discountName = name;
+                    descuento.company = company;
+                    descuento.discountType = discountType;
+                    descuento.expiranceDate = expirationDate;
+                    if (active.equals("true")) {
+                        descuento.discountActive = true;
+                    } else if (active.equals("false")) {
+                        descuento.discountActive = false;
+                    }
 
-                //Comprobamos los errores en descuento
-                double discount = 0;
-                if (discountType.equals("%")) {
-                    //Comprobamos que la cantidad sea un número
-                    try {
-                        discount = Double.parseDouble(quantity);
-                    } catch (NumberFormatException e) {
-                        view.showAlertDialog("El porcentaje debe ser un número", "Error");
+                    //Comprobamos los errores en descuento
+                    double discount = 0;
+                    if (discountType.equals("%")) {
+                        //Comprobamos que la cantidad sea un número
+                        try {
+                            discount = Double.parseDouble(quantity);
+                            descuento.quantityDiscount = discount;
+                        } catch (NumberFormatException e) {
+                            view.showAlertDialog("El porcentaje debe ser un número", "Error");
+                        }
+                        //Comprobamos que la cantidad esté entre 0 y 100
+                        if (discount < 0 || discount > 100) {
+                            view.showAlertDialog("El porcentaje debe estar entre 0 y 100", "Error");
+                        } else {
+                            view.showSuccesDialog();
+                            //guardar los datos en la base de datos
+                            db.insertAll(descuento);
+                        }
+
+                    } else if (discountType.equals("€/l")) {
+                        //Comprobamos que la cantidad sea un número
+                        try {
+                            discount = Double.parseDouble(quantity);
+                            descuento.quantityDiscount = discount;
+                        } catch (NumberFormatException e) {
+                            view.showAlertDialog("La cantidad fija debe ser un número", "Error");
+                        }
+                        //Comprobamos que es mayor que 0
+                        if (discount <= 0) {
+                            view.showAlertDialog("La cantidad fija debe ser mayor que 0", "Error");
+                        } else {
+                            view.showSuccesDialog();
+                            //guardar los datos en la base de datos
+                            db.insertAll(descuento);
+                        }
+
                     }
-                    //Comprobamos que la cantidad esté entre 0 y 100
-                    if (discount < 0 || discount > 100) {
-                        view.showAlertDialog("El porcentaje debe estar entre 0 y 100", "Error");
-                    } else {
-                        view.showSuccesDialog();
-                        //TODO guardar los datos en la base de datos
-                    }
-                } else if (discountType.equals("€/l")) {
-                    //Comprobamos que la cantidad sea un número
-                    try {
-                        discount = Double.parseDouble(quantity);
-                    } catch (NumberFormatException e) {
-                        view.showAlertDialog("La cantidad fija debe ser un número", "Error");
-                    }
-                    //Comprobamos que es mayor que 0
-                    if (discount <= 0) {
-                        view.showAlertDialog("La cantidad fija debe ser mayor que 0", "Error");
-                    } else {
-                        view.showSuccesDialog();
-                        //TODO guardar los datos en la base de datos
-                    }
+                } else {
+                    view.showAlertDialog("No se puede crear el descuento porque ya existe uno con el mismo nombre", "Error");
                 }
+
+
             }
         }
 
