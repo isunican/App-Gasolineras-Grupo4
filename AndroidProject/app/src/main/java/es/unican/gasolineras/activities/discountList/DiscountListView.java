@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.List;
 
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.model.Descuento;
 import es.unican.gasolineras.repository.AppDatabaseDiscount;
 import es.unican.gasolineras.repository.DataBase;
@@ -52,7 +53,7 @@ public class DiscountListView extends AppCompatActivity implements IDiscountList
     @Override
     public void showDescuentos(List<Descuento> descuentos) {
         if (descuentos.isEmpty()) {
-            Toast.makeText(this, "Todavia no hay descuentos registrados.\nRegistra tu primer descuento", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No hay descuentos registrados", Toast.LENGTH_SHORT).show();
         }
         ListView list = findViewById(R.id.lvDiscounts);
         DiscountArrayAdapter adapter = new DiscountArrayAdapter(this, descuentos);
@@ -62,6 +63,6 @@ public class DiscountListView extends AppCompatActivity implements IDiscountList
 
     @Override
     public void showErrorBD() {
-
+        Utils.showAlertDialog("Error en el acceso a la base de datos","Error base de datos", this);
     }
 }
