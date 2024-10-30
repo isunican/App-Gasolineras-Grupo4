@@ -2,6 +2,8 @@ package es.unican.gasolineras.activities.registerDiscount;
 
 import android.content.Context;
 
+import es.unican.gasolineras.repository.IDescuentoDAO;
+
 public interface IRegisterDiscountContract {
 
     public interface Presenter {
@@ -20,6 +22,8 @@ public interface IRegisterDiscountContract {
         public void showDiscountHistory();
 
         public void showAlertDialog(String message, String title);
+
+        IDescuentoDAO getDescuentoDAO();
 
         public Context getContext();
 

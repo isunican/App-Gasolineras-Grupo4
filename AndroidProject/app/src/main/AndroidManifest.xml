@@ -31,10 +31,13 @@
         <activity
             android:name=".activities.combustible.CombustibleView"
             android:exported="false" />
+        <activity
+            android:name=".activities.registerDiscount.RegisterDiscountView"
+            android:exported="false" />
         <!--
         -->
         <activity
-            android:name=".activities.registerDiscount.RegisterDiscountView"
+            android:name=".activities.main.MainView"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

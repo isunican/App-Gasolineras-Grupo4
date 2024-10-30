@@ -2,7 +2,6 @@ package es.unican.gasolineras.activities.registerDiscount;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class RegisterDiscountPresenter implements IRegisterDiscountContract.Presenter {
 

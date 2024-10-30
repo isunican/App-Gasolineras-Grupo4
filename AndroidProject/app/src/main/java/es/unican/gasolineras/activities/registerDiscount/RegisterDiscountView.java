@@ -25,20 +25,22 @@ import java.util.Set;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.common.Utils;
-import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.AppDatabaseDiscount;
+import es.unican.gasolineras.repository.DataBase;
+import es.unican.gasolineras.repository.IDescuentoDAO;
 
 public class RegisterDiscountView extends AppCompatActivity implements IRegisterDiscountContract.View{
 
     private IRegisterDiscountContract.Presenter presenter;
 
-    private AppDatabase dataBase;
+    private AppDatabaseDiscount db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         //Initialize the interface
         super.onCreate(savedInstanceState);
         init();
-
+        db = DataBase.getAppDatabaseDiscount(getApplicationContext());
         //Catch all the elements in the interface and make the buttons work
         //TODO cuando se tenga la interfaz ya creada
         Button btnCancel = findViewById(R.id.btnCancel);
@@ -164,6 +166,9 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
     public void showAlertDialog(String message, String title) {
         Utils.showAlertDialog(message, title, this);
     }
+
+    @Override
+    public IDescuentoDAO getDescuentoDAO(){return db.descuentosDAO();}
 
     @Override
     public Context getContext() {
