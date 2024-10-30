@@ -67,11 +67,5 @@
         <item>Hidrogeno</item>
     </string-array>
 
-    <string-array name= "opcionesCompañiasSpinner">
-        <item>Repsol</item>
-        <item>Cepsa</item>
-        <item>Ballenoil</item>
-    </string-array>
-
 
 </resources>

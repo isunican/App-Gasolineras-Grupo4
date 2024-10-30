@@ -39,8 +39,8 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
     protected void onCreate(Bundle savedInstanceState){
         //Initialize the interface
         super.onCreate(savedInstanceState);
-        init();
         db = DataBase.getAppDatabaseDiscount(getApplicationContext());
+        init();
         //Catch all the elements in the interface and make the buttons work
         //TODO cuando se tenga la interfaz ya creada
         Button btnCancel = findViewById(R.id.btnCancel);
