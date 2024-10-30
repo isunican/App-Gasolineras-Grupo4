@@ -64,6 +64,9 @@ public class CombustiblePresenter implements ICombustibleContract.Presenter{
         view.showInfoActivity();
     }
 
+    @Override
+    public void onMenuDescuentosClicked() { view.showDescuentosActivity(); }
+
     /**
      * Loads the gas stations from the repository, and sends them to the view
      */

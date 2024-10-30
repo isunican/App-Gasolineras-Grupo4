@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.activities.discountList.DiscountListView;
 import es.unican.gasolineras.activities.filtros.FiltrosView;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
@@ -97,6 +98,9 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
             return true;
         } else if (itemId == R.id.menuItemEmbudo) {
             presenter.onMenuFiltrosClicked();
+            return true;
+        } else if (itemId == R.id.menuItemDescuentos) {
+            presenter.onMenuDescuentosClicked();
             return true;
         }
 
@@ -175,6 +179,12 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
         // Pasar el valor del enumerado y el orden en el Intent
         intent.putExtra("tipoCombustible", tipoCombustible.toString());
         intent.putExtra("order", Integer.valueOf(order).toString());
+        startActivity(intent);
+    }
+
+    @Override
+    public void showDescuentosActivity() {
+        Intent intent = new Intent(this, DiscountListView.class);
         startActivity(intent);
     }
 
