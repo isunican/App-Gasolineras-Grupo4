@@ -53,22 +53,22 @@ public class DiscountArrayAdapter extends BaseAdapter {
         // Nombre de descuento
         {
             TextView tv = convertView.findViewById(R.id.discountName);
-            tv.setText(descuento.discountName);
+            tv.setText("Nombre:\n" + descuento.discountName);
         }
         // Tipo de descuento
         {
             TextView tv = convertView.findViewById(R.id.discountType);
-            tv.setText("Tipo descuento: " + descuento.discountType);
+            tv.setText("Tipo descuento\n" + descuento.discountType);
         }
         // Compañia
         {
             TextView tv = convertView.findViewById(R.id.discountBrand);
-            tv.setText("Compañia: " + descuento.company);
+            tv.setText("Compañia:\n" + descuento.company);
         }
         // Valor de descuento
         {
             TextView tv = convertView.findViewById(R.id.discountValue);
-            tv.setText("Valor descuento: " + String.valueOf(descuento.quantityDiscount));
+            tv.setText("Valor descuento:\n" + String.valueOf(descuento.quantityDiscount));
         }
         // Activo
         {
