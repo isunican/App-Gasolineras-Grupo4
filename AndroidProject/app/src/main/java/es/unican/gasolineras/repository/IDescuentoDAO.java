@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -49,5 +50,13 @@ public interface IDescuentoDAO {
      */
     @Delete
     void delete(Descuento descuento);
+
+    /**
+     * Actualiza el campo activo a el nuevo campo activo para el nombre pasado
+     * @param activo Boolean de si esta activo o no
+     * @param nombre Nombre del descuento a actualizar
+     */
+    @Query("UPDATE Descuento set discount_active = :activo where discount_name = :nombre")
+    void update(boolean activo, String nombre);
 
 }
