@@ -33,6 +33,8 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
             if (date.isBefore(LocalDate.now())) {
                 view.showAlertDialog("La fecha de expiración no puede ser anterior a la fecha actual", "Error");
             } else {
+                //TODO comprobar que el nombre no esta repetido, hace falta la BD
+
                 //Comprobamos los errores en descuento
                 double discount = 0;
                 if (discountType.equals("%")) {
@@ -45,6 +47,9 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
                     //Comprobamos que la cantidad esté entre 0 y 100
                     if (discount < 0 || discount > 100) {
                         view.showAlertDialog("El porcentaje debe estar entre 0 y 100", "Error");
+                    } else {
+                        view.showSuccesDialog();
+                        //TODO guardar los datos en la base de datos
                     }
                 } else if (discountType.equals("€/l")) {
                     //Comprobamos que la cantidad sea un número
@@ -56,6 +61,9 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
                     //Comprobamos que es mayor que 0
                     if (discount <= 0) {
                         view.showAlertDialog("La cantidad fija debe ser mayor que 0", "Error");
+                    } else {
+                        view.showSuccesDialog();
+                        //TODO guardar los datos en la base de datos
                     }
                 }
             }
@@ -66,6 +74,6 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
 
     @Override
     public void onCancelRegistryClicked() {
-
+        view.showDiscountHistory();
     }
 }

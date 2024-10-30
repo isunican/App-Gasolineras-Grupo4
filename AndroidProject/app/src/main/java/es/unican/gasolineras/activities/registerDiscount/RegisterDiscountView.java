@@ -3,10 +3,10 @@ package es.unican.gasolineras.activities.registerDiscount;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -77,6 +78,10 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
             String active = ((CheckBox) findViewById(R.id.chkActive)).isChecked() ? "true" : "false";
             presenter.onRegisterDiscountClicked(name,company,discountType,quantity,expirationDate,active);
         });
+
+        //Settear la toolbar correctamente
+        Toolbar toolbar = findViewById(R.id.tbRegisterDiscount);
+        setSupportActionBar(toolbar);
     }
 
     private void initSpinnerCompany() {
@@ -126,6 +131,7 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         // Crear y mostrar el DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
+                R.style.CustomDatePickerDialogTheme,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int añoSeleccionado, int mesSeleccionado, int díaSeleccionado) {
@@ -150,7 +156,8 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
 
     @Override
     public void showDiscountHistory() {
-
+        Intent intent = new Intent(this, null/*TODO cuando este creado el historial de descuentos*/);
+        startActivity(intent);
     }
 
     @Override
