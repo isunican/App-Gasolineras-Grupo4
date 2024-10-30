@@ -28,7 +28,7 @@ public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presente
     }
 
     /**
-     * @see ICombustibleContract.Presenter#onMenuBackArrowClick()
+     * @see IPaymentHistoryContract.Presenter#onMenuBackArrowClick()
      */
 
     public void onMenuBackArrowClick() {view.showMainActivity();}
