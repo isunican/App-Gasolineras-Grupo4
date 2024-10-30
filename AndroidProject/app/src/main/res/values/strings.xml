@@ -47,6 +47,9 @@
     <string name="succes_reg_pay">El pago se ha registrado de manera correcta en el historial de pagos</string>
     <string name="title_succes_reg_pay">Registro correcto</string>
 
+    <string name="succes_reg_discount">El descuento se ha creado de manera correcta.</string>
+    <string name="title_succes_reg_discount">Registro correcto</string>
+
     <string-array name="opcionesSpinner">
         <item>Biodiesel</item>
         <item>Bioetanol</item>

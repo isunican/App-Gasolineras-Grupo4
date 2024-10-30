@@ -10,11 +10,16 @@ import androidx.appcompat.app.AlertDialog;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.GasolinerasResponse;
@@ -61,5 +66,40 @@ public class Utils {
         // 3. Get the AlertDialog.
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public static Set<String> obtenerRotulosUnicos(InputStream jsonInputStream) {
+        Set<String> rotulosUnicos = new HashSet<>();
+
+        try {
+            // Leer el archivo JSON desde el InputStream
+            BufferedReader reader = new BufferedReader(new InputStreamReader(jsonInputStream));
+            StringBuilder jsonString = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonString.append(line);
+            }
+
+            // Convertir a JSONObject
+            JSONObject jsonObject = new JSONObject(jsonString.toString());
+            JSONArray listaEESSPrecio = jsonObject.getJSONArray("ListaEESSPrecio");
+
+            // Iterar por cada objeto en la lista
+            for (int i = 0; i < listaEESSPrecio.length(); i++) {
+                JSONObject estacion = listaEESSPrecio.getJSONObject(i);
+                String rotulo = estacion.optString("Rótulo", "");
+                if (!rotulo.isEmpty() && !rotulo.matches("\\d+")) {
+                    rotulo = rotulo.trim();
+                    if (rotulo.equals("(SIN RÓTULO)")) {
+                        rotulo = "";
+                    }
+                    rotulosUnicos.add(rotulo);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return rotulosUnicos;
     }
 }
