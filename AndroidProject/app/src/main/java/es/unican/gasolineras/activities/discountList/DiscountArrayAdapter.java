@@ -68,7 +68,7 @@ public class DiscountArrayAdapter extends BaseAdapter {
         // Valor de descuento
         {
             TextView tv = convertView.findViewById(R.id.discountValue);
-            tv.setText("Valor descuento: " + String.valueOf(descuento.quantityDiscount)));
+            tv.setText("Valor descuento: " + String.valueOf(descuento.quantityDiscount));
         }
         // Activo
         {
