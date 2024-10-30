@@ -48,7 +48,7 @@ public class DiscountArrayAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context)
-                    .inflate(R.layout.activity_payment_history_list_item, parent, false);
+                    .inflate(R.layout.activity_discount_list_item, parent, false);
         }
         // Nombre de descuento
         {

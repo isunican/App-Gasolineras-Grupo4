@@ -18,7 +18,7 @@ public interface IDescuentoDAO {
      * base de datos
      * @return Lista de descuentos que hay en la base de datos
      */
-    @Query("SELECT * FROM descuento ORDER BY expirance_date DESC")
+    @Query("SELECT * FROM descuento ORDER BY expirance_date ASC")
     List<Descuento> getAll();
 
     /**
