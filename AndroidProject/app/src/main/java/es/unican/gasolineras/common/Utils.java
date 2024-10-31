@@ -97,7 +97,7 @@ public class Utils {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
 
         return rotulosUnicos;
