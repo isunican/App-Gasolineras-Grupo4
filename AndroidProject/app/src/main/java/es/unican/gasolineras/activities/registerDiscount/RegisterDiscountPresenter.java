@@ -20,23 +20,24 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
 
     @Override
     public void onRegisterDiscountClicked(String name, String company, String discountType, String quantity, String expirationDate, String active) {
+        String errorTitle = "Error";
         //Comprobamos que no hay campos vacios
         if (name.isEmpty()) {
-            view.showAlertDialog("El nombre no puede estar vacío", "Error");
+            view.showAlertDialog("El nombre no puede estar vacío", errorTitle);
         } else if (company.isEmpty()) {
-            view.showAlertDialog("La compañía no puede estar vacía", "Error");
+            view.showAlertDialog("La compañía no puede estar vacía", errorTitle);
         } else if (discountType.isEmpty()) {
-            view.showAlertDialog("El tipo de descuento no puede estar vacío", "Error");
+            view.showAlertDialog("El tipo de descuento no puede estar vacío", errorTitle);
         } else if (quantity.isEmpty()) {
-            view.showAlertDialog("La cantidad no puede estar vacía", "Error");
+            view.showAlertDialog("La cantidad no puede estar vacía", errorTitle);
         } else if (expirationDate.isEmpty()) {
-            view.showAlertDialog("La fecha de expiración no puede estar vacía", "Error");
+            view.showAlertDialog("La fecha de expiración no puede estar vacía", errorTitle);
         } else {
             //Comprobamos que la fecha de expiración no sea anterior a la fecha actual
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
             LocalDate date = LocalDate.parse(expirationDate, formatter);
             if (date.isBefore(LocalDate.now())) {
-                view.showAlertDialog("La fecha de expiración no puede ser anterior a la fecha actual", "Error");
+                view.showAlertDialog("La fecha de expiración no puede ser anterior a la fecha actual", errorTitle);
             } else {
                 //comprobar que el nombre no esta repetido
                 if (db.findByName(name) == null) {
@@ -59,11 +60,11 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
                             discount = Double.parseDouble(quantity);
                             descuento.quantityDiscount = discount;
                         } catch (NumberFormatException e) {
-                            view.showAlertDialog("El porcentaje debe ser un número", "Error");
+                            view.showAlertDialog("El porcentaje debe ser un número", errorTitle);
                         }
                         //Comprobamos que la cantidad esté entre 0 y 100
                         if (discount < 0 || discount > 100) {
-                            view.showAlertDialog("El porcentaje debe estar entre 0 y 100", "Error");
+                            view.showAlertDialog("El porcentaje debe estar entre 0 y 100", errorTitle);
                         } else {
                             view.showSuccesDialog();
                             //guardar los datos en la base de datos
@@ -76,11 +77,11 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
                             discount = Double.parseDouble(quantity);
                             descuento.quantityDiscount = discount;
                         } catch (NumberFormatException e) {
-                            view.showAlertDialog("La cantidad fija debe ser un número", "Error");
+                            view.showAlertDialog("La cantidad fija debe ser un número", errorTitle);
                         }
                         //Comprobamos que es mayor que 0
                         if (discount <= 0) {
-                            view.showAlertDialog("La cantidad fija debe ser mayor que 0", "Error");
+                            view.showAlertDialog("La cantidad fija debe ser mayor que 0", errorTitle);
                         } else {
                             view.showSuccesDialog();
                             //guardar los datos en la base de datos
@@ -89,7 +90,7 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
 
                     }
                 } else {
-                    view.showAlertDialog("No se puede crear el descuento porque ya existe uno con el mismo nombre", "Error");
+                    view.showAlertDialog("No se puede crear el descuento porque ya existe uno con el mismo nombre", errorTitle);
                 }
 
 
