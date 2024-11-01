@@ -10,7 +10,7 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
 
     private IRegisterDiscountContract.View view;
 
-    public IDescuentoDAO db;
+    private IDescuentoDAO db;
 
     @Override
     public void init(IRegisterDiscountContract.View view) {
