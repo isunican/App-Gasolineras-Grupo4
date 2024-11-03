@@ -149,5 +149,7 @@ dependencies {
     // Espresso
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
+    //Para datepicker
+    implementation 'com.google.android.material:material:1.6.1'
 
 }

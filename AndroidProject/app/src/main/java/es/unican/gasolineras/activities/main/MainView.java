@@ -21,9 +21,11 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.activities.discountList.DiscountListView;
 import es.unican.gasolineras.activities.filtros.FiltrosView;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
+import es.unican.gasolineras.activities.registerDiscount.RegisterDiscountView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -87,6 +89,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             return true;
         } else if (itemId == R.id.menuItemFiltros) {
             presenter.onMenuFiltrosClicked();
+            return true;
+        } else if (itemId == R.id.menuItemDescuentos) {
+            presenter.onMenuDescuentosClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -177,6 +182,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void showFiltrosActivity() {
         Intent intent = new Intent(this, FiltrosView.class);
+        startActivity(intent);
+    }
+
+    /**
+     * @see IMainContract.View#showDescuentosActivity()
+     */
+    @Override
+    public void showDescuentosActivity() {
+        Intent intent = new Intent(this, DiscountListView.class);
         startActivity(intent);
     }
 

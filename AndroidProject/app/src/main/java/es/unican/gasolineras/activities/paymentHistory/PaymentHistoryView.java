@@ -21,7 +21,7 @@ import java.util.List;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Pago;
-import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.AppDatabasePayments;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
@@ -31,7 +31,7 @@ import es.unican.gasolineras.repository.IPagoDAO;
 public class PaymentHistoryView extends AppCompatActivity implements IPaymentHistoryContract.View{
 
     /** Database of the payments **/
-    private AppDatabase db;
+    private AppDatabasePayments db;
 
     /** The presenter of this view */
     private PaymentHistoryPresenter presenter;
