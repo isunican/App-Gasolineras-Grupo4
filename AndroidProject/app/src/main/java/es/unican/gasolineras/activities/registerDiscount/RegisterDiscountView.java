@@ -2,7 +2,6 @@ package es.unican.gasolineras.activities.registerDiscount;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.text.InputType;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -45,9 +43,7 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         init();
         //Catch all the elements in the interface and make the buttons work
         Button btnCancel = findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(onClickListener -> {
-            presenter.onCancelRegistryClicked();
-        });
+        btnCancel.setOnClickListener(onClickListener -> presenter.onCancelRegistryClicked());
 
         //Funcionalidad de selección del porcentaje o precio fijo
         TextView tvType = findViewById(R.id.tvType);
@@ -199,10 +195,9 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         builder.setMessage(R.string.succes_reg_discount)
                 .setTitle(R.string.title_succes_reg_discount);
 
-        builder.setPositiveButton("Aceptar", (dialog, id) -> {
+        builder.setPositiveButton("Aceptar", (dialog, id) ->
             // User taps OK button.
-            showDiscountHistory();
-        });
+            showDiscountHistory());
 
         // 3. Get the AlertDialog.
         AlertDialog dialog = builder.create();
