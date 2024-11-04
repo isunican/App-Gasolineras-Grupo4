@@ -31,12 +31,6 @@ public class FiltrosPresenter implements IFiltrosContract.Presenter{
     }
 
     /**
-     * @see IFiltrosContract.Presenter#onMenuBackArrowClick()
-     */
-    @Override
-    public void onMenuBackArrowClick() {view.showMainActivity();}
-
-    /**
      * @see IFiltrosContract.Presenter#onButtonConfirmarClick()
      */
     @Override
@@ -47,13 +41,21 @@ public class FiltrosPresenter implements IFiltrosContract.Presenter{
      */
     @Override
     public Intent seleccionarFiltros(Spinner spinner,RadioButton rbAscendente, RadioButton rbDescendente, Intent intent) {
+        TipoCombustible tipoCombustible = seleccionarFiltrosTipoCombustible(spinner);
+        String order = seleccionarFiltrosOrden(rbAscendente, rbDescendente);
+        // Pasar el valor del enumerado y el orden en el Intent
+        intent.putExtra("tipoCombustible", tipoCombustible.toString());
+        intent.putExtra("order", order);
+        return intent;
+    }
 
+    @Override
+    public TipoCombustible seleccionarFiltrosTipoCombustible(Spinner spinner) {
         // Obtener el valor seleccionado del Spinner
         String seleccion = spinner.getSelectedItem().toString();
 
         // Asignar el valor del enumerado basado en la selección
         TipoCombustible tipoCombustible = null;
-
         switch (seleccion) {
             case "Biodiesel":
                 tipoCombustible = TipoCombustible.BIODIESEL;
@@ -102,7 +104,11 @@ public class FiltrosPresenter implements IFiltrosContract.Presenter{
                 tipoCombustible = TipoCombustible.BIODIESEL;
                 break;
         }
+        return tipoCombustible;
+    }
 
+    @Override
+    public String seleccionarFiltrosOrden(RadioButton rbAscendente, RadioButton rbDescendente) {
         //0-mayor a menor 1-menor a mayor 2-nada
         String order = "";
         if (rbAscendente.isChecked()) {
@@ -112,11 +118,9 @@ public class FiltrosPresenter implements IFiltrosContract.Presenter{
         } else {
             order = "2";
         }
+        return order;
 
-        // Pasar el valor del enumerado y el orden en el Intent
-        intent.putExtra("tipoCombustible", tipoCombustible.toString());
-        intent.putExtra("order", order);
-
-        return intent;
     }
+
 }
+

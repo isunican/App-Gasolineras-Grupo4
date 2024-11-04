@@ -15,4 +15,10 @@
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
+    <style name="CustomDatePickerDialogTheme" parent="ThemeOverlay.Material3.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>

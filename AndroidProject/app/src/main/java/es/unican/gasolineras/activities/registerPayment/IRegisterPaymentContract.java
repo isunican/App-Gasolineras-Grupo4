@@ -46,14 +46,7 @@ public interface IRegisterPaymentContract {
         public void showRegisterHistory();
 
         public IPagoDAO getPagoDAO();
-
-
-
-        /**
-         * The view is requested to open the main activity.
-         * Only the Presenter should call this method
-         */
-        public void showPaymentHistoryActivity();
+        
         public void showAlertDialog(String message, String title);
 
         public void showSuccesDialog();

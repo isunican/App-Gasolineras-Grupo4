@@ -50,6 +50,11 @@ public interface IMainContract {
          */
         public void onMenuFiltrosClicked();
 
+        /**
+         * The presenter is informed that the descuentos item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuDescuentosClicked();
     }
 
     /**
@@ -124,6 +129,11 @@ public interface IMainContract {
          */
         public void showFiltrosActivity();
 
+        /**
+         * The view is requested to open the descuentos activity.
+         * Only the Presenter should call this method
+         */
+        public void showDescuentosActivity();
 
     }
 }

@@ -60,6 +60,9 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showFiltrosActivity();
     }
 
+    @Override
+    public void onMenuDescuentosClicked() { view.showDescuentosActivity(); }
+
 
     /**
      * Loads the gas stations from the repository, and sends them to the view

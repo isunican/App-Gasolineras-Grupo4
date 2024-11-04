@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menuItemFiltros"
+        android:id="@+id/menuItemEmbudo"
         android:icon="@drawable/embudo"
         android:title=""
         android:visible="true"
         app:showAsAction="always" />
+
     <item
         android:id="@+id/menuItemInfo"
         android:title="@string/info" />
