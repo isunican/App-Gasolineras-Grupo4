@@ -52,23 +52,19 @@ public class DiscountArrayAdapter extends BaseAdapter {
         }
         // Nombre de descuento
         {
-            TextView tv = convertView.findViewById(R.id.discountName);
-            tv.setText("Nombre:\n" + descuento.discountName);
+            setTextView(convertView,R.id.discountName,"Nombre:\n" + descuento.discountName);
         }
         // Tipo de descuento
         {
-            TextView tv = convertView.findViewById(R.id.discountType);
-            tv.setText("Tipo descuento\n" + descuento.discountType);
+            setTextView(convertView,R.id.discountType,"Tipo descuento\n" + descuento.discountType);
         }
         // Compañia
         {
-            TextView tv = convertView.findViewById(R.id.discountBrand);
-            tv.setText("Compañia:\n" + descuento.company);
+            setTextView(convertView,R.id.discountBrand,"Compañia:\n" + descuento.company);
         }
         // Valor de descuento
         {
-            TextView tv = convertView.findViewById(R.id.discountValue);
-            tv.setText("Valor descuento:\n" + String.valueOf(descuento.quantityDiscount));
+            setTextView(convertView,R.id.discountValue,"Valor descuento:\n" + String.valueOf(descuento.quantityDiscount));
         }
         // Activo
         {
@@ -82,5 +78,10 @@ public class DiscountArrayAdapter extends BaseAdapter {
         }
         
         return convertView;
+    }
+
+    private void setTextView(View convertView, int textViewId, String text) {
+        TextView tv = convertView.findViewById(textViewId);
+        tv.setText(text);
     }
 }

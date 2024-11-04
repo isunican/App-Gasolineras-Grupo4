@@ -46,34 +46,33 @@ public class PagosArrayAdapter extends BaseAdapter {
         }
         // Fecha
         {
-            TextView tv = convertView.findViewById(R.id.Fecha);
-            tv.setText("Fecha: " + pago.getDate());
+            setTextView(convertView,R.id.Fecha,"Fecha: " + pago.getDate());
         }
         // Nombre
         {
-            TextView tv = convertView.findViewById(R.id.Estacion);
-            tv.setText(pago.getStationName());
+            setTextView(convertView,R.id.Estacion,pago.getStationName());
         }
         // Tipo combustible
         {
-            TextView tv = convertView.findViewById(R.id.TipoCombustible);
-            tv.setText("Combustible: " + pago.getFuelType());
+            setTextView(convertView,R.id.TipoCombustible,"Combustible: " + pago.getFuelType());
         }
         // Cantidad
         {
-            TextView tv = convertView.findViewById(R.id.Cantidad);
-            tv.setText("Cantidad: " + String.valueOf(pago.getQuantity()));
+            setTextView(convertView,R.id.Cantidad,"Cantidad: " + String.valueOf(pago.getQuantity()));
         }
         // Importe total
         {
-            TextView tv = convertView.findViewById(R.id.ImporteTotal);
-            tv.setText("Importe: " + String.valueOf(pago.getFinalPrice()));
+            setTextView(convertView,R.id.ImporteTotal,"Importe: " + String.valueOf(pago.getFinalPrice()));
         }
         // Precio
         {
-            TextView tv = convertView.findViewById(R.id.Precio);
-            tv.setText("Precio: " + String.valueOf(pago.pricePerLitre));
+            setTextView(convertView,R.id.Precio,"Precio: " + String.valueOf(pago.pricePerLitre));
         }
         return convertView;
+    }
+
+    private void setTextView(View convertView, int textViewId, String text) {
+        TextView tv = convertView.findViewById(textViewId);
+        tv.setText(text);
     }
 }
