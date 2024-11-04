@@ -2,7 +2,6 @@ package es.unican.gasolineras.activities.registerDiscount;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.text.InputType;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -26,6 +24,7 @@ import java.util.Set;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.discountList.DiscountListView;
 import es.unican.gasolineras.common.Utils;
+import es.unican.gasolineras.model.Descuento;
 import es.unican.gasolineras.repository.AppDatabaseDiscount;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IDescuentoDAO;
@@ -44,9 +43,7 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         init();
         //Catch all the elements in the interface and make the buttons work
         Button btnCancel = findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(onClickListener -> {
-            presenter.onCancelRegistryClicked();
-        });
+        btnCancel.setOnClickListener(onClickListener -> presenter.onCancelRegistryClicked());
 
         //Funcionalidad de selección del porcentaje o precio fijo
         TextView tvType = findViewById(R.id.tvType);
@@ -72,13 +69,30 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         //Boton de registro
         Button btnCreate = findViewById(R.id.btnCreate);
         btnCreate.setOnClickListener(onClickListener -> {
+            String quantity = "";
             String name = ((TextView) findViewById(R.id.etName)).getText().toString();
             String company = ((Spinner) findViewById(R.id.spnCompany)).getSelectedItem().toString();
             String discountType = tvType.getText().toString();
-            String quantity = ((EditText) findViewById(R.id.etQuantity)).getText().toString();
+            quantity = ((EditText) findViewById(R.id.etQuantity)).getText().toString();
             String expirationDate = ((EditText) findViewById(R.id.tvExpiranceDate)).getText().toString();
             String active = ((CheckBox) findViewById(R.id.chkActive)).isChecked() ? "true" : "false";
-            presenter.onRegisterDiscountClicked(name,company,discountType,quantity,expirationDate,active);
+
+
+            Descuento descuento = new Descuento();
+            if (active.equals("true")) {
+                descuento.discountActive = true;
+            } else if (active.equals("false")) {
+                descuento.discountActive = false;
+            }
+            descuento.discountName = name;
+            descuento.company = company;
+            descuento.discountType = discountType;
+            if (!quantity.isEmpty()) {
+                descuento.quantityDiscount = Double.valueOf(quantity);
+            }
+            descuento.expiranceDate = expirationDate;
+
+            presenter.onRegisterDiscountClicked(descuento);
         });
 
         //Settear la toolbar correctamente
@@ -181,10 +195,9 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         builder.setMessage(R.string.succes_reg_discount)
                 .setTitle(R.string.title_succes_reg_discount);
 
-        builder.setPositiveButton("Aceptar", (dialog, id) -> {
+        builder.setPositiveButton("Aceptar", (dialog, id) ->
             // User taps OK button.
-            showDiscountHistory();
-        });
+            showDiscountHistory());
 
         // 3. Get the AlertDialog.
         AlertDialog dialog = builder.create();
