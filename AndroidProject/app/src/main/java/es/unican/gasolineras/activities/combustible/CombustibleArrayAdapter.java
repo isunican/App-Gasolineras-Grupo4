@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.model.Descuento;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.TipoCombustible;
 
@@ -69,47 +70,45 @@ public class CombustibleArrayAdapter extends BaseAdapter {
                     .inflate(R.layout.activity_filtro_combustible_list_item, parent, false);
         }
 
-        // logo
-        {
-            String rotulo = gasolinera.getRotulo().toLowerCase();
+        convertView = linkTextView(convertView,gasolinera);
+        return convertView;
+    }
 
-            int imageID = context.getResources()
-                    .getIdentifier(rotulo, "drawable", context.getPackageName());
-
-            // Si el rotulo son sólo numeros, el método getIdentifier simplemente devuelve
-            // como imageID esos números, pero eso va a fallar porque no tendré ningún recurso
-            // que coincida con esos números
-            if (imageID == 0 || TextUtils.isDigitsOnly(rotulo)) {
-                imageID = context.getResources()
-                        .getIdentifier("generic", "drawable", context.getPackageName());
-            }
-
-            if (imageID != 0) {
-                ImageView view = convertView.findViewById(R.id.ivLogo);
-                view.setImageResource(imageID);
-            }
-        }
-
+    private View linkTextView(View convertView, Gasolinera gasolinera){
         // name
-        {
-            TextView tv = convertView.findViewById(R.id.tvName);
-            tv.setText(gasolinera.getRotulo());
-        }
+        setTextView(convertView,R.id.tvName,gasolinera.getRotulo());
 
         // address
-        {
-            TextView tv = convertView.findViewById(R.id.tvAddress);
-            tv.setText(gasolinera.getDireccion());
+        setTextView(convertView,R.id.tvAddress,gasolinera.getDireccion());
+
+        // type combustible
+        setTextView(convertView,R.id.tvCombustible,String.format("%s:", tipoCombustible));
+
+        // price combustible
+        setTextView(convertView,R.id.tvPrecioCombustible,String.format("%.3f", gasolinera.getPrecioProducto()));
+
+        // logo
+        String rotulo = gasolinera.getRotulo().toLowerCase();
+
+        int imageID = context.getResources()
+                .getIdentifier(rotulo, "drawable", context.getPackageName());
+
+        // Si el rotulo son sólo numeros, el método getIdentifier simplemente devuelve
+        // como imageID esos números, pero eso va a fallar porque no tendré ningún recurso
+        // que coincida con esos números
+        if (imageID == 0 || TextUtils.isDigitsOnly(rotulo)) {
+            imageID = context.getResources()
+                    .getIdentifier("generic", "drawable", context.getPackageName());
         }
 
-        // combustible price
-        {
-            TextView tvLabel = convertView.findViewById(R.id.tvCombustible);
-            tvLabel.setText(String.format("%s:", tipoCombustible));
-
-            TextView tv = convertView.findViewById(R.id.tvPrecioCombustible);
-            tv.setText(String.format("%.3f", gasolinera.getPrecioProducto()));
+        if (imageID != 0) {
+            ImageView view = convertView.findViewById(R.id.ivLogo);
+            view.setImageResource(imageID);
         }
         return convertView;
+    }
+    private void setTextView(View convertView, int textViewId, String text) {
+        TextView tv = convertView.findViewById(textViewId);
+        tv.setText(text);
     }
 }
