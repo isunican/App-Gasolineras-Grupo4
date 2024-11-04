@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.activities.discountList.DiscountListView;
 import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.repository.AppDatabaseDiscount;
 import es.unican.gasolineras.repository.DataBase;
@@ -42,7 +43,6 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         db = DataBase.getAppDatabaseDiscount(getApplicationContext());
         init();
         //Catch all the elements in the interface and make the buttons work
-        //TODO cuando se tenga la interfaz ya creada
         Button btnCancel = findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(onClickListener -> {
             presenter.onCancelRegistryClicked();
@@ -126,23 +126,20 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
 
         // Obtener la fecha actual
         final Calendar calendario = Calendar.getInstance();
-        int año = calendario.get(Calendar.YEAR);
+        int anho = calendario.get(Calendar.YEAR);
         int mes = calendario.get(Calendar.MONTH);
-        int día = calendario.get(Calendar.DAY_OF_MONTH);
+        int dia = calendario.get(Calendar.DAY_OF_MONTH);
 
         // Crear y mostrar el DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 R.style.CustomDatePickerDialogTheme,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int añoSeleccionado, int mesSeleccionado, int díaSeleccionado) {
-                        // El mes empieza desde 0, por eso sumamos 1
-                        String fechaSeleccionada = díaSeleccionado + "/" + (mesSeleccionado + 1) + "/" + añoSeleccionado;
-                        fechaEditText.setText(fechaSeleccionada);
-                    }
+                (view, anhoSeleccionado, mesSeleccionado, diaSeleccionado) -> {
+                    // El mes empieza desde 0, por eso sumamos 1
+                    String fechaSeleccionada = diaSeleccionado + "/" + (mesSeleccionado + 1) + "/" + anhoSeleccionado;
+                    fechaEditText.setText(fechaSeleccionada);
                 },
-                año, mes, día);
+                anho, mes, dia);
 
         datePickerDialog.show();
     }
@@ -158,7 +155,7 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
 
     @Override
     public void showDiscountHistory() {
-        Intent intent = new Intent(this, null/*TODO cuando este creado el historial de descuentos*/);
+        Intent intent = new Intent(this, DiscountListView.class);
         startActivity(intent);
     }
 
@@ -184,11 +181,9 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         builder.setMessage(R.string.succes_reg_discount)
                 .setTitle(R.string.title_succes_reg_discount);
 
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User taps OK button.
-                showDiscountHistory();
-            }
+        builder.setPositiveButton("Aceptar", (dialog, id) -> {
+            // User taps OK button.
+            showDiscountHistory();
         });
 
         // 3. Get the AlertDialog.
