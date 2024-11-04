@@ -66,59 +66,52 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
                     .inflate(R.layout.activity_main_list_item, parent, false);
         }
 
-        // logo
-        {
-            String rotulo = gasolinera.getRotulo().toLowerCase();
-
-            int imageID = context.getResources()
-                    .getIdentifier(rotulo, "drawable", context.getPackageName());
-
-            // Si el rotulo son sólo numeros, el método getIdentifier simplemente devuelve
-            // como imageID esos números, pero eso va a fallar porque no tendré ningún recurso
-            // que coincida con esos números
-            if (imageID == 0 || TextUtils.isDigitsOnly(rotulo)) {
-                imageID = context.getResources()
-                        .getIdentifier("generic", "drawable", context.getPackageName());
-            }
-
-            if (imageID != 0) {
-                ImageView view = convertView.findViewById(R.id.ivLogo);
-                view.setImageResource(imageID);
-            }
-        }
-
-        // name
-        {
-            TextView tv = convertView.findViewById(R.id.tvName);
-            tv.setText(gasolinera.getRotulo());
-        }
-
-        // address
-        {
-            TextView tv = convertView.findViewById(R.id.tvAddress);
-            tv.setText(gasolinera.getDireccion());
-        }
-
-        // gasolina 95 price
-        {
-            TextView tvLabel = convertView.findViewById(R.id.tvCombustible);
-            String label = context.getResources().getString(R.string.gasolina95label);
-            tvLabel.setText(String.format("%s:", label));
-
-            TextView tv = convertView.findViewById(R.id.tvPrecioCombustible);
-            tv.setText(String.valueOf(gasolinera.getGasolina95E5()));
-        }
-
-        // diesel A price
-        {
-            TextView tvLabel = convertView.findViewById(R.id.tvDieselALabel);
-            String label = context.getResources().getString(R.string.dieselAlabel);
-            tvLabel.setText(String.format("%s:", label));
-
-            TextView tv = convertView.findViewById(R.id.tvDieselA);
-            tv.setText(String.valueOf(gasolinera.getGasoleoA()));
-        }
+        convertView = linkTextView(convertView,gasolinera);
 
         return convertView;
+    }
+
+    private View linkTextView(View convertView, Gasolinera gasolinera){
+        // name
+        setTextView(convertView,R.id.tvName,gasolinera.getRotulo());
+
+        // address
+        setTextView(convertView,R.id.tvAddress,gasolinera.getDireccion());
+
+        // type combustible gasolina 95
+        setTextView(convertView,R.id.tvCombustible,String.format("%s:", context.getResources().getString(R.string.gasolina95label)));
+
+        // price combustible gasolina 95
+        setTextView(convertView,R.id.tvPrecioCombustible,String.valueOf(gasolinera.getGasolina95E5()));
+
+        // type combustible diesel
+        setTextView(convertView,R.id.tvDieselALabel,String.format("%s:",context.getResources().getString(R.string.dieselAlabel)));
+
+        // price combustible diesel
+        setTextView(convertView,R.id.tvDieselA,String.valueOf(gasolinera.getGasoleoA()));
+
+        // logo
+        String rotulo = gasolinera.getRotulo().toLowerCase();
+
+        int imageID = context.getResources()
+                .getIdentifier(rotulo, "drawable", context.getPackageName());
+
+        // Si el rotulo son sólo numeros, el método getIdentifier simplemente devuelve
+        // como imageID esos números, pero eso va a fallar porque no tendré ningún recurso
+        // que coincida con esos números
+        if (imageID == 0 || TextUtils.isDigitsOnly(rotulo)) {
+            imageID = context.getResources()
+                    .getIdentifier("generic", "drawable", context.getPackageName());
+        }
+
+        if (imageID != 0) {
+            ImageView view = convertView.findViewById(R.id.ivLogo);
+            view.setImageResource(imageID);
+        }
+        return convertView;
+    }
+    private void setTextView(View convertView, int textViewId, String text) {
+        TextView tv = convertView.findViewById(textViewId);
+        tv.setText(text);
     }
 }
