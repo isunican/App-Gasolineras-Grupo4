@@ -35,10 +35,28 @@ public interface ICombustibleContract {
         public void onStationClicked(Gasolinera station);
 
         /**
-         * The presenter is informed that the Back Arrow item in the menu has been clicked
+         * The presenter is informed that the Info item in the menu has been clicked
          * Only the View should call this method
          */
-        public void onMenuBackArrowClick();
+        public void onMenuInfoClicked();
+
+        /**
+         * The presenter is informed that the Payment History item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuHistoryClicked();
+
+        /**
+         * The presenter is informed that the filtros item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuFiltrosClicked();
+
+        /**
+         * The presenter is informed that the descuentos item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuDescuentosClicked();
 
     }
 
@@ -96,10 +114,29 @@ public interface ICombustibleContract {
         public void showStationDetails(Gasolinera station);
 
         /**
-         * The view is requested to open the main activity.
+         * The view is requested to open the info activity.
          * Only the Presenter should call this method
          */
-        public void showMainActivity();
+        public void showInfoActivity();
+
+
+        /**
+         * The view is requested to open the payment history activity.
+         * Only the Presenter should call this method
+         */
+        public void showHistoryActivity();
+
+        /**
+         * The view is requested to open the filtros activity.
+         * Only the Presenter should call this method
+         */
+        public void showFiltrosActivity();
+
+        /**
+         * The view is requested to open the descuentos activity.
+         * Only the Presenter should call this method
+         */
+        public void showDescuentosActivity();
 
     }
 }

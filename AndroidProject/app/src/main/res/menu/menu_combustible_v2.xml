@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuItemEmbudo"
+        android:icon="@drawable/embudo"
+        android:title=""
+        android:visible="true"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menuItemInfo"
+        android:title="@string/info" />
+    <item
+        android:id="@+id/menuItemHistorialPagos"
+        android:title="@string/historial_pagos" />
+    <item
+        android:id="@+id/menuItemDescuentos"
+        android:title="Descuentos" />
+</menu>

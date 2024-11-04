@@ -1,15 +1,8 @@
 package es.unican.gasolineras.activities.combustible;
 
-import android.util.Log;
-import android.view.View;
-
-import java.io.Console;
 import java.util.Comparator;
 import java.util.List;
 
-
-import es.unican.gasolineras.activities.main.IMainContract;
-import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.model.TipoCombustible;
@@ -48,10 +41,31 @@ public class CombustiblePresenter implements ICombustibleContract.Presenter{
     }
 
     /**
-     * @see ICombustibleContract.Presenter#onMenuBackArrowClick()
+     * @see ICombustibleContract.Presenter#onMenuFiltrosClicked()
      */
     @Override
-    public void onMenuBackArrowClick() {view.showMainActivity();}
+    public void onMenuFiltrosClicked(){
+        view.showFiltrosActivity();
+    }
+
+    /**
+     * @see ICombustibleContract.Presenter#onMenuHistoryClicked()
+     */
+    @Override
+    public void onMenuHistoryClicked(){
+        view.showHistoryActivity();
+    }
+
+    /**
+     * @see ICombustibleContract.Presenter#onMenuInfoClicked()
+     */
+    @Override
+    public void onMenuInfoClicked() {
+        view.showInfoActivity();
+    }
+
+    @Override
+    public void onMenuDescuentosClicked() { view.showDescuentosActivity(); }
 
     /**
      * Loads the gas stations from the repository, and sends them to the view
