@@ -26,6 +26,7 @@ import java.util.Set;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.discountList.DiscountListView;
 import es.unican.gasolineras.common.Utils;
+import es.unican.gasolineras.model.Descuento;
 import es.unican.gasolineras.repository.AppDatabaseDiscount;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IDescuentoDAO;
@@ -72,13 +73,30 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         //Boton de registro
         Button btnCreate = findViewById(R.id.btnCreate);
         btnCreate.setOnClickListener(onClickListener -> {
+            String quantity = "";
             String name = ((TextView) findViewById(R.id.etName)).getText().toString();
             String company = ((Spinner) findViewById(R.id.spnCompany)).getSelectedItem().toString();
             String discountType = tvType.getText().toString();
-            String quantity = ((EditText) findViewById(R.id.etQuantity)).getText().toString();
+            quantity = ((EditText) findViewById(R.id.etQuantity)).getText().toString();
             String expirationDate = ((EditText) findViewById(R.id.tvExpiranceDate)).getText().toString();
             String active = ((CheckBox) findViewById(R.id.chkActive)).isChecked() ? "true" : "false";
-            presenter.onRegisterDiscountClicked(name,company,discountType,quantity,expirationDate,active);
+
+
+            Descuento descuento = new Descuento();
+            if (active.equals("true")) {
+                descuento.discountActive = true;
+            } else if (active.equals("false")) {
+                descuento.discountActive = false;
+            }
+            descuento.discountName = name;
+            descuento.company = company;
+            descuento.discountType = discountType;
+            if (!quantity.isEmpty()) {
+                descuento.quantityDiscount = Double.valueOf(quantity);
+            }
+            descuento.expiranceDate = expirationDate;
+
+            presenter.onRegisterDiscountClicked(descuento);
         });
 
         //Settear la toolbar correctamente
