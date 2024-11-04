@@ -50,26 +50,8 @@ public class DiscountArrayAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context)
                     .inflate(R.layout.activity_discount_list_item, parent, false);
         }
-        // Nombre de descuento
-        {
-            TextView tv = convertView.findViewById(R.id.discountName);
-            tv.setText("Nombre:\n" + descuento.discountName);
-        }
-        // Tipo de descuento
-        {
-            TextView tv = convertView.findViewById(R.id.discountType);
-            tv.setText("Tipo descuento\n" + descuento.discountType);
-        }
-        // Compañia
-        {
-            TextView tv = convertView.findViewById(R.id.discountBrand);
-            tv.setText("Compañia:\n" + descuento.company);
-        }
-        // Valor de descuento
-        {
-            TextView tv = convertView.findViewById(R.id.discountValue);
-            tv.setText("Valor descuento:\n" + String.valueOf(descuento.quantityDiscount));
-        }
+
+        convertView = linkTextView(convertView, descuento);
         // Activo
         {
             CheckBox chk = convertView.findViewById(R.id.chkActive);
@@ -80,7 +62,28 @@ public class DiscountArrayAdapter extends BaseAdapter {
                 descuentoDAO.update(chk.isChecked(), descuento.discountName);
             });
         }
-        
+
         return convertView;
     }
+
+    private View linkTextView(View convertView, Descuento descuento){
+        // Nombre de descuento
+        setTextView(convertView,R.id.discountName,"Nombre:\n" + descuento.discountName);
+
+        // Tipo de descuento
+        setTextView(convertView,R.id.discountType,"Tipo descuento\n" + descuento.discountType);
+
+        // Compañia
+        setTextView(convertView,R.id.discountBrand,"Compañia:\n" + descuento.company);
+
+        // Valor de descuento
+        setTextView(convertView,R.id.discountValue,"Valor descuento:\n" + String.valueOf(descuento.quantityDiscount));
+        return convertView;
+    }
+    private void setTextView(View convertView, int textViewId, String text) {
+        TextView tv = convertView.findViewById(textViewId);
+        tv.setText(text);
+    }
+
+
 }
