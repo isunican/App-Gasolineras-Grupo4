@@ -110,10 +110,6 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
         startActivity(intent);
     }
 
-    public void showPaymentHistoryActivity() {
-        Intent intent = new Intent(this, PaymentHistoryView.class);
-        startActivity(intent);
-    }
 
     @Override
     public void showAlertDialog(String message, String title) {

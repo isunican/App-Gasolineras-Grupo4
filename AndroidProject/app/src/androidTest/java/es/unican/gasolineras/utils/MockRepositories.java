@@ -52,4 +52,5 @@ public class MockRepositories {
         }).when(mock).requestGasolinerasCombustible(any(ICallBack.class), any(String.class), any(String.class));
         return mock;
     }
+
 }

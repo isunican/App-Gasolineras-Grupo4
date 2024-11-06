@@ -10,7 +10,7 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
 
     private IRegisterDiscountContract.View view;
 
-    public IDescuentoDAO db;
+    private IDescuentoDAO db;
 
     @Override
     public void init(IRegisterDiscountContract.View view) {
@@ -19,77 +19,45 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
     }
 
     @Override
-    public void onRegisterDiscountClicked(String name, String company, String discountType, String quantity, String expirationDate, String active) {
+    public void onRegisterDiscountClicked(Descuento d) {
+        String errorTitle = "Error";
         //Comprobamos que no hay campos vacios
-        if (name.isEmpty()) {
-            view.showAlertDialog("El nombre no puede estar vacío", "Error");
-        } else if (company.isEmpty()) {
-            view.showAlertDialog("La compañía no puede estar vacía", "Error");
-        } else if (discountType.isEmpty()) {
-            view.showAlertDialog("El tipo de descuento no puede estar vacío", "Error");
-        } else if (quantity.isEmpty()) {
-            view.showAlertDialog("La cantidad no puede estar vacía", "Error");
-        } else if (expirationDate.isEmpty()) {
-            view.showAlertDialog("La fecha de expiración no puede estar vacía", "Error");
-        } else {
+        if (!hayCamposVacios(d)) {
             //Comprobamos que la fecha de expiración no sea anterior a la fecha actual
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
-            LocalDate date = LocalDate.parse(expirationDate, formatter);
+            LocalDate date = LocalDate.parse(d.expiranceDate, formatter);
             if (date.isBefore(LocalDate.now())) {
-                view.showAlertDialog("La fecha de expiración no puede ser anterior a la fecha actual", "Error");
+                view.showAlertDialog("La fecha de expiración no puede ser anterior a la fecha actual", errorTitle);
             } else {
                 //comprobar que el nombre no esta repetido
-                if (db.findByName(name) == null) {
-                    Descuento descuento = new Descuento();
-                    descuento.discountName = name;
-                    descuento.company = company;
-                    descuento.discountType = discountType;
-                    descuento.expiranceDate = expirationDate;
-                    if (active.equals("true")) {
-                        descuento.discountActive = true;
-                    } else if (active.equals("false")) {
-                        descuento.discountActive = false;
-                    }
+                if (db.findByName(d.discountName) == null) {
 
                     //Comprobamos los errores en descuento
-                    double discount = 0;
-                    if (discountType.equals("%")) {
-                        //Comprobamos que la cantidad sea un número
-                        try {
-                            discount = Double.parseDouble(quantity);
-                            descuento.quantityDiscount = discount;
-                        } catch (NumberFormatException e) {
-                            view.showAlertDialog("El porcentaje debe ser un número", "Error");
-                        }
+                    if (d.discountType.equals("%")) {
+
                         //Comprobamos que la cantidad esté entre 0 y 100
-                        if (discount < 0 || discount > 100) {
-                            view.showAlertDialog("El porcentaje debe estar entre 0 y 100", "Error");
+                        if (d.quantityDiscount < 0 || d.quantityDiscount > 100) {
+                            view.showAlertDialog("El porcentaje debe estar entre 0 y 100", errorTitle);
                         } else {
                             view.showSuccesDialog();
                             //guardar los datos en la base de datos
-                            db.insertAll(descuento);
+                            db.insertAll(d);
                         }
 
-                    } else if (discountType.equals("€/l")) {
-                        //Comprobamos que la cantidad sea un número
-                        try {
-                            discount = Double.parseDouble(quantity);
-                            descuento.quantityDiscount = discount;
-                        } catch (NumberFormatException e) {
-                            view.showAlertDialog("La cantidad fija debe ser un número", "Error");
-                        }
+                    } else if (d.discountType.equals("€/l")) {
+
                         //Comprobamos que es mayor que 0
-                        if (discount <= 0) {
-                            view.showAlertDialog("La cantidad fija debe ser mayor que 0", "Error");
+                        if (d.quantityDiscount <= 0) {
+                            view.showAlertDialog("La cantidad fija debe ser mayor que 0", errorTitle);
                         } else {
                             view.showSuccesDialog();
                             //guardar los datos en la base de datos
-                            db.insertAll(descuento);
+                            db.insertAll(d);
                         }
 
                     }
                 } else {
-                    view.showAlertDialog("No se puede crear el descuento porque ya existe uno con el mismo nombre", "Error");
+                    view.showAlertDialog("No se puede crear el descuento porque ya existe uno con el mismo nombre", errorTitle);
                 }
 
 
@@ -97,6 +65,30 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
         }
 
 
+    }
+
+    @Override
+    public boolean hayCamposVacios(Descuento d){
+        String errorTitle = "Error";
+        boolean error = false;
+        if (d.discountName.isEmpty()) {
+            view.showAlertDialog("El nombre no puede estar vacío", errorTitle);
+            error = true;
+        } else if (d.company.isEmpty()) {
+            view.showAlertDialog("La compañía no puede estar vacía", errorTitle);
+            error = true;
+        } else if (d.discountType.isEmpty()) {
+            view.showAlertDialog("El tipo de descuento no puede estar vacío", errorTitle);
+            error = true;
+        } else if (d.quantityDiscount == null) {
+            view.showAlertDialog("La cantidad no puede estar vacía", errorTitle);
+            error = true;
+        } else if (d.expiranceDate.isEmpty()) {
+            view.showAlertDialog("La fecha de expiración no puede estar vacía", errorTitle);
+            error = true;
+        }
+
+        return error;
     }
 
     @Override
