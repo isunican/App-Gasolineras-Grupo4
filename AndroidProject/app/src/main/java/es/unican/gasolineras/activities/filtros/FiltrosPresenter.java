@@ -5,11 +5,6 @@ import android.content.Intent;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.combustible.CombustibleView;
-import es.unican.gasolineras.activities.combustible.ICombustibleContract;
 import es.unican.gasolineras.model.TipoCombustible;
 
 /**

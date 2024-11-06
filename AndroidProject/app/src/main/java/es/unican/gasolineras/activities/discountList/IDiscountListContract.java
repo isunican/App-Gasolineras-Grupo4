@@ -2,10 +2,8 @@ package es.unican.gasolineras.activities.discountList;
 
 import java.util.List;
 
-import es.unican.gasolineras.activities.paymentHistory.IPaymentHistoryContract;
 import es.unican.gasolineras.model.Descuento;
 import es.unican.gasolineras.repository.IDescuentoDAO;
-import es.unican.gasolineras.repository.IDescuentoDAO_Impl;
 
 public interface IDiscountListContract {
 
