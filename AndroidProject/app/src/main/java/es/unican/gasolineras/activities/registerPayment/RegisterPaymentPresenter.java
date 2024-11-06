@@ -16,7 +16,7 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
     }
 
     @Override
-    public void onMenuBackArrowClick() {view.showRegisterHistory();}
+    public void onMenuBackArrowClick() {view.showPaymentHistoryActivity();}
 
     @Override
     public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad){

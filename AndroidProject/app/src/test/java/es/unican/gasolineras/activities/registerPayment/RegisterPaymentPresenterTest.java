@@ -18,7 +18,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.time.LocalDate;
 
 import es.unican.gasolineras.model.Pago;
-import es.unican.gasolineras.repository.AppDatabasePayments;
+import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 @RunWith(RobolectricTestRunner.class)
@@ -32,7 +32,7 @@ public class RegisterPaymentPresenterTest {
     @Mock
     private IPagoDAO pagoDAOmock;
 
-    private AppDatabasePayments db;
+    private AppDatabase db;
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);

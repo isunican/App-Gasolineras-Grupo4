@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import org.parceler.Parcels;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,10 +22,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.details.DetailsView;
-import es.unican.gasolineras.activities.discountList.DiscountListView;
-import es.unican.gasolineras.activities.filtros.FiltrosView;
-import es.unican.gasolineras.activities.info.InfoView;
-import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
+import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.TipoCombustible;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
@@ -65,6 +63,7 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
 
         String orderStr = getIntent().getStringExtra("order");
         order = Integer.parseInt(orderStr);
+
         presenter.init(this, tipoCombustible);
     }
 
@@ -77,7 +76,7 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_combustible_v2, menu);
+        menuInflater.inflate(R.menu.menu_combustible, menu);
         return true;
     }
 
@@ -90,20 +89,10 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menuItemInfo) {
-            presenter.onMenuInfoClicked();
-            return true;
-        } else if (itemId == R.id.menuItemHistorialPagos) {
-            presenter.onMenuHistoryClicked();
-            return true;
-        } else if (itemId == R.id.menuItemEmbudo) {
-            presenter.onMenuFiltrosClicked();
-            return true;
-        } else if (itemId == R.id.menuItemDescuentos) {
-            presenter.onMenuDescuentosClicked();
+        if (itemId == R.id.menuItemBackArrow) {
+            presenter.onMenuBackArrowClick();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -152,39 +141,9 @@ public class CombustibleView extends AppCompatActivity implements ICombustibleCo
         startActivity(intent);
     }
 
-    /**
-     * @see ICombustibleContract.View#showInfoActivity()
-     */
     @Override
-    public void showInfoActivity() {
-        Intent intent = new Intent(this, InfoView.class);
-        startActivity(intent);
-    }
-
-    /**
-     * @see ICombustibleContract.View#showHistoryActivity()
-     */
-    @Override
-    public void showHistoryActivity() {
-        Intent intent = new Intent(this, PaymentHistoryView.class);
-        startActivity(intent);
-    }
-
-    /**
-     * @see ICombustibleContract.View#showFiltrosActivity()
-     */
-    @Override
-    public void showFiltrosActivity() {
-        Intent intent = new Intent(this, FiltrosView.class);
-        // Pasar el valor del enumerado y el orden en el Intent
-        intent.putExtra("tipoCombustible", tipoCombustible.toString());
-        intent.putExtra("order", Integer.valueOf(order).toString());
-        startActivity(intent);
-    }
-
-    @Override
-    public void showDescuentosActivity() {
-        Intent intent = new Intent(this, DiscountListView.class);
+    public void showMainActivity() {
+        Intent intent = new Intent(this, MainView.class);
         startActivity(intent);
     }
 

@@ -1,9 +1,8 @@
 package es.unican.gasolineras.model;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import lombok.Getter;

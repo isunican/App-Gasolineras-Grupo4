@@ -57,15 +57,16 @@ public class HistoryPaymentUITest {
     @BindValue
     final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
 
-    private AppDatabasePayments db;
+    private AppDatabase db;
     private IPagoDAO pagoDAO;
     private Pago p1,p2,p3,p4;
+    private View decorView;
 
     @Before
     public void setUp(){
         // Create the database
         db = Room.databaseBuilder(context,
-                        AppDatabasePayments.class, "payments")
+                        AppDatabase.class, "payments")
                 .allowMainThreadQueries()
                 .build();
         pagoDAO = db.pagoDAO();

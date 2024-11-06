@@ -1,25 +1,27 @@
 package es.unican.gasolineras.activities.paymentHistory;
 
-import android.content.Intent;
 import android.os.Bundle;
+import es.unican.gasolineras.common.*;
+import android.widget.ListView;
+
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import es.unican.gasolineras.activities.main.MainView;
+import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.main.MainView;
-import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
-import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.model.Pago;
-import es.unican.gasolineras.repository.AppDatabasePayments;
+import es.unican.gasolineras.repository.AppDatabase;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
@@ -29,7 +31,7 @@ import es.unican.gasolineras.repository.IPagoDAO;
 public class PaymentHistoryView extends AppCompatActivity implements IPaymentHistoryContract.View{
 
     /** Database of the payments **/
-    private AppDatabasePayments db;
+    private AppDatabase db;
 
     /** The presenter of this view */
     private PaymentHistoryPresenter presenter;
