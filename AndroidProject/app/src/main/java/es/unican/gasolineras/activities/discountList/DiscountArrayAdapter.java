@@ -52,18 +52,20 @@ public class DiscountArrayAdapter extends BaseAdapter {
         }
 
         convertView = linkTextView(convertView, descuento);
-        // Activo
-        {
-            CheckBox chk = convertView.findViewById(R.id.chkActive);
-            chk.setChecked(descuento.discountActive);
+        updateCheckBoxBD(convertView, descuento);
 
-            // Listener for if it is clicked it will update the value in the database
-            chk.setOnClickListener(OnClickListener -> {
-                descuentoDAO.update(chk.isChecked(), descuento.discountName);
-            });
-        }
 
         return convertView;
+    }
+
+    private void updateCheckBoxBD(View convertView, Descuento descuento) {
+        CheckBox chk = convertView.findViewById(R.id.chkActive);
+        chk.setChecked(descuento.discountActive);
+
+        // Listener for if it is clicked it will update the value in the database
+        chk.setOnClickListener(onClickListener ->
+            descuentoDAO.update(chk.isChecked(), descuento.discountName)
+        );
     }
 
     private View linkTextView(View convertView, Descuento descuento){
@@ -77,7 +79,7 @@ public class DiscountArrayAdapter extends BaseAdapter {
         setTextView(convertView,R.id.discountBrand,"Compañia:\n" + descuento.company);
 
         // Valor de descuento
-        setTextView(convertView,R.id.discountValue,"Valor descuento:\n" + String.valueOf(descuento.quantityDiscount));
+        setTextView(convertView,R.id.discountValue,"Valor descuento:\n" + descuento.quantityDiscount);
         return convertView;
     }
 
