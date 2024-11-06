@@ -2,7 +2,6 @@ package es.unican.gasolineras.activities.registerDiscount;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.text.InputType;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -24,7 +22,9 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.activities.discountList.DiscountListView;
 import es.unican.gasolineras.common.Utils;
+import es.unican.gasolineras.model.Descuento;
 import es.unican.gasolineras.repository.AppDatabaseDiscount;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IDescuentoDAO;
@@ -39,14 +39,11 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
     protected void onCreate(Bundle savedInstanceState){
         //Initialize the interface
         super.onCreate(savedInstanceState);
-        init();
         db = DataBase.getAppDatabaseDiscount(getApplicationContext());
+        init();
         //Catch all the elements in the interface and make the buttons work
-        //TODO cuando se tenga la interfaz ya creada
         Button btnCancel = findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(onClickListener -> {
-            presenter.onCancelRegistryClicked();
-        });
+        btnCancel.setOnClickListener(onClickListener -> presenter.onCancelRegistryClicked());
 
         //Funcionalidad de selección del porcentaje o precio fijo
         TextView tvType = findViewById(R.id.tvType);
@@ -72,13 +69,30 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         //Boton de registro
         Button btnCreate = findViewById(R.id.btnCreate);
         btnCreate.setOnClickListener(onClickListener -> {
+            String quantity = "";
             String name = ((TextView) findViewById(R.id.etName)).getText().toString();
             String company = ((Spinner) findViewById(R.id.spnCompany)).getSelectedItem().toString();
             String discountType = tvType.getText().toString();
-            String quantity = ((EditText) findViewById(R.id.etQuantity)).getText().toString();
+            quantity = ((EditText) findViewById(R.id.etQuantity)).getText().toString();
             String expirationDate = ((EditText) findViewById(R.id.tvExpiranceDate)).getText().toString();
             String active = ((CheckBox) findViewById(R.id.chkActive)).isChecked() ? "true" : "false";
-            presenter.onRegisterDiscountClicked(name,company,discountType,quantity,expirationDate,active);
+
+
+            Descuento descuento = new Descuento();
+            if (active.equals("true")) {
+                descuento.discountActive = true;
+            } else if (active.equals("false")) {
+                descuento.discountActive = false;
+            }
+            descuento.discountName = name;
+            descuento.company = company;
+            descuento.discountType = discountType;
+            if (!quantity.isEmpty()) {
+                descuento.quantityDiscount = Double.valueOf(quantity);
+            }
+            descuento.expiranceDate = expirationDate;
+
+            presenter.onRegisterDiscountClicked(descuento);
         });
 
         //Settear la toolbar correctamente
@@ -126,23 +140,20 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
 
         // Obtener la fecha actual
         final Calendar calendario = Calendar.getInstance();
-        int año = calendario.get(Calendar.YEAR);
+        int anho = calendario.get(Calendar.YEAR);
         int mes = calendario.get(Calendar.MONTH);
-        int día = calendario.get(Calendar.DAY_OF_MONTH);
+        int dia = calendario.get(Calendar.DAY_OF_MONTH);
 
         // Crear y mostrar el DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 R.style.CustomDatePickerDialogTheme,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int añoSeleccionado, int mesSeleccionado, int díaSeleccionado) {
-                        // El mes empieza desde 0, por eso sumamos 1
-                        String fechaSeleccionada = díaSeleccionado + "/" + (mesSeleccionado + 1) + "/" + añoSeleccionado;
-                        fechaEditText.setText(fechaSeleccionada);
-                    }
+                (view, anhoSeleccionado, mesSeleccionado, diaSeleccionado) -> {
+                    // El mes empieza desde 0, por eso sumamos 1
+                    String fechaSeleccionada = diaSeleccionado + "/" + (mesSeleccionado + 1) + "/" + anhoSeleccionado;
+                    fechaEditText.setText(fechaSeleccionada);
                 },
-                año, mes, día);
+                anho, mes, dia);
 
         datePickerDialog.show();
     }
@@ -158,7 +169,7 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
 
     @Override
     public void showDiscountHistory() {
-        Intent intent = new Intent(this, null/*TODO cuando este creado el historial de descuentos*/);
+        Intent intent = new Intent(this, DiscountListView.class);
         startActivity(intent);
     }
 
@@ -184,12 +195,9 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
         builder.setMessage(R.string.succes_reg_discount)
                 .setTitle(R.string.title_succes_reg_discount);
 
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User taps OK button.
-                showDiscountHistory();
-            }
-        });
+        builder.setPositiveButton("Aceptar", (dialog, id) ->
+            // User taps OK button.
+            showDiscountHistory());
 
         // 3. Get the AlertDialog.
         AlertDialog dialog = builder.create();

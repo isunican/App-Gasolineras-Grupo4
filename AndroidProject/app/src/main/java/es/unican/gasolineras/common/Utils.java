@@ -3,7 +3,6 @@ package es.unican.gasolineras.common;
 import static es.unican.gasolineras.repository.GasolinerasService.deserializer;
 
 import android.content.Context;
-import android.content.DialogInterface;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -29,6 +28,8 @@ import es.unican.gasolineras.model.GasolinerasResponse;
  */
 public class Utils {
 
+    private Utils() {}
+
     /**
      * Parses a list of gas stations from a json resource file.
      * The json must contain a serialized GasolinerasResponse object.
@@ -45,8 +46,7 @@ public class Utils {
                 .registerTypeAdapter(double.class, deserializer)
                 .create()
                 .fromJson(reader, typeToken);
-        List<Gasolinera> gasolineras = response.getGasolineras();
-        return gasolineras;
+        return response.getGasolineras();
     }
 
     public static void showAlertDialog(String message, String title, Context context) {
@@ -57,10 +57,8 @@ public class Utils {
         builder.setMessage(message)
                 .setTitle(title);
 
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User taps OK button.
-            }
+        builder.setPositiveButton("Aceptar", (dialog, id) -> {
+            // User taps OK button.
         });
 
         // 3. Get the AlertDialog.
@@ -96,8 +94,8 @@ public class Utils {
                     rotulosUnicos.add(rotulo);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
+
         }
 
         return rotulosUnicos;

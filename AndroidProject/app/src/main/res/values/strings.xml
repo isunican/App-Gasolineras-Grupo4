@@ -50,6 +50,8 @@
     <string name="succes_reg_discount">El descuento se ha creado de manera correcta.</string>
     <string name="title_succes_reg_discount">Registro correcto</string>
 
+
+
     <string-array name="opcionesSpinner">
         <item>Biodiesel</item>
         <item>Bioetanol</item>
@@ -65,12 +67,6 @@
         <item>Gasolina 98 E10</item>
         <item>Gasolina 98 E5</item>
         <item>Hidrogeno</item>
-    </string-array>
-
-    <string-array name= "opcionesCompañiasSpinner">
-        <item>Repsol</item>
-        <item>Cepsa</item>
-        <item>Ballenoil</item>
     </string-array>
 
 
