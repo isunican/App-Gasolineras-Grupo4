@@ -25,7 +25,6 @@ import es.unican.gasolineras.activities.discountList.DiscountListView;
 import es.unican.gasolineras.activities.filtros.FiltrosView;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
-import es.unican.gasolineras.activities.registerDiscount.RegisterDiscountView;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 

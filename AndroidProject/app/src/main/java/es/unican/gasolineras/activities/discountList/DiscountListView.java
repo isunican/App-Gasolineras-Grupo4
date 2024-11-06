@@ -47,9 +47,7 @@ public class   DiscountListView extends AppCompatActivity implements IDiscountLi
         setSupportActionBar(toolbar);
 
         ListView list = findViewById(R.id.lvDiscounts);
-        list.setOnItemClickListener((parent, view, position, id) -> {
-            Descuento descuento = (Descuento) parent.getItemAtPosition(position);
-        });
+
     }
 
     @Override
