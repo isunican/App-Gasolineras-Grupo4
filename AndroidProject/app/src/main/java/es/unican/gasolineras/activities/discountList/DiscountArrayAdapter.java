@@ -80,6 +80,7 @@ public class DiscountArrayAdapter extends BaseAdapter {
         setTextView(convertView,R.id.discountValue,"Valor descuento:\n" + String.valueOf(descuento.quantityDiscount));
         return convertView;
     }
+
     private void setTextView(View convertView, int textViewId, String text) {
         TextView tv = convertView.findViewById(textViewId);
         tv.setText(text);
