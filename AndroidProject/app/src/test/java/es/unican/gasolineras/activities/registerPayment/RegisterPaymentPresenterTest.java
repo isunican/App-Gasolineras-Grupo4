@@ -32,7 +32,6 @@ public class RegisterPaymentPresenterTest {
     @Mock
     private IPagoDAO pagoDAOmock;
 
-    private AppDatabasePayments db;
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);

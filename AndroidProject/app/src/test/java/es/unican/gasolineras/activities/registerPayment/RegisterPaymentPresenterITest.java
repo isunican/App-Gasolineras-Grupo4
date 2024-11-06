@@ -75,7 +75,7 @@ public class RegisterPaymentPresenterITest {
         presenter.onRegisterPaymentClicked
                 ("", "Gasolinera arrandel", "1.54", "30");
         pagos = pagoDAO.getAll();
-        assertEquals(pagos.size(), 0);
+        assertEquals(0, pagos.size());
         verify(viewMock, times(1)).showAlertDialog
                 ("Debes seleccionar un tipo de combustible", "Error en el tipo de combustible");
 
@@ -83,7 +83,7 @@ public class RegisterPaymentPresenterITest {
         presenter.onRegisterPaymentClicked
                 ("GLP", "", "1.54", "30");
         pagos = pagoDAO.getAll();
-        assertEquals(pagos.size(), 0);
+        assertEquals(0, pagos.size());
         verify(viewMock, times(1)).showAlertDialog
                 ("Debes introducir un nombre de gasolinera", "Error en el nombre de gasolinera");
 
@@ -91,7 +91,7 @@ public class RegisterPaymentPresenterITest {
         presenter.onRegisterPaymentClicked
                 ("GLP", "Gasolinera arrandel", "", "30");
         pagos = pagoDAO.getAll();
-        assertEquals(pagos.size(), 0);
+        assertEquals(0, pagos.size());
         verify(viewMock, times(1)).showAlertDialog
                 ("Debes introducir un precio", "Error en el precio por litro");
 
@@ -99,7 +99,7 @@ public class RegisterPaymentPresenterITest {
         presenter.onRegisterPaymentClicked
                 ("GLP", "Gasolinera arrandel", "1.54", "");
         pagos = pagoDAO.getAll();
-        assertEquals(pagos.size(), 0);
+        assertEquals(0, pagos.size());
         verify(viewMock, times(1)).showAlertDialog
                 ("Debes introducir una cantidad de combustible", "Error en la cantidad");
 
