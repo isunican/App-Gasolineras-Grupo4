@@ -22,6 +22,9 @@ public interface IRegisterDiscountContract {
          */
         public void onRegisterDiscountClicked(Descuento descuento);
 
+        /**
+         * Metodo destinado a la llamada al View para que lance la actividad de vista de descuentos.
+         */
         public void onCancelRegistryClicked();
 
         /**
@@ -36,16 +39,38 @@ public interface IRegisterDiscountContract {
     public interface View {
 
 
+        /**
+         * Metodo encargado de inicializar aquello que necesita la clase View para funcionar
+         */
         public void init();
 
+        /**
+         * Metodo que lanza la vista de descuentos
+         */
         public void showDiscountHistory();
 
+        /**
+         * Metodo el cual es encargado de crear AlertDialogs con el titulo y mensaje indiciado.
+         * @param message Mensaje del alertDialog
+         * @param title Titulo del alertDialog
+         */
         public void showAlertDialog(String message, String title);
 
-        IDescuentoDAO getDescuentoDAO();
+        /**
+         * Metodo que retorna el objeto de tipo IDescuentoDAO que es necesario para interactuar con la base de datos.
+         * @return una instancia de IDescuentoDAO
+         */
+        public IDescuentoDAO getDescuentoDAO();
 
+        /**
+         * Metodo que retorna el contexto de la vista, para que el presenter pueda acceder a sus recursos.
+         * @return el contexto de la vista
+         */
         public Context getContext();
 
+        /**
+         * Metodo encargado de mostrar el alertDialog de exito.
+         */
         public void showSuccesDialog();
     }
 
