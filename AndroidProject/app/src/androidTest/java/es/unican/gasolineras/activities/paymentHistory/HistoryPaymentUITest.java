@@ -60,7 +60,6 @@ public class HistoryPaymentUITest {
     private AppDatabasePayments db;
     private IPagoDAO pagoDAO;
     private Pago p1,p2,p3,p4;
-    private View decorView;
 
     @Before
     public void setUp(){
