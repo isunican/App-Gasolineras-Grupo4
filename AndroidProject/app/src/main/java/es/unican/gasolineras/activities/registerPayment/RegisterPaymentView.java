@@ -21,7 +21,7 @@ import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.paymentHistory.IPaymentHistoryContract;
 import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.common.Utils;
-import es.unican.gasolineras.repository.AppDatabase;
+import es.unican.gasolineras.repository.AppDatabasePayments;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
@@ -29,7 +29,7 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
 
     private RegisterPaymentPresenter presenter;
 
-    private AppDatabase db;
+    private AppDatabasePayments db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +110,6 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
         startActivity(intent);
     }
 
-    public void showPaymentHistoryActivity() {
-        Intent intent = new Intent(this, PaymentHistoryView.class);
-        startActivity(intent);
-    }
 
     @Override
     public void showAlertDialog(String message, String title) {

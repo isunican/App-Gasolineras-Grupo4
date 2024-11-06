@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/menuItemBackArrow"
-        android:icon="@drawable/flecha_retroceder"
+        android:icon="@drawable/logo_casa"
         android:title=""
         android:visible="true"
         app:showAsAction="always" />

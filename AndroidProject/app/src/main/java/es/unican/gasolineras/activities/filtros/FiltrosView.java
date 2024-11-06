@@ -2,23 +2,22 @@ package es.unican.gasolineras.activities.filtros;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.combustible.CombustibleView;
-import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.TipoCombustible;
 
 public class FiltrosView extends AppCompatActivity implements IFiltrosContract.View {
 
     private FiltrosPresenter presenter;
+    private String order = "";
+    private TipoCombustible tipoCombustible = TipoCombustible.BIODIESEL;
     Spinner spinner;
     RadioButton rbAscendente;
     RadioButton rbDescendente;
@@ -27,6 +26,7 @@ public class FiltrosView extends AppCompatActivity implements IFiltrosContract.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros_gasolinera_view);
+        String orderS = getIntent().getStringExtra("order");
 
         spinner = findViewById(R.id.spinnerCombustible);
         rbAscendente = findViewById(R.id.rbAscendente);
@@ -35,6 +35,7 @@ public class FiltrosView extends AppCompatActivity implements IFiltrosContract.V
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        opcionesIniciales();
 
         btnConfirmar.setOnClickListener(onClickListener -> {
             presenter.onButtonConfirmarClick();
@@ -43,43 +44,6 @@ public class FiltrosView extends AppCompatActivity implements IFiltrosContract.V
         presenter.init(this);
     }
 
-    /**
-     * This creates the menu that is shown in the action bar (the upper toolbar)
-     * @param menu The options menu in which you place your items.
-     *
-     * @return true because we are defining a new menu
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_combustible, menu);
-        return true;
-    }
-
-    /**
-     * This is called when an item in the action bar menu is selected.
-     * @param item The menu item that was selected.
-     *
-     * @return true if we have handled the selection
-     */
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
-
-        if (itemId == R.id.menuItemBackArrow) {
-            presenter.onMenuBackArrowClick();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * @see IFiltrosContract.View#showMainActivity()
-     */
-    public void showMainActivity() {
-        Intent intent = new Intent(this, MainView.class);
-        startActivity(intent);
-    }
 
     /**
      * @see IFiltrosContract.View#lanzarBusquedaConFiltros()
@@ -89,6 +53,79 @@ public class FiltrosView extends AppCompatActivity implements IFiltrosContract.V
         Intent intent = new Intent(this, CombustibleView.class);
         intent = presenter.seleccionarFiltros(spinner, rbAscendente, rbDescendente, intent);
         startActivity(intent);
+    }
+
+
+    @Override
+    public void opcionesIniciales() {
+        order = getIntent().getStringExtra("order");
+        //Parametro de la llamadas desde el main
+        if (order == null) {
+            order = "2";
+        }
+        //Orden
+        rbDescendente.setChecked(false);
+        rbAscendente.setChecked(false);
+        if (order.equals("0")) {
+            rbDescendente.setChecked(true);
+        } else if (order.equals("1")) {
+            rbAscendente.setChecked(true);
+        }
+
+        //Tipo combustible
+        String tipoCombustibleStr = getIntent().getStringExtra("tipoCombustible");
+        if (tipoCombustibleStr == null) {
+            tipoCombustibleStr = "BIODIESEL";
+        }
+        tipoCombustible = TipoCombustible.valueOf(tipoCombustibleStr);
+        switch (tipoCombustible) {
+            case BIODIESEL:
+                spinner.setSelection(0);
+                break;
+            case BIOETANOL:
+                spinner.setSelection(1);
+                break;
+            case GAS_NATURAL_COMPRIMIDO:
+                spinner.setSelection(2);
+                break;
+            case GAS_NATURAL_LICUADO:
+                spinner.setSelection(3);
+                break;
+            case GASES_LICUADOS_DEL_PETROLEO:
+                spinner.setSelection(4);
+                break;
+            case GASOLEO_A_HABITUAL:
+                spinner.setSelection(5);
+                break;
+            case GASOLEO_B:
+                spinner.setSelection(6);
+                break;
+            case GASOLEO_PREMIUM:
+                spinner.setSelection(7);
+                break;
+            case GASOLINA_95_E10:
+                spinner.setSelection(8);
+                break;
+            case GASOLINA_95_E5:
+                spinner.setSelection(9);
+                break;
+            case GASOLINA_95_E5_PREMIUM:
+                spinner.setSelection(10);
+                break;
+            case GASOLINA_98_E10:
+                spinner.setSelection(11);
+                break;
+            case GASOLINA_98_E5:
+                spinner.setSelection(12);
+                break;
+            case HIDROGENO:
+                spinner.setSelection(13);
+                break;
+            default:
+                spinner.setSelection(0);
+                break;
+        }
+
     }
 
 }

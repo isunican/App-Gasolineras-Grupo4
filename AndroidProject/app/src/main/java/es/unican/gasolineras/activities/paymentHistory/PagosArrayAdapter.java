@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.model.Descuento;
 import es.unican.gasolineras.model.Pago;
 
 /** The list of gas stations to render */
@@ -44,36 +45,29 @@ public class PagosArrayAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context)
                     .inflate(R.layout.activity_payment_history_list_item, parent, false);
         }
-        // Fecha
-        {
-            TextView tv = convertView.findViewById(R.id.Fecha);
-            tv.setText("Fecha: " + pago.getDate());
-        }
-        // Nombre
-        {
-            TextView tv = convertView.findViewById(R.id.Estacion);
-            tv.setText(pago.getStationName());
-        }
-        // Tipo combustible
-        {
-            TextView tv = convertView.findViewById(R.id.TipoCombustible);
-            tv.setText("Combustible: " + pago.getFuelType());
-        }
-        // Cantidad
-        {
-            TextView tv = convertView.findViewById(R.id.Cantidad);
-            tv.setText("Cantidad: " + String.valueOf(pago.getQuantity()));
-        }
-        // Importe total
-        {
-            TextView tv = convertView.findViewById(R.id.ImporteTotal);
-            tv.setText("Importe: " + String.valueOf(pago.getFinalPrice()));
-        }
-        // Precio
-        {
-            TextView tv = convertView.findViewById(R.id.Precio);
-            tv.setText("Precio: " + String.valueOf(pago.pricePerLitre));
-        }
+        convertView = linkTextView(convertView, pago);
+
         return convertView;
+    }
+
+    private View linkTextView(View convertView, Pago pago){
+        // Fecha
+        setTextView(convertView,R.id.Fecha,"Fecha: " + pago.getDate());
+        // Nombre
+        setTextView(convertView,R.id.Estacion,pago.getStationName());
+        // Tipo combustible
+        setTextView(convertView,R.id.TipoCombustible,"Combustible: " + pago.getFuelType());
+        // Cantidad
+        setTextView(convertView,R.id.Cantidad,"Cantidad: " + String.valueOf(pago.getQuantity()));
+        // Importe total
+        setTextView(convertView,R.id.ImporteTotal,"Importe: " + String.valueOf(pago.getFinalPrice()));
+        // Precio
+        setTextView(convertView,R.id.Precio,"Precio: " + String.valueOf(pago.pricePerLitre));
+        return convertView;
+    }
+
+    private void setTextView(View convertView, int textViewId, String text) {
+        TextView tv = convertView.findViewById(textViewId);
+        tv.setText(text);
     }
 }

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbRegisterDiscount"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.Gasolineras.Toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Registro de descuento" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="58dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:text="Nombre"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbRegisterDiscount" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+    <TextView
+        android:id="@+id/tvCompany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Compañia"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/etName"
+        app:layout_constraintTop_toBottomOf="@+id/etName" />
+
+    <Spinner
+        android:id="@+id/spnCompany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="@+id/tvCompany"
+        app:layout_constraintTop_toBottomOf="@+id/tvCompany" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/tvTypeDiscount"
+        app:layout_constraintTop_toBottomOf="@+id/tvTypeDiscount">
+
+        <RadioButton
+            android:id="@+id/rbPercentaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:text="Porcentaje" />
+
+        <RadioButton
+            android:id="@+id/rbFixed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fijo" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tvQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Cantidad"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <EditText
+        android:id="@+id/etQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="@+id/tvQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuantity" />
+
+    <TextView
+        android:id="@+id/tvType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CambiarTipoAqui"
+        app:layout_constraintBottom_toBottomOf="@+id/etQuantity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etQuantity"
+        app:layout_constraintTop_toTopOf="@+id/etQuantity" />
+
+    <EditText
+        android:id="@+id/tvExpiranceDate"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="@+id/tvValidityDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvValidityDate" />
+
+    <CheckBox
+        android:id="@+id/chkActive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Activo"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tvExpiranceDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvExpiranceDate" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="20dp"
+        android:text="Cancelar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chkActive" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="70dp"
+        android:text="Crear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnCancel" />
+
+    <TextView
+        android:id="@+id/tvTypeDiscount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Tipo descuento"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/spnCompany"
+        app:layout_constraintTop_toBottomOf="@+id/spnCompany" />
+
+    <TextView
+        android:id="@+id/tvValidityDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Validez"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/etQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/etQuantity" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

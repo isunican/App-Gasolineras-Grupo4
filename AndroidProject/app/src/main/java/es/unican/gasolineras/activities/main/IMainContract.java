@@ -4,7 +4,6 @@ import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
  * The Presenter-View contract for the Main activity.
@@ -50,6 +49,11 @@ public interface IMainContract {
          */
         public void onMenuFiltrosClicked();
 
+        /**
+         * The presenter is informed that the descuentos item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuDescuentosClicked();
     }
 
     /**
@@ -124,6 +128,11 @@ public interface IMainContract {
          */
         public void showFiltrosActivity();
 
+        /**
+         * The view is requested to open the descuentos activity.
+         * Only the Presenter should call this method
+         */
+        public void showDescuentosActivity();
 
     }
 }
