@@ -7,14 +7,20 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import android.content.Context;
 
+import android.content.Context;
+import android.widget.DatePicker;
+
+import androidx.test.espresso.contrib.PickerActions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -39,18 +45,20 @@ public class RegisterDiscountErrorCantidadNoValidaUITest {
 
     @Test
     public void errorCantidadMenorQue0(){
-        //Compruebo el caso de error cantidad menor que 0
+
+        // Compruebo el caso de error cantidad menor que 0
         onView(withId(R.id.etName)).perform(typeText("Descuento8"), closeSoftKeyboard());
         onView(withId(R.id.spnCompany)).perform(click());
         onView(withText("ALSA")).perform(click());
         onView(withId(R.id.rbFixed)).perform(click());
         onView(withId(R.id.etQuantity)).perform(typeText("0"), closeSoftKeyboard());
-        onView(withId(R.id.tvExpiranceDate)).perform(click());
-        // onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2023, 6, 15));
+        onView(withId(R.id.tvExpiranceDate)).check(matches(isDisplayed())).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2024, 11, 20));
         onView(withText("OK")).perform(click());
-        onView(withId(R.id.btnCreate)).perform(click());
+        onView(ViewMatchers.withId(R.id.btnCreate)).perform(click());
         onView(withText("Error")).inRoot(isDialog()).check(matches(isDisplayed()));
-        onView(withText("La cantidad fija debe ser mayor que 0" )).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText("La cantidad fija debe ser mayor que 0")).inRoot(isDialog()).check(matches(isDisplayed()));
         onView(withText("Aceptar")).inRoot(isDialog()).check(matches(isDisplayed())).perform(click());
+
     }
 }
