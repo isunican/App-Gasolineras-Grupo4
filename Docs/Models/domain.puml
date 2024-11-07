@@ -11,23 +11,33 @@ class Gasolinera {
     - double gasoleoA
     - double gasolina95E5
     - double precioProducto
+    + getPrecioSumario()
 }
 
 class GasolinerasResponse {
     - String fecha
     - String nota
-    - List<Gasolinera> gasolineras
     - String consulta
 }
 
 class Pago {
-    - int id
-    - String stationName
-    - String date
-    - String fuelType
-    - double quantity
-    - double finalPrice
-    - pricePerLitre 
+    + int pid
+    + String stationName
+    + String date
+    + String fuelType
+    + double quantity
+    + pricePerLitre 
+    + double finalPrice
+}
+
+class Descuento {
+    + int pid
+    + String discountName
+    + string company
+    + String discountType
+    + Double quantityDiscount
+    + String expiranceDate
+    + boolean discountActive
 }
 
 enum IDCCAAs {

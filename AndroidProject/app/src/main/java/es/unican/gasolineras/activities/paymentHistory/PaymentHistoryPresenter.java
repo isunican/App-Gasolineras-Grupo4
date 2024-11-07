@@ -4,7 +4,6 @@ import android.database.sqlite.SQLiteException;
 
 import java.util.List;
 
-import es.unican.gasolineras.activities.combustible.ICombustibleContract;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
