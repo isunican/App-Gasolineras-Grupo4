@@ -46,4 +46,10 @@ public interface IPagoDAO {
      */
     @Delete
     void delete(Pago pago);
+
+    /**
+     * Vacia todo lo registrado en la tabla pago
+     */
+    @Query("DELETE FROM pago")
+    void vaciaBD();
 }
