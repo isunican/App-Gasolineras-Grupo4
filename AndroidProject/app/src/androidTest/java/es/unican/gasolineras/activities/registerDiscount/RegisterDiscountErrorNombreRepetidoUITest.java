@@ -13,12 +13,12 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
 import android.content.Context;
-import android.view.View;
+
 import android.widget.DatePicker;
 
 import androidx.room.Room;
 import androidx.test.espresso.contrib.PickerActions;
-import androidx.test.espresso.matcher.ViewMatchers;
+
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -31,11 +31,11 @@ import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Descuento;
-import es.unican.gasolineras.model.Pago;
+
 import es.unican.gasolineras.repository.AppDatabaseDiscount;
-import es.unican.gasolineras.repository.AppDatabasePayments;
+
 import es.unican.gasolineras.repository.IDescuentoDAO;
-import es.unican.gasolineras.repository.IPagoDAO;
+
 
 
 @HiltAndroidTest
