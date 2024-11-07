@@ -33,35 +33,36 @@ public class RegisterDiscountPresenterCamposVaciosTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         sut = new RegisterDiscountPresenter();
         sut.init(viewMock);
         descuentoValido = new Descuento();
-        descuentoValido.discountName="Descuento1";
-        descuentoValido.company="ALSA";
-        descuentoValido.discountType="PERCENTAGE";
-        descuentoValido.quantityDiscount=50.0;
-        descuentoValido.expiranceDate="2024-11-30";
+        descuentoValido.discountName="Des1";
+        descuentoValido.company="REPSOL";
+        descuentoValido.discountType="€/l";
+        descuentoValido.quantityDiscount=0.1;
+        descuentoValido.expiranceDate="23/11/2024";
+        descuentoValido.discountActive=true;
 
     }
 
     @Test
     public void testDescuentoValido() {
-        // Caso donde todos los campos están completos
+
         boolean resultado = sut.hayCamposVacios(descuentoValido);
         assertFalse("Debe devolver false cuando todos los campos estan completos", resultado);
         verify(viewMock, never()).showAlertDialog(anyString(), anyString());
     }
 
     @Test
-    public void testNombreVacio() {
-        // Caso donde el nombre está vacío
+    public void testNombreVacio() { // UP1.2
+
         Descuento descuento = new Descuento();
         descuento.discountName = "";
         descuento.company = "ALSA";
-        descuento.discountType = "PERCENTAGE";
+        descuento.discountType = "%";
         descuento.quantityDiscount = 50.0;
-        descuento.expiranceDate = "2024-11-20";
+        descuento.expiranceDate = "2024/11/20";
 
         boolean resultado = sut.hayCamposVacios(descuento);
         assertTrue("Debe haber un error", resultado);
@@ -69,14 +70,14 @@ public class RegisterDiscountPresenterCamposVaciosTest {
         verify(viewMock).showAlertDialog("El nombre no puede estar vacío", "Error");
     }
     @Test
-    public void testCompañiaVacia() {
-        // Caso donde la compañía está vacía
+    public void testCompañiaVacia() { // UP1.3
+
         Descuento descuento = new Descuento();
         descuento.discountName = "Nombre";
-        descuento.company = "";  // Compañía vacía
-        descuento.discountType = "PERCENTAGE";
+        descuento.company = "";
+        descuento.discountType = "%";
         descuento.quantityDiscount = 50.0;
-        descuento.expiranceDate = "2024-11-20";
+        descuento.expiranceDate = "2024/11/20";
 
         boolean resultado = sut.hayCamposVacios(descuento);
         assertTrue("Debe haber un error", resultado);
@@ -87,14 +88,14 @@ public class RegisterDiscountPresenterCamposVaciosTest {
 
 
     @Test
-    public void testCantidadVacia() {
-        // Caso donde la cantidad está vacía
+    public void testCantidadVacia() { // UP1.4
+
         Descuento descuento = new Descuento();
         descuento.discountName = "Nombre";
         descuento.company = "ALSA";
-        descuento.discountType = "PERCENTAGE";
-        descuento.quantityDiscount = null;  // Cantidad nula
-        descuento.expiranceDate = "2024-11-20";
+        descuento.discountType = "%";
+        descuento.quantityDiscount = null;
+        descuento.expiranceDate = "2024/11/20";
 
         boolean resultado = sut.hayCamposVacios(descuento);
         assertTrue("Debe haber un error", resultado);
@@ -104,14 +105,14 @@ public class RegisterDiscountPresenterCamposVaciosTest {
 
 
     @Test
-    public void testFechaVacia() {
-        // Caso donde la fecha de expiración está vacía
+    public void testFechaVacia() { // UP1.5
+
         Descuento descuento = new Descuento();
         descuento.discountName = "Nombre";
         descuento.company = "ALSA";
-        descuento.discountType = "PERCENTAGE";
+        descuento.discountType = "%";
         descuento.quantityDiscount = 50.0;
-        descuento.expiranceDate = "";  // Fecha vacía
+        descuento.expiranceDate = "";
 
         boolean resultado = sut.hayCamposVacios(descuento);
         assertTrue("Debe haber un error", resultado);
@@ -120,14 +121,13 @@ public class RegisterDiscountPresenterCamposVaciosTest {
     }
 
     @Test
-    public void testTipoDescuentoVacio() {
-        // Caso donde el tipo de descuento está vacío
+    public void testTipoDescuentoVacio() { // UP1.6
         Descuento descuento = new Descuento();
         descuento.discountName = "Nombre";
         descuento.company = "ALSA";
-        descuento.discountType = "";  // Tipo vacío
+        descuento.discountType = "";
         descuento.quantityDiscount = 50.0;
-        descuento.expiranceDate = "2024-11-20";
+        descuento.expiranceDate = "2024/11/20";
 
         boolean resultado = sut.hayCamposVacios(descuento);
         assertTrue("Debe haber un error", resultado);

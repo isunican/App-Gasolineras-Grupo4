@@ -36,7 +36,7 @@ public class RegisterDiscountPresenter implements IRegisterDiscountContract.Pres
                     if (d.discountType.equals("%")) {
 
                         //Comprobamos que la cantidad esté entre 0 y 100
-                        if (d.quantityDiscount < 0 || d.quantityDiscount > 100) {
+                        if (d.quantityDiscount <= 0 || d.quantityDiscount > 100) {
                             view.showAlertDialog("El porcentaje debe estar entre 0 y 100", errorTitle);
                         } else {
                             view.showSuccesDialog();
