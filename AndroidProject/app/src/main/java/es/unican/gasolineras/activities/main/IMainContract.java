@@ -4,7 +4,6 @@ import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
  * The Presenter-View contract for the Main activity.

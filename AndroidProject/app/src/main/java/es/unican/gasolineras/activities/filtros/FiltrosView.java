@@ -2,18 +2,15 @@ package es.unican.gasolineras.activities.filtros;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.combustible.CombustibleView;
-import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.TipoCombustible;
 
 public class FiltrosView extends AppCompatActivity implements IFiltrosContract.View {
