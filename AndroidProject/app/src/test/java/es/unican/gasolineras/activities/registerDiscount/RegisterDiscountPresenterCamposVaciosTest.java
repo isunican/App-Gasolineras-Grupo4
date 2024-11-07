@@ -33,15 +33,16 @@ public class RegisterDiscountPresenterCamposVaciosTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         sut = new RegisterDiscountPresenter();
         sut.init(viewMock);
         descuentoValido = new Descuento();
-        descuentoValido.discountName="Descuento1";
-        descuentoValido.company="ALSA";
-        descuentoValido.discountType="PERCENTAGE";
-        descuentoValido.quantityDiscount=50.0;
-        descuentoValido.expiranceDate="2024-11-30";
+        descuentoValido.discountName="Des1";
+        descuentoValido.company="REPSOL";
+        descuentoValido.discountType="FIXED";
+        descuentoValido.quantityDiscount=0.1;
+        descuentoValido.expiranceDate="23/11/2024";
+        descuentoValido.discountActive=true;
 
     }
 
