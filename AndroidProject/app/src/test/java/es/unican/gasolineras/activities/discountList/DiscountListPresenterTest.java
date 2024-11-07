@@ -19,10 +19,6 @@ import java.util.LinkedList;
 import es.unican.gasolineras.model.Descuento;
 import es.unican.gasolineras.repository.IDescuentoDAO;
 
-
-/**
- * TEST REALIZADO POR
- * EDUARD GABRIEL TANASE*/
 @RunWith(RobolectricTestRunner.class)
 public class DiscountListPresenterTest {
 
@@ -73,8 +69,8 @@ public class DiscountListPresenterTest {
         d2.setExpiranceDate("20/8/2026");
         d3.setExpiranceDate("21/10/2027");
         d1.setDiscountActive(true);
-        d1.setDiscountActive(false);
-        d1.setDiscountActive(false);
+        d2.setDiscountActive(false);
+        d3.setDiscountActive(false);
 
         // Initialize the lists of discounts
         descuentos = new LinkedList<Descuento>();
