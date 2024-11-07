@@ -11,23 +11,23 @@ class Gasolinera {
     - double gasoleoA
     - double gasolina95E5
     - double precioProducto
+    + getPrecioSumario()
 }
 
 class GasolinerasResponse {
     - String fecha
     - String nota
-    - List<Gasolinera> gasolineras
     - String consulta
 }
 
 class Pago {
-    + int id
+    + int pid
     + String stationName
     + String date
     + String fuelType
     + double quantity
-    + double finalPrice
     + pricePerLitre 
+    + double finalPrice
 }
 
 class Descuento {
