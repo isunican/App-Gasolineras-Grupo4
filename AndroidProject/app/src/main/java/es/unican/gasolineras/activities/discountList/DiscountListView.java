@@ -15,16 +15,15 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.List;
 
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.activities.registerDiscount.RegisterDiscountView;
-import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
+import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.model.Descuento;
 import es.unican.gasolineras.repository.AppDatabaseDiscount;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IDescuentoDAO;
 
-public class DiscountListView extends AppCompatActivity implements IDiscountListContract.View {
+public class   DiscountListView extends AppCompatActivity implements IDiscountListContract.View {
 
     private DiscountListPresenter presenter;
 
