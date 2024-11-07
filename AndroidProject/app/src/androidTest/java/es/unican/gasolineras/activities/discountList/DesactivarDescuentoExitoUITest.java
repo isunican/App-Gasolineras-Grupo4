@@ -64,6 +64,8 @@ public class DesactivarDescuentoExitoUITest {
                 .allowMainThreadQueries()
                 .build();
         descuentosDAO = db.descuentosDAO();
+        descuentosDAO.vaciaBD();
+
     }
 
     @Test

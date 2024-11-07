@@ -58,4 +58,6 @@ public interface IDescuentoDAO {
     @Query("UPDATE Descuento set discount_active = :activo where discount_name = :nombre")
     void update(boolean activo, String nombre);
 
+    @Query("DELETE FROM descuento")
+    void vaciaBD();
 }

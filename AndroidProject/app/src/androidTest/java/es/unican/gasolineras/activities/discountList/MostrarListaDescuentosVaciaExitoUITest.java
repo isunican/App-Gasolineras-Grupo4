@@ -26,6 +26,7 @@ import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.AppDatabaseDiscount;
 import es.unican.gasolineras.repository.IDescuentoDAO;
@@ -57,10 +58,15 @@ public class MostrarListaDescuentosVaciaExitoUITest {
                 .allowMainThreadQueries()
                 .build();
         descuentosDAO = db.descuentosDAO();
+        descuentosDAO.vaciaBD();
+
     }
 
     @Test
     public void mostrarListaDescuentosVaciaExito() {
+        pressBackUnconditionally();
+        activityRule.getScenario().close();
+        ActivityScenario.launch(DiscountListView.class);
         onView(withId(R.id.lvDiscounts)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
     }
 }
