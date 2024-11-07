@@ -1,20 +1,13 @@
 package es.unican.gasolineras.activities.discountList;
 
-
 import static androidx.test.espresso.Espresso.onData;
-import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBackUnconditionally;
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isNotActivated;
 import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
 import static org.hamcrest.CoreMatchers.anything;
-
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
@@ -44,7 +37,7 @@ import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @UninstallModules(RepositoriesModule.class)
 @HiltAndroidTest
-public class MostrarListaDescuentosExitoUITest {
+public class DesactivarDescuentoExitoUITest {
 
     @Rule(order = 0)
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
@@ -74,8 +67,7 @@ public class MostrarListaDescuentosExitoUITest {
     }
 
     @Test
-    public void mostrarListaDescuentosExitoso() {
-
+    public void desactivarDescuentoExito() {
         d1.setDiscountName("Descuento1");
         d2.setDiscountName("Descuento2");
         d3.setDiscountName("Descuento3");
@@ -103,37 +95,14 @@ public class MostrarListaDescuentosExitoUITest {
         activityRule.getScenario().close();
         ActivityScenario.launch(DiscountListView.class);
 
-
         SystemClock.sleep(5000);
 
-        onView(withId(R.id.lvDiscounts)).check(matches(isDisplayed())).check(matches(hasChildCount(3)));
-
         DataInteraction descuento1 = onData(anything()).inAdapterView(withId(R.id.lvDiscounts)).atPosition(0);
-        DataInteraction descuento2 = onData(anything()).inAdapterView(withId(R.id.lvDiscounts)).atPosition(1);
-        DataInteraction descuento3 = onData(anything()).inAdapterView(withId(R.id.lvDiscounts)).atPosition(2);
-
-        descuento1.onChildView(withId(R.id.discountName)).check(matches(withText("Nombre:\nDescuento1")));
-        descuento2.onChildView(withId(R.id.discountName)).check(matches(withText("Nombre:\nDescuento2")));
-        descuento3.onChildView(withId(R.id.discountName)).check(matches(withText("Nombre:\nDescuento3")));
-
-        descuento1.onChildView(withId(R.id.discountBrand)).check(matches(withText("Compañia:\nRepsol")));
-        descuento2.onChildView(withId(R.id.discountBrand)).check(matches(withText("Compañia:\nCepsa")));
-        descuento3.onChildView(withId(R.id.discountBrand)).check(matches(withText("Compañia:\nBP")));
-
-        descuento1.onChildView(withId(R.id.discountBrand)).check(matches(withText("Compañia:\nRepsol")));
-        descuento2.onChildView(withId(R.id.discountBrand)).check(matches(withText("Compañia:\nCepsa")));
-        descuento3.onChildView(withId(R.id.discountBrand)).check(matches(withText("Compañia:\nBP")));
-
-        descuento1.onChildView(withId(R.id.discountType)).check(matches(withText("Tipo descuento\nFijo")));
-        descuento2.onChildView(withId(R.id.discountType)).check(matches(withText("Tipo descuento\nVariable")));
-        descuento3.onChildView(withId(R.id.discountType)).check(matches(withText("Tipo descuento\nFijo")));
-
-        descuento1.onChildView(withId(R.id.discountValue)).check(matches(withText("Valor descuento:\n0.1")));
-        descuento2.onChildView(withId(R.id.discountValue)).check(matches(withText("Valor descuento:\n20.0")));
-        descuento3.onChildView(withId(R.id.discountValue)).check(matches(withText("Valor descuento:\n0.2")));
 
         descuento1.onChildView(withId(R.id.chkActive)).check(matches(isChecked()));
-        descuento2.onChildView(withId(R.id.chkActive)).check(matches(isNotActivated()));
-        descuento3.onChildView(withId(R.id.chkActive)).check(matches(isNotChecked()));
+
+        descuento1.onChildView(withId(R.id.chkActive)).perform(click());
+        descuento1.onChildView(withId(R.id.chkActive)).check(matches(isNotChecked()));
+
     }
 }

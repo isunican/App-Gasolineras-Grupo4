@@ -66,7 +66,7 @@ public class DiscountListPresenterTest {
         d2.setQuantityDiscount(20.0);
         d3.setQuantityDiscount(0.2);
         d1.setExpiranceDate("23/11/2024");
-        d2.setExpiranceDate("20/8/2026");
+        d2.setExpiranceDate("20/08/2026");
         d3.setExpiranceDate("21/10/2027");
         d1.setDiscountActive(true);
         d2.setDiscountActive(false);
