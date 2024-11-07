@@ -21,13 +21,23 @@ class GasolinerasResponse {
 }
 
 class Pago {
-    - int id
-    - String stationName
-    - String date
-    - String fuelType
-    - double quantity
-    - double finalPrice
-    - pricePerLitre 
+    + int id
+    + String stationName
+    + String date
+    + String fuelType
+    + double quantity
+    + double finalPrice
+    + pricePerLitre 
+}
+
+class Descuento {
+    + int pid
+    + String discountName
+    + string company
+    + String discountType
+    + Double quantityDiscount
+    + String expiranceDate
+    + boolean discountActive
 }
 
 enum IDCCAAs {
