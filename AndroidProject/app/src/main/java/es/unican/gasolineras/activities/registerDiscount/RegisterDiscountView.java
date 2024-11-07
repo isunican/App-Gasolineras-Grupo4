@@ -150,7 +150,7 @@ public class RegisterDiscountView extends AppCompatActivity implements IRegister
                 R.style.CustomDatePickerDialogTheme,
                 (view, anhoSeleccionado, mesSeleccionado, diaSeleccionado) -> {
                     // El mes empieza desde 0, por eso sumamos 1
-                    String fechaSeleccionada = diaSeleccionado + "/" + (mesSeleccionado + 1) + "/" + anhoSeleccionado;
+                    String fechaSeleccionada = String.format("%02d", diaSeleccionado) + "/" + String.format("%02d", mesSeleccionado + 1) + "/" + anhoSeleccionado;
                     fechaEditText.setText(fechaSeleccionada);
                 },
                 anho, mes, dia);

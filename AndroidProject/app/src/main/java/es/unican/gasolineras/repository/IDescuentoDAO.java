@@ -17,7 +17,7 @@ public interface IDescuentoDAO {
      * base de datos
      * @return Lista de descuentos que hay en la base de datos
      */
-    @Query("SELECT * FROM descuento ORDER BY expirance_date ASC")
+    @Query("SELECT * FROM descuento ORDER BY SUBSTR(expirance_date, 7, 4) || '-' || SUBSTR(expirance_date, 4, 2) || '-' || SUBSTR(expirance_date, 1, 2) ASC")
     List<Descuento> getAll();
 
     /**
@@ -58,4 +58,9 @@ public interface IDescuentoDAO {
     @Query("UPDATE Descuento set discount_active = :activo where discount_name = :nombre")
     void update(boolean activo, String nombre);
 
+    /**
+     * Vacia todo lo registrado en la tabla descuento
+     */
+    @Query("DELETE FROM descuento")
+    void vaciaBD();
 }
