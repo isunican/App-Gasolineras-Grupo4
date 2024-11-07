@@ -1,4 +1,4 @@
-package es.unican.gasolineras.activities.discountList;
+package es.unican.gasolineras.activities.paymentHistory;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBackUnconditionally;
@@ -10,7 +10,6 @@ import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
 import android.os.SystemClock;
-import android.view.View;
 
 import androidx.room.Room;
 import androidx.test.core.app.ActivityScenario;
@@ -26,47 +25,58 @@ import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
+import es.unican.gasolineras.activities.discountList.DiscountListView;
 import es.unican.gasolineras.injection.RepositoriesModule;
-import es.unican.gasolineras.repository.AppDatabaseDiscount;
-import es.unican.gasolineras.repository.IDescuentoDAO;
+import es.unican.gasolineras.model.Pago;
+import es.unican.gasolineras.repository.AppDatabasePayments;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import es.unican.gasolineras.repository.IPagoDAO;
 
-@UninstallModules(RepositoriesModule.class)
+/** TEST REALIZADO POR
+ * ALEJANDRO ACEBO**/
+@UninstallModules(RepositoriesModule  .class)
 @HiltAndroidTest
-public class MostrarListaDescuentosVaciaExitoUITest {
+public class HistoryPaymentListaVaciaUITest {
 
-    @Rule(order = 0)
+    @Rule(order = 0)  // the Hilt rule must execute first
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
 
     @Rule(order = 1)
-    public ActivityScenarioRule<DiscountListView> activityRule = new ActivityScenarioRule<>(DiscountListView.class);
+    public ActivityScenarioRule<PaymentHistoryView> activityRule = new ActivityScenarioRule<>(PaymentHistoryView.class);
 
+    // I need the context to access resources, such as the json with test gas stations
     final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
     @BindValue
     final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
 
-    private AppDatabaseDiscount db;
-    private IDescuentoDAO descuentosDAO;
-    private View decorView;
+    private AppDatabasePayments db;
+    private IPagoDAO pagoDAO;
+    private Pago p1, p2, p3, p4;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         // Create the database
         db = Room.databaseBuilder(context,
-                        AppDatabaseDiscount.class, "discounts")
+                        AppDatabasePayments.class, "payments")
                 .allowMainThreadQueries()
                 .build();
-        descuentosDAO = db.descuentosDAO();
-        descuentosDAO.vaciaBD();
-
+        pagoDAO = db.pagoDAO();
+        pagoDAO.vaciaBD();
     }
 
+    /**
+     * This test checks if the list of payments is empty.
+     */
     @Test
-    public void mostrarListaDescuentosVaciaExito() {
+    public void showHistoryPaymentsNoPaymentsTest() {
+
         pressBackUnconditionally();
         activityRule.getScenario().close();
-        ActivityScenario.launch(DiscountListView.class);
-        onView(withId(R.id.lvDiscounts)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
+        ActivityScenario.launch(PaymentHistoryView.class);
+        // Checks that the list of payments is empty because 0 childs and it is visible to check
+        onView(withId(R.id.lvPagos)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
+        SystemClock.sleep(5000);
+
     }
 }

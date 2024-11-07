@@ -71,6 +71,8 @@ public class MostrarListaDescuentosExitoUITest {
                 .allowMainThreadQueries()
                 .build();
         descuentosDAO = db.descuentosDAO();
+        descuentosDAO.vaciaBD();
+
     }
 
     @Test
