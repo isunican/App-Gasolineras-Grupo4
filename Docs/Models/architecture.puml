@@ -12,6 +12,8 @@ MainView -down..-> FiltrosView : <<use>>
 MainView -down..-> CombustibleView : <<use>>
 MainView -up..-> PaymentHistoryView : <<use>>
 MainView -up..-> RegisterPaymentView: <<use>>
+MainView -up..-> DiscountListView: <<use>>
+MainView -up..-> RegisterDiscountView: <<use>>
 
 
 FiltrosView -right(0- FiltrosPresenter: IFiltrosContract.Presenter
@@ -26,11 +28,71 @@ PaymentHistoryView -right(0- PaymentHistoryPresenter: IPaymentHistoryContract.Pr
 PaymentHistoryView-right0)- PaymentHistoryPresenter : IPaymentHistoryContract.View
 PaymentHistoryPresenter -right(0- LibreriaRoom: IPagoDAO 
 
-RegisterPaymentView-right(0- RegisterPaymentPresenter: IRegisterPayment.Presenter
-RegisterPaymentView-right0)- RegisterPaymentPresenter : IRegisterPayment.View
+RegisterPaymentView-right(0- RegisterPaymentPresenter: IRegisterPaymentContract.Presenter
+RegisterPaymentView-right0)- RegisterPaymentPresenter : IRegisterPaymentContract.View
 
-class MainPresenter {
-    -load()
+DiscountListView-right(0- DiscountListPresenter: IRegisterPaymentContract.Presenter
+DiscountListView-right0)- DiscountListPresenter: IRegisterPaymentContract.View
+DiscountListPresenter -right(0- LibreriaRoom: IDescuentoDAO 
+
+RegisterDiscountView-right(0- RegisterDiscountPresenter: IRegisterDiscountContract.Presenter
+RegisterDiscountView-right0)- RegisterDiscountPresenter: IRegisterDiscountContract.View
+
+
+
+interface ICombustileContract#Presenter {
+    + init(View view, TipoCombustible tipoCombustible)
+    + onStationClicked(Gasolinera station)
+    + onMenuInfoClicked()
+    + onMenuHistoryClicked()
+    + onMenuFiltrosClicked()
+    + onMenuDescuentosClicked()
+}
+
+interface ICombustileContract#View {
+    + init()
+    + getGasolinerasRepository()
+    + showStations(List<Gasolinera> stations)
+    + showLoadCorrect(int stations)
+    + showLoadError()
+    + showStationDetails(Gasolinera station)
+    + showInfoActivity()
+    + showHistoryActivity()
+    + showFiltrosActivity()
+    + showDescuentosActivity()
+}
+
+interface IDiscountListCOntract#Presenter {
+    + init(View view)
+}
+
+interface IDiscountListCOntract#View {
+    + init()
+    + getDescuentoDAO()
+    + showDescuentos(List<Descuento> descuentos)
+    + showErrorBD()
+}
+
+interface IFiltrosContract#Presenter {
+    + init(View view)
+    + onButtonConfirmarClick()
+    + seleccionarFiltros()
+    + seleccionarFiltrosOrden()
+    + seleccionarFiltrosTipoCOmbustible()
+}
+
+interface IFiltrosContract#View {
+    + lanzarBusquedaConFiltros()
+    + opcionesIniciales()
+}
+
+interface IMainContract#Presenter {
+    + init(View view)
+    + onStationClicked(Gasolinera station)
+    + onMenuInfoClicked()
+    + onMenuHistoryClicked()
+    + onMenuFiltrosClicked()
+    + onMenuDescuentosClicked()
 }
 
 interface IMainContract#View {
@@ -43,50 +105,11 @@ interface IMainContract#View {
     + showInfoActivity()
     + showHistoryActivity()
     + howFiltrosActivity()
+    + showDescuentosActivity()
 }
 
-interface IMainContract#Presenter {
+interface IPaymentHistoryContract#Presenter {
     + init(View view)
-    + onStationClicked(Gasolinera station)
-    + onMenuInfoClicked()
-    + onMenuHistoryClicked()
-    + onMenuFiltrosClicked()
-}
-
-interface IGasolinerasRepository {
-    + requestGasolineras(ICallBack cb, String ccaa)
-}
-
-interface ICallBack {
-    + onSuccess(List<Gasolinera> gasolineras)
-    + onFailure(Throwable e)
-}
-
-interface IFiltrosContract#View {
-    + showMainActivity()
-    + lanzarBusquedaConFiltros()
-}
-
-interface IFiltrosContract#Presenter {
-    + init(View view)
-    + onMenuBackArrowClick()
-    + onButtonConfirmarClick()
-    + seleccionarFiltros(Spinner spinner, RadioButton rbAscendente, RadioButton rbDescendente, Intent intent)
-}
-
-interface ICombustileContract#View {
-    + init()
-    + getGasolinerasRepository()
-    + showStations(List<Gasolinera> stations)
-    + showLoadCorrect(int stations)
-    + showLoadError()
-    + showStationDetails(Gasolinera station)
-    + showMainActivity()
-}
-
-interface ICombustileContract#Presenter {
-    + init(View view, TipoCombustible tipoCombustible)
-    + onStationClicked(Gasolinera station)
     + onMenuBackArrowClick()
 }
 
@@ -98,28 +121,75 @@ interface IPaymentHistoryContract#View {
     + showErrorBD()
 }
 
-interface IPaymentHistoryContract#Presenter {
-    + init(View view)
-    + onMenuBackArrowClick()
+interface IRegisterDiscountContract#Presenter {
+    + init(VIew view)
+    + onRegisterDiscountClicked(Descuento descuento)
+    + onCancelRegistryClicked()
+    + hayCamposVacios(Descuento d)
 }
 
-interface IPagoDAO {
-    + getAll()
-    + insertAll()
-}
-
-interface IRegisterPaymentContract#View{
+interface IRegisterDiscountContract#View {
     + init()
-    + showRegisterHistory()
-    + getPagoDAO()
-    + showPaymentHistoryActivity()
+    + showDiscountHIstory()
     + showAlertDialog(String message, String title)
+    + getDescuentoDAO()
+    + getContext()
     + showSuccesDialog()
+
 }
 
-interface IRegisterPaymentContract#Presneter{
+interface IRegisterPaymentContract#Presneter {
     + init(View view)
     + onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad)
     + onMenuBackArrowClick()
 }
+
+interface IRegisterPaymentContract#View {
+    + init()
+    + showRegisterHistory()
+    + getPagoDAO()
+    + showAlertDialog(String message, String title)
+    + showSuccesDialog()
+    + getContext()
+}
+
+
+
+
+
+interface IGasolinerasRepository {
+    + requestGasolineras(ICallBack cb, String ccaa)
+    + requestGasolinerasCombustible(ICallBack cb, String combustible)
+}
+
+interface ICallBack {
+    + onSuccess(List<Gasolinera> gasolineras)
+    + onFailure(Throwable e)
+}
+
+interface IPagoDAO {
+    + getAll()
+    + loadAllByIds(int[] pagosIds)
+    + findByName(String stationName)
+    + insertAll(Pago pagos)
+    + delete(Pago pago)
+    + vaciaBD()
+
+}
+
+interface IDescuentoDAO {
+    + getAll()
+    + loadAllByIds(int[] discountsIds)
+    + findByName(String discountName)
+    + insertAll(Descuento descunetos)
+    + delete(Descuento descuento)
+    + update(boolean activo, String nombre)
+    + vaciaBD()
+}
+
+interface IGasolinerasAPI {
+    + gasolineras(String ccaa)
+    + gasolinerasCombustible(String ccaa, String combustible)
+}
+
 @enduml
