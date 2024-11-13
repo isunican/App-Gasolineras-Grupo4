@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbAnalytics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Analíticas mensuales"
+        app:titleTextColor="#FFFFFF" />
+
+    <Spinner
+        android:id="@+id/spnMonth"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbAnalytics" />
+
+    <Spinner
+        android:id="@+id/spnYear"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/spnMonth"
+        app:layout_constraintStart_toEndOf="@+id/spnMonth" />
+
+    <ImageButton
+        android:id="@+id/imgBtnTick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Boton de aceptar"
+        app:layout_constraintBottom_toBottomOf="@+id/spnYear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spnYear"
+        app:layout_constraintTop_toTopOf="@+id/spnYear"
+        app:srcCompat="@android:drawable/ic_menu_search" />
+
+
+    <FrameLayout
+        android:id="@+id/frmGraphic"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnTypeGraphic" />
+
+    <Spinner
+        android:id="@+id/spnTypeGraphic"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnMonth" />
+
+    <TextView
+        android:id="@+id/tvPrecioCombustibleMedio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:text="Precio combustible medio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frmGraphic" />
+
+    <TextView
+        android:id="@+id/tvLitrosPromedio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Litros promedio"
+        app:layout_constraintStart_toStartOf="@+id/tvPrecioCombustibleMedio"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrecioCombustibleMedio" />
+
+    <TextView
+        android:id="@+id/tvLitrosTotales"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Litros totales"
+        app:layout_constraintStart_toStartOf="@+id/tvLitrosPromedio"
+        app:layout_constraintTop_toBottomOf="@+id/tvLitrosPromedio" />
+
+    <TextView
+        android:id="@+id/tvGastoTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Gasto total"
+        app:layout_constraintStart_toStartOf="@+id/tvLitrosTotales"
+        app:layout_constraintTop_toBottomOf="@+id/tvLitrosTotales" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
