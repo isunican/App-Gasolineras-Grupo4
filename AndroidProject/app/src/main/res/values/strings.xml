@@ -49,6 +49,7 @@
 
     <string name="succes_reg_discount">El descuento se ha creado de manera correcta.</string>
     <string name="title_succes_reg_discount">Registro correcto</string>
+    <string name="delete_pay_btn">Boton dedicado a eliminar un pago</string>
 
 
 
