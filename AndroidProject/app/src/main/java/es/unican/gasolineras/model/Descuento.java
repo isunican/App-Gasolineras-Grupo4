@@ -45,4 +45,9 @@ public class Descuento {
                 && Objects.equals(quantityDiscount, descuento.quantityDiscount) && Objects.equals(expiranceDate, descuento.expiranceDate)
                 && Objects.equals(discountActive, descuento.discountActive);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(pid);
+    }
 }
