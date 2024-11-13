@@ -26,10 +26,29 @@ public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presente
         load();
     }
 
+    @Override
+    public void onDeleteButtonClicked(Pago pago) {
+        view.showAlertDialogEliminarPago(pago);
+    }
+
+    @Override
+    public void deletePago(Pago p) throws SQLiteException{
+        IPagoDAO dao = view.getPagoDAO();
+        try {
+            dao.delete(p);
+        } catch (SQLiteException e) {
+            view.showErrorBD();
+        } catch (NullPointerException e) {
+            //Caso de null pointer exception, no se hace nada pero
+            // no se recarga la vista ni se muestra mensaje de exito
+        }
+        load();
+        view.showAlertDialog("Éxito eliminación", "El pago ha sido eliminado de manera exitosa de la base de datos");
+    }
+
     /**
      * @see IPaymentHistoryContract.Presenter#onMenuBackArrowClick()
      */
-
     public void onMenuBackArrowClick() {view.showMainActivity();}
 
     /**

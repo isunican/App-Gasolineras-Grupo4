@@ -9,10 +9,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.MainView;
@@ -33,6 +35,8 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
 
     /** The presenter of this view */
     private PaymentHistoryPresenter presenter;
+
+    private PagosArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
         list.setOnItemClickListener((parent, view, position, id) -> {
             Pago pago = (Pago) parent.getItemAtPosition(position);
         });
+
 
     }
 
@@ -104,8 +109,8 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
             Toast.makeText(this, "Todavia no hay pagos registrados.\nRegistra tu primer pago", Toast.LENGTH_SHORT).show();
         }
         ListView list = findViewById(R.id.lvPagos);
-        PagosArrayAdapter adapter = new PagosArrayAdapter(this, pagos);
-        list.setAdapter(adapter);
+        arrayAdapter = new PagosArrayAdapter(this, pagos, presenter);
+        list.setAdapter(arrayAdapter);
     }
 
     @Override
@@ -118,6 +123,35 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
     public void showErrorBD(){
         Utils.showAlertDialog("Error en el acceso a la base de datos","Error base de datos", this);
     }
+    
 
+    public void showAlertDialogEliminarPago(Pago pago) {
+
+        // 1. Instantiate an AlertDialog.Builder with its constructor.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // 2. Chain together various setter methods to set the dialog characteristics.
+        builder.setMessage("¿Desea usted eliminar el pago en " + pago.stationName + " el día " + pago.date + "?")
+                .setTitle("Eliminar pago");
+
+        builder.setNegativeButton("Si", (dialog, id) -> {
+            // User taps OK button.
+            presenter.deletePago(pago);
+        });
+
+        builder.setPositiveButton("No", (dialog, id) ->{
+            //Nothing
+        });
+
+        // 3. Get the AlertDialog.
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    @Override
+    public void showAlertDialog(String titulo, String mensaje) {
+        Utils.showAlertDialog(mensaje, titulo, this);
+    }
 
 }
