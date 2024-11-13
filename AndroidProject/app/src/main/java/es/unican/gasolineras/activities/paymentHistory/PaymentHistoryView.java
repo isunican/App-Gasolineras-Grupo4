@@ -135,7 +135,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
 
         builder.setNegativeButton("Si", (dialog, id) -> {
             // User taps OK button.
-            presenter.onDeleteConfirm(pago);
+            presenter.onDeleteConfirmed(pago);
         });
 
         builder.setPositiveButton("No", (dialog, id) ->{
