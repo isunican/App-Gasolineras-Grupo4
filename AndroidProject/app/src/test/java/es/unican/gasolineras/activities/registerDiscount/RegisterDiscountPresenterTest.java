@@ -1,7 +1,14 @@
 package es.unican.gasolineras.activities.registerDiscount;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import static org.mockito.Mockito.*;
+import android.database.sqlite.SQLiteException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,19 +17,15 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-
-import android.database.sqlite.SQLiteException;
 
 import es.unican.gasolineras.model.Descuento;
+
 import es.unican.gasolineras.repository.IDescuentoDAO;
 
 
 @RunWith(RobolectricTestRunner.class)
-public class RegisterDiscountPresenterOnRegisterDiscountClickedTest {
+public class RegisterDiscountPresenterTest {
+
 
     @Mock
     private RegisterDiscountView mockView;
@@ -39,10 +42,26 @@ public class RegisterDiscountPresenterOnRegisterDiscountClickedTest {
     private Descuento descuentoValido;
     private Descuento descuentoExistente;
 
+    @Mock
+    private RegisterDiscountView viewMock;
+
+    private Descuento descuentoValidoCamposVacios;
+
+    @Mock
+    private IDescuentoDAO descuentoDAOMock;
+
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         sut = new RegisterDiscountPresenter();
+        sut.init(viewMock);
+        descuentoValidoCamposVacios = new Descuento();
+        descuentoValidoCamposVacios.discountName="Des1";
+        descuentoValidoCamposVacios.company="REPSOL";
+        descuentoValidoCamposVacios.discountType="€/l";
+        descuentoValidoCamposVacios.quantityDiscount=0.1;
+        descuentoValidoCamposVacios.expiranceDate="23/11/2024";
+        descuentoValidoCamposVacios.discountActive=true;
 
 
         descuentoValido = new Descuento();
@@ -68,8 +87,97 @@ public class RegisterDiscountPresenterOnRegisterDiscountClickedTest {
         when(mockDescuentoDAO2.getAll()).thenThrow(SQLiteException.class);
         when(mockView.getDescuentoDAO()).thenReturn(mockDescuentoDAO);
 
-
     }
+
+    @Test
+    public void testDescuentoValidoCamposVacios() {
+
+        boolean resultado = sut.hayCamposVacios(descuentoValidoCamposVacios);
+        assertFalse("Debe devolver false cuando todos los campos estan completos", resultado);
+        verify(viewMock, never()).showAlertDialog(anyString(), anyString());
+    }
+
+    @Test
+    public void testNombreVacioCamposVacios() { // UP1.2
+
+        Descuento descuento = new Descuento();
+        descuento.discountName = "";
+        descuento.company = "ALSA";
+        descuento.discountType = "%";
+        descuento.quantityDiscount = 50.0;
+        descuento.expiranceDate = "2024/11/20";
+
+        boolean resultado = sut.hayCamposVacios(descuento);
+        assertTrue("Debe haber un error", resultado);
+
+        verify(viewMock).showAlertDialog("El nombre no puede estar vacío", "Error");
+    }
+    @Test
+    public void testCompañiaVaciaCamposVacios() { // UP1.3
+
+        Descuento descuento = new Descuento();
+        descuento.discountName = "Nombre";
+        descuento.company = "";
+        descuento.discountType = "%";
+        descuento.quantityDiscount = 50.0;
+        descuento.expiranceDate = "2024/11/20";
+
+        boolean resultado = sut.hayCamposVacios(descuento);
+        assertTrue("Debe haber un error", resultado);
+
+        verify(viewMock).showAlertDialog("La compañía no puede estar vacía", "Error");
+    }
+
+
+
+    @Test
+    public void testCantidadVaciaCamposVacios() { // UP1.4
+
+        Descuento descuento = new Descuento();
+        descuento.discountName = "Nombre";
+        descuento.company = "ALSA";
+        descuento.discountType = "%";
+        descuento.quantityDiscount = null;
+        descuento.expiranceDate = "2024/11/20";
+
+        boolean resultado = sut.hayCamposVacios(descuento);
+        assertTrue("Debe haber un error", resultado);
+
+        verify(viewMock).showAlertDialog("La cantidad no puede estar vacía", "Error");
+    }
+
+
+    @Test
+    public void testFechaVaciaCamposVacios() { // UP1.5
+
+        Descuento descuento = new Descuento();
+        descuento.discountName = "Nombre";
+        descuento.company = "ALSA";
+        descuento.discountType = "%";
+        descuento.quantityDiscount = 50.0;
+        descuento.expiranceDate = "";
+
+        boolean resultado = sut.hayCamposVacios(descuento);
+        assertTrue("Debe haber un error", resultado);
+
+        verify(viewMock).showAlertDialog("La fecha de expiración no puede estar vacía", "Error");
+    }
+
+    @Test
+    public void testTipoDescuentoVacioCamposVacios() { // UP1.6
+        Descuento descuento = new Descuento();
+        descuento.discountName = "Nombre";
+        descuento.company = "ALSA";
+        descuento.discountType = "";
+        descuento.quantityDiscount = 50.0;
+        descuento.expiranceDate = "2024/11/20";
+
+        boolean resultado = sut.hayCamposVacios(descuento);
+        assertTrue("Debe haber un error", resultado);
+
+        verify(viewMock).showAlertDialog("El tipo de descuento no puede estar vacío", "Error");
+    }
+
 
     @Test
     public void testRegistrarDescuentoExitoso() { // UP 2.1
@@ -331,9 +439,6 @@ public class RegisterDiscountPresenterOnRegisterDiscountClickedTest {
         when(mockView.getDescuentoDAO()).thenReturn(mockDescuentoDAO2);
         sut.onRegisterDiscountClicked(descuentoFalloBBDD);
         verify(mockDescuentoDAO2, times(0)).insertAll(descuentoFalloBBDD);
-
-
-
 
     }
 
