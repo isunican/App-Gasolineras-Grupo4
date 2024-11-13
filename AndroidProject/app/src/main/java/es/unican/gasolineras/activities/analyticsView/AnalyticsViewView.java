@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Calendar;
 
 import es.unican.gasolineras.R;
@@ -78,7 +80,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
         // Inicializamos el botón para calcular los resultados
         ImageButton imgBtnTick = findViewById(R.id.imgBtnTick);
-
+        setUpSpinners();
         imgBtnTick.setOnClickListener(v -> {
 
             // Obtenemos el valor seleccionado en el Spinner de mes y año
@@ -143,5 +145,22 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     @Override
     public void showNoDataFound() {
 
+    }
+
+
+    private void setUpSpinners() {
+        LocalDate currentDate = LocalDate.now();
+
+        int anhoActual = currentDate.getYear();
+
+
+        Month mesActual = currentDate.getMonth();
+
+        int mesInt = mesActual.getValue();
+
+        spnMonth.setSelection(mesInt - 1);
+
+
+        spnYear.setSelection(anhoActual);
     }
 }
