@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="128dp">
+    android:layout_height="140dp">
 
     <TextView
         android:id="@+id/Fecha"
@@ -28,9 +28,8 @@
         android:id="@+id/Precio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/ImporteTotal"
-        app:layout_constraintTop_toBottomOf="@+id/ImporteTotal"
+        app:layout_constraintTop_toTopOf="@+id/TipoCombustible"
         tools:text="Precio" />
 
     <TextView
@@ -46,9 +45,8 @@
         android:id="@+id/ImporteTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/Cantidad"
-        app:layout_constraintTop_toBottomOf="@+id/Cantidad"
+        app:layout_constraintTop_toTopOf="@+id/Estacion"
         tools:text="Importe total" />
 
     <TextView
@@ -63,11 +61,11 @@
 
     <ImageButton
         android:id="@+id/btnEliminar"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:contentDescription="Icon to delete"
+        android:contentDescription="@string/delete_pay_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_delete" />
