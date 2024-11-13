@@ -40,11 +40,12 @@
         android:id="@+id/imgBtnTick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="Boton de aceptar"
         app:layout_constraintBottom_toBottomOf="@+id/spnYear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/spnYear"
         app:layout_constraintTop_toTopOf="@+id/spnYear"
-        app:srcCompat="@drawable/_8442" />
+        app:srcCompat="@android:drawable/ic_menu_search" />
 
 
     <FrameLayout

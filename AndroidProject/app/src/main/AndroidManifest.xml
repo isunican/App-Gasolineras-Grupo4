@@ -38,10 +38,13 @@
             android:name=".activities.discountList.DiscountListView"
             android:exported="false" />
 
+        <activity
+            android:name=".activities.analyticsView.AnalyticsViewView"
+            android:exported="true"/>
         <!--
         -->
         <activity
-            android:name=".activities.analyticsView.AnalyticsViewView"
+            android:name=".activities.main.MainView"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
