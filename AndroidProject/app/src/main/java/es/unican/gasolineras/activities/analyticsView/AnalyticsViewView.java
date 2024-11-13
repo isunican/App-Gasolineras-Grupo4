@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.MainView;
+import es.unican.gasolineras.activities.registerDiscount.RegisterDiscountPresenter;
 import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
 import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.model.Pago;
@@ -42,10 +43,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics_view);
         db = DataBase.getAppDatabase(getApplicationContext());
-
-        // Instanciamos el Presenter
-        presenter = new AnalyticsViewPresenter();
-        presenter.init(this);
+        init();
 
         // Inicializamos los Spinners
         spnMonth = findViewById(R.id.spnMonth);
@@ -57,6 +55,9 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         tvLitrosTotales = findViewById(R.id.tvLitrosTotales);
         tvGastoTotal = findViewById(R.id.tvGastoTotal);
 
+        //Settear la toolbar correctamente
+        Toolbar toolbar = findViewById(R.id.tbAnalytics);
+        setSupportActionBar(toolbar);
         // Inicializamos el botón para calcular los resultados
         ImageButton imgBtnTick = findViewById(R.id.imgBtnTick);
         imgBtnTick.setOnClickListener(v -> {
@@ -77,10 +78,11 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
     @Override
     public void init() {
-        // Crea la barra de herramientas
-        Toolbar toolbar = findViewById(R.id.toolbarRegister);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Analíticas mensuales");
+        //Setting the content view
+        setContentView(R.layout.activity_analytics_view);
+        //Creation of the presenter
+        presenter = new AnalyticsViewPresenter();
+        presenter.init(this);
     }
 
     @Override
