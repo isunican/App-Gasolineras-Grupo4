@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.MainView;
@@ -136,7 +135,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
 
         builder.setNegativeButton("Si", (dialog, id) -> {
             // User taps OK button.
-            presenter.deletePago(pago);
+            presenter.onDeleteConfirm(pago);
         });
 
         builder.setPositiveButton("No", (dialog, id) ->{
