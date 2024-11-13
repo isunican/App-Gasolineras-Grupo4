@@ -27,13 +27,6 @@ public interface IRegisterDiscountContract {
          */
         public void onCancelRegistryClicked();
 
-        /**
-         * Metodo encargado de comprobar que no hay campos vacios en el descuento, en caso de haberlos
-         * creara una ventana de alerta para que el usuario lo vea.
-         * @param d Descuento a revisar
-         * @return true si hay campos vacios y false si no los hay
-         */
-        public boolean hayCamposVacios(Descuento d);
     }
 
     public interface View {
