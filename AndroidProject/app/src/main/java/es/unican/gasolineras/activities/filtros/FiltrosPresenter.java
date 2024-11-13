@@ -36,6 +36,9 @@ public class FiltrosPresenter implements IFiltrosContract.Presenter{
      */
     @Override
     public Intent seleccionarFiltros(Spinner spinner,RadioButton rbAscendente, RadioButton rbDescendente, Intent intent) {
+        if (spinner == null || rbAscendente == null || rbDescendente == null){
+            return null;
+        }
         TipoCombustible tipoCombustible = seleccionarFiltrosTipoCombustible(spinner);
         String order = seleccionarFiltrosOrden(rbAscendente, rbDescendente);
         // Pasar el valor del enumerado y el orden en el Intent
