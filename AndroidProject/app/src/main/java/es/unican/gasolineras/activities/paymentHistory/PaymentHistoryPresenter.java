@@ -32,7 +32,7 @@ public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presente
     }
 
     @Override
-    public void deletePago(Pago p) throws SQLiteException{
+    public void onDeleteConfirmed(Pago p) throws SQLiteException{
         IPagoDAO dao = view.getPagoDAO();
         try {
             dao.delete(p);
