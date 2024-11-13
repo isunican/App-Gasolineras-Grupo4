@@ -45,12 +45,28 @@ public interface IRegisterPaymentContract {
          */
         public void showRegisterHistory();
 
+        /**
+         * Metodo que retorna el objeto de tipo IPagoDAO que es necesario para interactuar con la base de datos.
+         * @return una instancia de IPagoDAO
+         */
         public IPagoDAO getPagoDAO();
-        
+
+        /**
+         * Metodo el cual es encargado de crear AlertDialogs con el titulo y mensaje indiciado.
+         * @param message Mensaje del alertDialog
+         * @param title Titulo del alertDialog
+         */
         public void showAlertDialog(String message, String title);
 
+        /**
+         * Metodo encargado de mostrar el alertDialog de exito.
+         */
         public void showSuccesDialog();
 
+        /**
+         * Metodo que retorna el contexto de la vista, para que el presenter pueda acceder a sus recursos.
+         * @return el contexto de la vista
+         */
         public Context getContext();
     }
 }
