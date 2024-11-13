@@ -2,6 +2,8 @@ package es.unican.gasolineras.activities.analyticsView;
 
 import android.database.sqlite.SQLiteException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
             // Llamamos al método para hacer los cálculos
             calculateAnalytics(pagos);
             // Mostramos los resultados en la vista
-            view.showAnalytics(precioCombustibleMedio, litrosPromedio, litrosTotales, gastoTotal);
+            //view.showAnalytics(precioCombustibleMedio, litrosPromedio, litrosTotales, gastoTotal);
         } catch (SQLiteException e) {
             view.showErrorBD();
         }
@@ -111,10 +113,15 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
             // Suponiendo que el campo `fecha` en el modelo `Pago` es un String en formato "yyyy-MM-dd"
             String fecha = pago.date;
 
+            LocalDate fechaLocalDate = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+            // Extrae el año y el mes
+            int pagoYear = fechaLocalDate.getYear();
+            int pagoMonth = fechaLocalDate.getMonthValue();
             // Extraemos el mes y el año de la fecha del pago
-            String[] fechaParts = fecha.split("-");
-            int pagoYear = Integer.parseInt(fechaParts[0]); // Año
-            int pagoMonth = Integer.parseInt(fechaParts[1]); // Mes
+            //String[] fechaParts = fecha.split("-");
+            //int pagoYear = Integer.parseInt(fechaParts[0]); // Año
+            //int pagoMonth = Integer.parseInt(fechaParts[1]); // Mes
 
             // Comparamos el mes y año del pago con el mes y año seleccionados
             if (pagoMonth == month && pagoYear == year) {
