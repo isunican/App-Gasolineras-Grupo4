@@ -7,6 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".activities.details.DetailsView">
 
+    <TextView
+        android:id="@+id/tvMunicipio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/ivRotulo"
+        app:layout_constraintTop_toBottomOf="@+id/tvDireccion"
+        tools:text="Municipio" />
+
+    <ImageView
+        android:id="@+id/ivBilletes"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="-90dp"
+        android:layout_marginTop="-13dp"
+        android:src="@drawable/icono_dinero"
+        app:layout_constraintStart_toStartOf="@+id/ivRotulo"
+        app:layout_constraintTop_toTopOf="@+id/tvPrecioDiesel" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarRegister"
         android:layout_width="match_parent"
@@ -20,8 +41,8 @@
 
     <ImageView
         android:id="@+id/ivRotulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,71 +53,89 @@
         android:id="@+id/tvRotulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        tools:text="Rotulo"
+        android:layout_marginTop="64dp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivRotulo" />
-
-    <TextView
-        android:id="@+id/tvMunicipio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        tools:text="Municipio"
-        app:layout_constraintEnd_toEndOf="@+id/tvRotulo"
-        app:layout_constraintStart_toStartOf="@+id/tvRotulo"
-        app:layout_constraintTop_toBottomOf="@+id/tvRotulo" />
+        app:layout_constraintTop_toBottomOf="@+id/ivRotulo"
+        tools:text="Rotulo" />
 
     <TextView
         android:id="@+id/tvDireccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Direccion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMunicipio" />
+        android:layout_marginTop="64dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ivRotulo"
+        app:layout_constraintTop_toBottomOf="@+id/tvRotulo"
+        tools:text="Calle" />
 
     <TextView
         android:id="@+id/tvHorario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="64dp"
         android:text="Horario"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDireccion" />
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/ivRotulo"
+        app:layout_constraintTop_toBottomOf="@+id/tvMunicipio" />
 
     <TextView
         android:id="@+id/tvPrecio95"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="64dp"
         android:text="Precio 95"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/ivRotulo"
         app:layout_constraintTop_toBottomOf="@+id/tvHorario" />
 
     <TextView
         android:id="@+id/tvPrecioDiesel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:text="Precio diesel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/ivRotulo"
         app:layout_constraintTop_toBottomOf="@+id/tvPrecio95" />
 
     <TextView
         android:id="@+id/tvPrecioSumario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:text="Precio sumario"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/ivRotulo"
         app:layout_constraintTop_toBottomOf="@+id/tvPrecioDiesel" />
+
+    <ImageView
+        android:id="@+id/ivChincheta"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="-90dp"
+        app:layout_constraintStart_toStartOf="@+id/ivRotulo"
+        app:layout_constraintTop_toTopOf="@+id/tvDireccion"
+        app:srcCompat="@drawable/icono_chincheta" />
+
+    <ImageView
+        android:id="@+id/ivReloj"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="-90dp"
+        android:layout_marginTop="-7dp"
+        app:layout_constraintStart_toStartOf="@+id/ivRotulo"
+        app:layout_constraintTop_toTopOf="@+id/tvHorario"
+        app:srcCompat="@drawable/icono_reloj" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
