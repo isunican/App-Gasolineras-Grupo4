@@ -67,7 +67,7 @@ public class DiscountListView extends AppCompatActivity implements IDiscountList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_history, menu);
+        menuInflater.inflate(R.menu.menu_discounts, menu);
         return true;
     }
 
