@@ -37,7 +37,7 @@ public interface IPaymentHistoryContract {
          * @param p Pago a eliminar de la base de datos
          * @throws SQLiteException en caso de fallo de acceso a la base de datos
          */
-        public void onDeleteConfirm(Pago p) throws SQLiteException;
+        public void onDeleteConfirmed(Pago p) throws SQLiteException;
 
     }
 
