@@ -161,6 +161,6 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         spnMonth.setSelection(mesInt - 1);
 
 
-        spnYear.setSelection(anhoActual);
+        spnYear.setSelection(anhoActual -2010);
     }
 }
