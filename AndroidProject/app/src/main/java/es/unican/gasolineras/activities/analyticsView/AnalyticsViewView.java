@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.util.Calendar;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.MainView;
@@ -43,7 +46,9 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics_view);
         db = DataBase.getAppDatabase(getApplicationContext());
-        init();
+        //Creation of the presenter
+        presenter = new AnalyticsViewPresenter();
+        presenter.init(this);
 
         // Inicializamos los Spinners
         spnMonth = findViewById(R.id.spnMonth);
@@ -58,11 +63,33 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         //Settear la toolbar correctamente
         Toolbar toolbar = findViewById(R.id.tbAnalytics);
         setSupportActionBar(toolbar);
+
+        // Crea el adaptador con las opciones del spinner establecidas en strings.xml
+        ArrayAdapter<CharSequence> adaptador = ArrayAdapter.createFromResource(this,
+                R.array.opcionesSpinnerMes, android.R.layout.simple_spinner_item);
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnMonth.setAdapter(adaptador);
+
+        // Crea el adaptador con las opciones del spinner establecidas en strings.xml
+        ArrayAdapter<CharSequence> adaptador2 = ArrayAdapter.createFromResource(this,
+                R.array.opcionesSpinnerAnho, android.R.layout.simple_spinner_item);
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnYear.setAdapter(adaptador2);
+
         // Inicializamos el botón para calcular los resultados
         ImageButton imgBtnTick = findViewById(R.id.imgBtnTick);
+
         imgBtnTick.setOnClickListener(v -> {
+
             // Obtenemos el valor seleccionado en el Spinner de mes y año
-            int month = spnMonth.getSelectedItemPosition() + 1; // Los spinner empiezan desde 0, pero los meses empiezan desde 1
+            // Obtener el valor seleccionado del Spinner como String
+            String selectedMonthString = spnMonth.getSelectedItem().toString();
+            int month = Integer.parseInt(selectedMonthString);
+
+            // Convertir el valor de int a String nuevamente
+            String monthString = String.format("%02d", (month + 1));  // Asegura que el mes tenga 2 dígitos (por ejemplo, "03")
+
+
             int year = Integer.parseInt(spnYear.getSelectedItem().toString());
 
             // Verificamos que se haya seleccionado un mes y un año válidos
@@ -78,31 +105,15 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
     @Override
     public void init() {
-        //Setting the content view
-        setContentView(R.layout.activity_analytics_view);
-        //Creation of the presenter
-        presenter = new AnalyticsViewPresenter();
-        presenter.init(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_history, menu);
+        menuInflater.inflate(R.menu.menu_analytics, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menuItemAddPago) {
-            Intent intent = new Intent(this, RegisterPaymentView.class);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public IPagoDAO getPagoDAO() {
@@ -115,15 +126,13 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         startActivity(intent);
     }
 
-
-
     @Override
     public void showErrorBD() {
         Utils.showAlertDialog("Error en el acceso a la base de datos", "Error base de datos", this);
     }
 
     @Override
-    public void showAnalytics(double precioCombustibleMedio, double litrosPromedio, double litrosTotales, double gastoTotal) {
+    public void showAnalytics(Double precioCombustibleMedio, Double litrosPromedio, Double litrosTotales, Double gastoTotal) {
         // Muestra los resultados en la vista
         tvPrecioCombustibleMedio.setText("Precio Combustible Medio: " + precioCombustibleMedio);
         tvLitrosPromedio.setText("Litros Promedio: " + litrosPromedio);
