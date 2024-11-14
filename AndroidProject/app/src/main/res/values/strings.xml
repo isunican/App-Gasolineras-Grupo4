@@ -109,6 +109,13 @@
         <item>2028</item>
     </string-array>
 
+    <string-array name="opcionesSpinnerGrafico">
+        <item>Selecciona un gráfico</item>
+        <item>lineas</item>
+        <item>barras</item>
+        <item>queso</item>
+    </string-array>
+
 
 
 </resources>

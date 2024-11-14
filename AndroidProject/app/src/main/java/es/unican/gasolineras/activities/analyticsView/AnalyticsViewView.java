@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -14,14 +16,33 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TreeMap;
+import java.util.List;
+import java.util.Map;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.MainView;
-import es.unican.gasolineras.activities.registerDiscount.RegisterDiscountPresenter;
-import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
 import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.AppDatabasePayments;
@@ -36,6 +57,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     // Define los Spinners para el mes y el año
     private Spinner spnMonth;
     private Spinner spnYear;
+    private String chartType;
 
     // Define los TextViews para mostrar los resultados
     private TextView tvPrecioCombustibleMedio;
@@ -43,11 +65,21 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     private TextView tvLitrosTotales;
     private TextView tvGastoTotal;
 
+    private FrameLayout chartFrame;
+    private LineChart lineChart;
+    private BarChart barChart;
+    private PieChart pieChart;
+    private Spinner chartTypeSpinner;
+    private IPagoDAO pagosDAO;
+    private int month;
+    private int year;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics_view);
         db = DataBase.getAppDatabase(getApplicationContext());
+        pagosDAO = getPagoDAO();
         //Creation of the presenter
         presenter = new AnalyticsViewPresenter();
         presenter.init(this);
@@ -62,9 +94,14 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         tvLitrosTotales = findViewById(R.id.tvLitrosTotales);
         tvGastoTotal = findViewById(R.id.tvGastoTotal);
 
+        // Inicializamos spinner y frame para graficas
+        chartFrame = findViewById(R.id.frmGraphic);
+        chartTypeSpinner = findViewById(R.id.spnTypeGraphic);
+        chartTypeSpinner.setEnabled(false);
         //Settear la toolbar correctamente
         Toolbar toolbar = findViewById(R.id.tbAnalytics);
         setSupportActionBar(toolbar);
+
 
         // Crea el adaptador con las opciones del spinner establecidas en strings.xml
         ArrayAdapter<CharSequence> adaptador = ArrayAdapter.createFromResource(this,
@@ -82,17 +119,19 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         ImageButton imgBtnTick = findViewById(R.id.imgBtnTick);
         setUpSpinners();
         imgBtnTick.setOnClickListener(v -> {
+            // Permite seleccionar un grafico después de que se haya clickado el botón, teniendo asi
+            // mes y anho sobre el que hacer el grafico, además de actualizarlo.
+            chartTypeSpinner.setEnabled(true);
 
             // Obtenemos el valor seleccionado en el Spinner de mes y año
             // Obtener el valor seleccionado del Spinner como String
             String selectedMonthString = spnMonth.getSelectedItem().toString();
-            int month = Integer.parseInt(selectedMonthString);
+            month = Integer.parseInt(selectedMonthString);
 
             // Convertir el valor de int a String nuevamente
             String monthString = String.format("%02d", (month + 1));  // Asegura que el mes tenga 2 dígitos (por ejemplo, "03")
 
-
-            int year = Integer.parseInt(spnYear.getSelectedItem().toString());
+            year = Integer.parseInt(spnYear.getSelectedItem().toString());
 
             // Verificamos que se haya seleccionado un mes y un año válidos
             if (month == 0 || year == 0) {
@@ -102,7 +141,180 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
             // Llamamos al método para cargar los pagos y calcular las estadísticas
             presenter.loadForMonthYear(month, year);
+
+            updateChart();
         });
+
+        // GRAFICAS
+        // Configura el Spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.opcionesSpinnerGrafico, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chartTypeSpinner.setAdapter(adapter);
+        chartTypeSpinner.setSelection(0);
+        chartTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                chartType = parent.getItemAtPosition(position).toString();
+                updateChart();  // Llama al Presenter
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // No hacer nada si no se selecciona nada
+            }
+        });
+
+
+    }
+
+    private void updateChart() {
+        presenter.onChartTypeSelected(chartType);
+    }
+
+    @Override
+    public void clearContainer() {
+        // Limpia el contenedor antes de agregar un nuevo gráfico
+        chartFrame.removeAllViews();
+    }
+
+    // Métodos de ChartView para mostrar cada tipo de gráfico
+    @Override
+    public void showLineChart() {
+        lineChart = new LineChart(this);
+        chartFrame.addView(lineChart);
+
+        // Obtener pagos filtrados por mes y año
+        String monthStr = String.format("%02d", month);
+        String yearStr = String.valueOf(year);
+        List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
+
+        // Obtener el último día del mes
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, Integer.parseInt(yearStr));
+        calendar.set(Calendar.MONTH, Integer.parseInt(monthStr) - 1);
+        int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        // Crear las entradas del gráfico con los días con pagos
+        ArrayList<Entry> lineEntries = new ArrayList<>();
+        ArrayList<String> xLabels = new ArrayList<>();
+
+        // Agrupar pagos por día
+        TreeMap<Integer, Float> paymentsByDay = new TreeMap<>(); // Usar TreeMap para mantener el orden
+
+        // Añadir el primer día del mes
+        paymentsByDay.put(1, 0f);
+
+        // Añadir los días con pagos
+        for (Pago pago : pagos) {
+            String dayStr = pago.getDate().substring(8, 10);
+            int day = Integer.parseInt(dayStr);
+            paymentsByDay.put(day, paymentsByDay.getOrDefault(day, 0f) + pago.getFinalPrice().floatValue());
+        }
+
+        // Añadir el último día del mes si no está ya incluido
+        paymentsByDay.put(lastDayOfMonth, paymentsByDay.getOrDefault(lastDayOfMonth, 0f));
+
+        // Crear las entradas para el gráfico
+        float xIndex = 0;
+        for (Map.Entry<Integer, Float> entry : paymentsByDay.entrySet()) {
+            int day = entry.getKey();
+            float totalPago = entry.getValue();
+            lineEntries.add(new Entry(xIndex, totalPago));
+            xLabels.add(String.valueOf(day));
+            xIndex++;
+        }
+
+        // Configurar el conjunto de datos
+        LineDataSet lineDataSet = new LineDataSet(lineEntries, "Pagos del mes");
+        lineDataSet.setDrawValues(true);
+        lineDataSet.setValueTextSize(12f);
+        lineDataSet.setCircleRadius(6f);
+        lineDataSet.setLineWidth(2f);
+
+        LineData lineData = new LineData(lineDataSet);
+        lineChart.setData(lineData);
+
+        // Configurar el eje X
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(true);
+        xAxis.setGranularity(1f);
+        xAxis.setLabelRotationAngle(0);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabels));
+        xAxis.setLabelCount(xLabels.size());
+
+        // Asegurar que se muestren todas las etiquetas
+        xAxis.setAvoidFirstLastClipping(true);
+        lineChart.setVisibleXRangeMaximum(xLabels.size());
+
+        // Configurar márgenes para que las etiquetas sean visibles
+        lineChart.setExtraOffsets(10f, 10f, 10f, 20f);
+
+        // Configurar el eje Y izquierdo
+        YAxis leftYAxis = lineChart.getAxisLeft();
+        leftYAxis.setDrawGridLines(true);
+        leftYAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format("$%.2f", value);
+            }
+        });
+
+        // Desactivar el eje Y derecho
+        lineChart.getAxisRight().setEnabled(false);
+
+        // Configuraciones adicionales del gráfico
+        lineChart.getDescription().setEnabled(false);
+        lineChart.setTouchEnabled(true);
+        lineChart.setDragEnabled(true);
+        lineChart.setScaleEnabled(true);
+        lineChart.setPinchZoom(true);
+
+        // Actualizar el gráfico
+        lineChart.invalidate();
+    }
+
+
+
+
+
+    @Override
+    public void showBarChart() {
+        clearContainer();
+        barChart = new BarChart(this);
+        chartFrame.addView(barChart);
+
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        barEntries.add(new BarEntry(0, 2));
+        barEntries.add(new BarEntry(1, 4));
+        barEntries.add(new BarEntry(2, 6));
+        barEntries.add(new BarEntry(3, 8));
+        barEntries.add(new BarEntry(4, 10));
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Ejemplo de datos");
+        BarData barData = new BarData(barDataSet);
+        barChart.setData(barData);
+        barChart.invalidate();
+    }
+
+    @Override
+    public void showPieChart() {
+        clearContainer();
+        pieChart = new PieChart(this);
+        chartFrame.addView(pieChart);
+
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        pieEntries.add(new PieEntry(2, "A"));
+        pieEntries.add(new PieEntry(4, "B"));
+        pieEntries.add(new PieEntry(6, "C"));
+        pieEntries.add(new PieEntry(8, "D"));
+        pieEntries.add(new PieEntry(10, "E"));
+
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Ejemplo de datos");
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.invalidate();
     }
 
     @Override

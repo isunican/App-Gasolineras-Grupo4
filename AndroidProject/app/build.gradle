@@ -13,11 +13,10 @@ jacoco {
 
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
-    jacoco.excludes = ['jdk.internal.*'] // needed to support roboelectric with jacoco
+    jacoco.excludes = ['jdk.internal.*'] // Soporte para Robolectric
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'connectedAndroidTest']) {
-
     reports {
         xml.required = true
         html.required = true
@@ -29,9 +28,11 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'conn
 
     sourceDirectories.setFrom(files([mainSrc]))
     classDirectories.setFrom(files([javaTree]))
-    executionData.setFrom(fileTree(dir: project.buildDir, includes: ['outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec']))
+    executionData.setFrom(fileTree(dir: project.buildDir, includes: [
+            'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
+            'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec'
+    ]))
 }
-
 
 sonar {
     properties {
@@ -40,13 +41,7 @@ sonar {
         property "sonar.token", "120537998e2c122476f30cade8d4a25865210fa6"
         property "sonar.projectKey", "App-Gasolineras-Grupo4"
         property "sonar.projectName", "App-Gasolineras-Grupo4"
-
-        // I need this property to avoid the error where sonarqube does not close some files and
-        // prevents a clean afterwards
         property "sonar.scm.disabled", true
-
-        // this property is deprecated, now I use the xml file defined below it
-        // property "sonar.jacoco.reportPaths", "${project.buildDir}/jacoco/testDebugUnitTest.exec"
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml, ${project.buildDir}/reports/coverage/androidTest/debug/connected/report.xml"
     }
 }
@@ -55,27 +50,24 @@ android {
     namespace 'es.unican.gasolineras'
     compileSdk 34
 
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
-        }
-    }
-
     defaultConfig {
         applicationId "es.unican.gasolineras"
         minSdk 28
         targetSdk 34
         versionCode 1
         versionName "1.0"
-
-        // I need a custom test runner to support Hilt
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "es.unican.gasolineras.utils.CustomTestRunner"
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                jacoco {
+                    includeNoLocationClasses = true
+                }
+            }
+        }
     }
 
     buildTypes {
@@ -94,7 +86,7 @@ android {
 }
 
 dependencies {
-
+    // Dependencias de la librería (libs)
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -105,55 +97,55 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 
-    // Parceler (automatically implements methods to create parcels)
+    // Parceler (genera métodos para parcelas)
     implementation libs.parceler.api
     annotationProcessor libs.parceler
 
-    // Lombok (auto generate getters, etc.)
+    // Lombok
     compileOnly libs.lombok
     annotationProcessor libs.lombok
     testCompileOnly libs.lombok
     testAnnotationProcessor libs.lombok
 
-    // GSON (for json (de)serialization)
+    // GSON (json serialization)
     implementation libs.gson
 
-    // Retrofit (to access REST API)
+    // Retrofit (API REST)
     implementation libs.retrofit
     implementation libs.retrofit.gson
 
-    // Mockito (mocks for testing)
+    // Mockito (mocks para testing)
     testImplementation libs.mockito.core
     androidTestImplementation libs.mockito.android
 
-    // Hilt (for dependency injection)
+    // Hilt (inyección de dependencias)
     implementation libs.hilt.android
     annotationProcessor libs.hilt.compiler
-    androidTestImplementation  libs.hilt.android.testing
+    androidTestImplementation libs.hilt.android.testing
     androidTestAnnotationProcessor libs.hilt.compiler
     testImplementation libs.hilt.android.testing
     testAnnotationProcessor libs.hilt.compiler
 
-    // Roboelectric (to get a proper Context object in unit tests)
+    // Roboelectric
     testImplementation libs.roboelectric
 
-    // Libreria room
+    // Librería Room
     def room_version = "2.6.1"
-
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
-    // Mockito
-    def mockito_version= ' latest.release '
+    // Mockito para pruebas
+    def mockito_version= '5.0.0'
     testImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 
     // Espresso
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    // Espresso Contrib (incluye PickerActions)
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.6.1'
 
-    //Para datepicker
+    // DatePicker de Material
     implementation 'com.google.android.material:material:1.6.1'
 
+    // MPAndroidChart para gráficos
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

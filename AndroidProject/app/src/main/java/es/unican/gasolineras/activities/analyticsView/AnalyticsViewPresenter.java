@@ -132,4 +132,19 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
         return filteredPagos;
     }
 
+    public void onChartTypeSelected(String chartType) {
+        view.clearContainer();
+        switch (chartType) {
+            case "lineas":
+                view.showLineChart();
+                break;
+            case "barras":
+                view.showBarChart();
+                break;
+            case "queso":
+                view.showPieChart();
+                break;
+        }
+    }
+
 }
