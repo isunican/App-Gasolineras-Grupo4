@@ -25,6 +25,8 @@ public interface IAnalyticsViewContract {
          */
         public void init(View view);
 
+        public void onChartTypeSelected(String chartType);
+
 
     }
 
@@ -77,5 +79,13 @@ public interface IAnalyticsViewContract {
          * This method is called by the Presenter if no data is available for the period.
          */
         public void showNoDataFound();
+
+        void clearContainer();
+
+        public void showLineChart();
+
+        public void showBarChart();
+
+        public void showPieChart();
     }
 }

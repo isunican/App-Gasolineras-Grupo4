@@ -34,6 +34,15 @@ public interface IPagoDAO {
     List<Pago> findByName(String stationName);
 
     /**
+     * Hace una consulta en la que solo devuelve los pagos que se han realizado en un mes y anho.
+     * @param year Anho a consultar
+     * @param month Mes a consultar
+     * @return Los pagos que se han realizado en ese mes y año.
+     */
+    @Query("SELECT * FROM pago WHERE strftime('%Y', date) = :year AND strftime('%m', date) = :month ORDER BY date DESC")
+    List<Pago> getPagosByMonthAndYear(String year, String month);
+
+    /**
      * Inserta un objeto de la clase Pago en la base de datos
      * @param pagos Pago a insertar en la base de datos
      */
