@@ -1,6 +1,7 @@
 package es.unican.gasolineras.activities.analyticsView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,6 +38,8 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.List;
 import java.util.Map;
@@ -275,28 +278,99 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         lineChart.invalidate();
     }
 
-
-
-
-
     @Override
     public void showBarChart() {
-        clearContainer();
         barChart = new BarChart(this);
         chartFrame.addView(barChart);
 
-        ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0, 2));
-        barEntries.add(new BarEntry(1, 4));
-        barEntries.add(new BarEntry(2, 6));
-        barEntries.add(new BarEntry(3, 8));
-        barEntries.add(new BarEntry(4, 10));
+        // Obtener pagos filtrados por mes y año
+        String monthStr = String.format("%02d", month);
+        String yearStr = String.valueOf(year);
+        List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Ejemplo de datos");
+        // Obtener el último día del mes
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, Integer.parseInt(yearStr));
+        calendar.set(Calendar.MONTH, Integer.parseInt(monthStr) - 1);
+        int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        // Crear las entradas del gráfico con los días con pagos
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        ArrayList<String> xLabels = new ArrayList<>();
+
+        // Agrupar pagos por día
+        TreeMap<Integer, Float> paymentsByDay = new TreeMap<>(); // Usar TreeMap para mantener el orden
+
+        // Añadir el primer día del mes
+        paymentsByDay.put(1, 0f);
+
+        // Añadir los días con pagos
+        for (Pago pago : pagos) {
+            String dayStr = pago.getDate().substring(8, 10);
+            int day = Integer.parseInt(dayStr);
+            paymentsByDay.put(day, paymentsByDay.getOrDefault(day, 0f) + pago.getFinalPrice().floatValue());
+        }
+
+        // Añadir el último día del mes si no está ya incluido
+        paymentsByDay.put(lastDayOfMonth, paymentsByDay.getOrDefault(lastDayOfMonth, 0f));
+
+        // Crear las entradas para el gráfico
+        float xIndex = 0;
+        for (Map.Entry<Integer, Float> entry : paymentsByDay.entrySet()) {
+            int day = entry.getKey();
+            float totalPago = entry.getValue();
+            barEntries.add(new BarEntry(xIndex, totalPago));
+            xLabels.add(String.valueOf(day));
+            xIndex++;
+        }
+
+        // Configurar el conjunto de datos
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Pagos del mes");
+        barDataSet.setColors(Color.BLUE);
+        barDataSet.setValueTextSize(12f);
+
         BarData barData = new BarData(barDataSet);
         barChart.setData(barData);
+
+        // Configurar el eje X
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(true);
+        xAxis.setGranularity(1f);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xLabels));
+        xAxis.setLabelCount(xLabels.size());
+
+        // Asegurar que se muestren todas las etiquetas
+        xAxis.setAvoidFirstLastClipping(true);
+        barChart.setVisibleXRangeMaximum(xLabels.size());
+
+        // Configurar márgenes para que las etiquetas sean visibles
+        barChart.setExtraOffsets(10f, 10f, 10f, 20f);
+
+        // Configurar el eje Y izquierdo
+        YAxis leftYAxis = barChart.getAxisLeft();
+        leftYAxis.setDrawGridLines(true);
+        leftYAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format("$%.2f", value);
+            }
+        });
+
+        // Desactivar el eje Y derecho
+        barChart.getAxisRight().setEnabled(false);
+
+        // Configuraciones adicionales del gráfico
+        barChart.getDescription().setEnabled(false);
+        barChart.setTouchEnabled(true);
+        barChart.setDragEnabled(true);
+        barChart.setScaleEnabled(true);
+        barChart.setPinchZoom(true);
+
+        // Actualizar el gráfico
         barChart.invalidate();
     }
+
 
     @Override
     public void showPieChart() {
@@ -304,16 +378,64 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         pieChart = new PieChart(this);
         chartFrame.addView(pieChart);
 
-        ArrayList<PieEntry> pieEntries = new ArrayList<>();
-        pieEntries.add(new PieEntry(2, "A"));
-        pieEntries.add(new PieEntry(4, "B"));
-        pieEntries.add(new PieEntry(6, "C"));
-        pieEntries.add(new PieEntry(8, "D"));
-        pieEntries.add(new PieEntry(10, "E"));
+        // Obtener pagos filtrados por mes y año
+        String monthStr = String.format("%02d", month);
+        String yearStr = String.valueOf(year);
+        List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Ejemplo de datos");
+        Map<String, Float> pagosPorCombustible = new HashMap<>();
+
+        for (Pago pago : pagos) {
+            String tipoCombustible = pago.fuelType; // Método que retorna el tipo de combustible
+            pagosPorCombustible.put(tipoCombustible, pagosPorCombustible.getOrDefault(tipoCombustible, 0f) + 1);
+        }
+
+        for (Map.Entry<String, Float> entry : pagosPorCombustible.entrySet()) {
+            float porcentaje = (entry.getValue() / pagos.size()) * 100;
+            pagosPorCombustible.put(entry.getKey(), porcentaje);
+        }
+
+        // Crear las entradas para el gráfico de pastel
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        for (Map.Entry<String, Float> entry : pagosPorCombustible.entrySet()) {
+            if(entry.getValue() > 0){
+                pieEntries.add(new PieEntry(entry.getValue(), entry.getKey()));
+            }
+        }
+
+        List<Integer> colors = new ArrayList<>();
+        colors.add(Color.RED);    // Primer color
+        colors.add(Color.BLUE);   // Segundo color
+        colors.add(Color.GREEN);  // Tercer color
+        colors.add(Color.YELLOW); // Cuarto color
+        colors.add(Color.MAGENTA); // Quinto color
+        // Agregar más colores si es necesario
+
+        // Configurar el conjunto de datos
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
+        pieDataSet.setColors(colors); // Asignar colores personalizados
+        pieDataSet.setValueTextSize(12f);
+        pieDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                // Mostrar solo el porcentaje con un formato adecuado
+                return String.format("%.1f%%", value);
+            }
+        });
+
+        // Configurar los datos del gráfico
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
+
+        // Configuraciones adicionales del gráfico
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleRadius(40f); // Tamaño del agujero central
+        pieChart.setTransparentCircleRadius(45f);
+        pieChart.setCenterText("Pagos por combustible");
+        pieChart.setCenterTextSize(16f);
+
+        // Actualizar el gráfico
         pieChart.invalidate();
     }
 
