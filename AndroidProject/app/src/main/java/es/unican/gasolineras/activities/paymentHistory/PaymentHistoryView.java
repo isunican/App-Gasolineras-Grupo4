@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.List;
 
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.activities.analyticsView.AnalyticsViewView;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.activities.registerPayment.RegisterPaymentView;
 import es.unican.gasolineras.common.Utils;
@@ -84,6 +85,9 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
         } else if (itemId == R.id.menuItemBackArrow) {
             presenter.onMenuBackArrowClick();
             return true;
+        } else if(itemId == R.id.menuItemEstadistica){
+            Intent intent = new Intent(this, AnalyticsViewView.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

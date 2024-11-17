@@ -3,10 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menuItemEstadistica"
-        android:title="Estadistica"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/menuItemAddPago"
         android:icon="@drawable/icono_mas"
         android:title=""
