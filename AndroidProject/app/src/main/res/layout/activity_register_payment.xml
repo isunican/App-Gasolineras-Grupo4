@@ -67,7 +67,7 @@
         android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCantidad" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFecha" />
 
     <EditText
         android:id="@+id/etNombreGasolinera"
@@ -96,4 +96,23 @@
         android:inputType="numberDecimal"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvCantidad"
         app:layout_constraintStart_toStartOf="@+id/editTextNumberDecimal" />
+
+    <TextView
+        android:id="@+id/tvFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/tvCantidad"
+        app:layout_constraintTop_toBottomOf="@+id/tvCantidad" />
+
+    <EditText
+        android:id="@+id/tvExpiranceDate2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvFecha"
+        app:layout_constraintStart_toStartOf="@+id/editTextNumberDecimal2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,7 +50,8 @@
     <string name="succes_reg_discount">El descuento se ha creado de manera correcta.</string>
     <string name="title_succes_reg_discount">Registro correcto</string>
     <string name="delete_pay_btn">Boton dedicado a eliminar un pago</string>
-
+    <string name="error_fecha">Debes introducir una fecha</string>
+    <string name="titulo_error_fecha">Error en la fecha</string>
 
 
     <string-array name="opcionesSpinner">
