@@ -54,7 +54,6 @@ interface IAnalyticsViewContract#View {
     + showMainActivity()
     + showErrorBD( )
     + showAnalytics(Double precioCombustibleMedio, Double litrosPromedio, Double litrosTotales, Double gastoTotal)
-    + showNoDataFound()
     + clearContainer()
     + showLineChart()
     + showLineChartPriceLitre()
