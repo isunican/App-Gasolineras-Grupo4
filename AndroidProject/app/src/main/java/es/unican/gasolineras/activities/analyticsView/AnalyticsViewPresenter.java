@@ -135,13 +135,13 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
     public void onChartTypeSelected(String chartType) {
         view.clearContainer();
         switch (chartType) {
-            case "lineas":
+            case "Gasto diario":
                 view.showLineChart();
                 break;
-            case "barras":
-                view.showBarChart();
+            case "Precio combustible diario":
+                view.showLineChartPriceLitre();
                 break;
-            case "queso":
+            case "Porcentaje tipo combustible":
                 view.showPieChart();
                 break;
             default:

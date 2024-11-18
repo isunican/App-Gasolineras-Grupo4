@@ -78,7 +78,7 @@ public interface IAnalyticsViewContract {
 
         public void showLineChart();
 
-        public void showBarChart();
+        public void showLineChartPriceLitre();
 
         public void showPieChart();
     }
