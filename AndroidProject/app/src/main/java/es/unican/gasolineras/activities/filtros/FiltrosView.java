@@ -26,7 +26,6 @@ public class FiltrosView extends AppCompatActivity implements IFiltrosContract.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros_gasolinera_view);
-        String orderS = getIntent().getStringExtra("order");
 
         spinner = findViewById(R.id.spinnerCombustible);
         rbAscendente = findViewById(R.id.rbAscendente);
