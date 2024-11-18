@@ -66,14 +66,14 @@ public class RegisterPaymentPresenterITest {
         pago.quantity = (double) 30;
         pago.finalPrice = pago.pricePerLitre * pago.quantity;
         presenter.onRegisterPaymentClicked
-                ("GLP", "Gasolinera arrandel", "1.54", "30");
+                ("GLP", "Gasolinera arrandel", "1.54", "30", LocalDate.now());
         List<Pago> pagos = pagoDAO.getAll();
         assert(pagos.contains(pago));
 
         //Caso de error tipo gasolina
         pagoDAO.delete(pagos.get(0));
         presenter.onRegisterPaymentClicked
-                ("", "Gasolinera arrandel", "1.54", "30");
+                ("", "Gasolinera arrandel", "1.54", "30", LocalDate.now());
         pagos = pagoDAO.getAll();
         assertEquals(0, pagos.size());
         verify(viewMock, times(1)).showAlertDialog
@@ -81,7 +81,7 @@ public class RegisterPaymentPresenterITest {
 
         //Caso de error nombre gasolinera
         presenter.onRegisterPaymentClicked
-                ("GLP", "", "1.54", "30");
+                ("GLP", "", "1.54", "30", LocalDate.now());
         pagos = pagoDAO.getAll();
         assertEquals(0, pagos.size());
         verify(viewMock, times(1)).showAlertDialog
@@ -89,7 +89,7 @@ public class RegisterPaymentPresenterITest {
 
         //Caso de error precio por litro
         presenter.onRegisterPaymentClicked
-                ("GLP", "Gasolinera arrandel", "", "30");
+                ("GLP", "Gasolinera arrandel", "", "30", LocalDate.now());
         pagos = pagoDAO.getAll();
         assertEquals(0, pagos.size());
         verify(viewMock, times(1)).showAlertDialog
@@ -97,7 +97,7 @@ public class RegisterPaymentPresenterITest {
 
         //Caso de error cantidad repostada
         presenter.onRegisterPaymentClicked
-                ("GLP", "Gasolinera arrandel", "1.54", "");
+                ("GLP", "Gasolinera arrandel", "1.54", "", LocalDate.now());
         pagos = pagoDAO.getAll();
         assertEquals(0, pagos.size());
         verify(viewMock, times(1)).showAlertDialog
