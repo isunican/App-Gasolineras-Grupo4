@@ -144,6 +144,8 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
             case "queso":
                 view.showPieChart();
                 break;
+            default:
+                view.showLineChart();
         }
     }
 

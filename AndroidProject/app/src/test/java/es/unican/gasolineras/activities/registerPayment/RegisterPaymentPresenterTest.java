@@ -53,7 +53,7 @@ public class RegisterPaymentPresenterTest {
         String precioPorLitro = "1.54";
         String cantidad = "30";
 
-        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad);
+        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad, LocalDate.now());
 
         Pago pago = new Pago();
         pago.fuelType = tipoGasolina;
@@ -71,27 +71,27 @@ public class RegisterPaymentPresenterTest {
         //Caso error tipo gasolina
         tipoGasolina = "";
 
-        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad);
+        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad,LocalDate.now());
         verify(viewMock, times(1)).showAlertDialog("Debes seleccionar un tipo de combustible", "Error en el tipo de combustible");
 
         //Caso error nombre gasolinera
         tipoGasolina = "GLP";
         nombreGasolinera = "";
 
-        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad);
+        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad, LocalDate.now());
         verify(viewMock, times(1)).showAlertDialog("Debes introducir un nombre de gasolinera", "Error en el nombre de gasolinera");
 
         //Caso error precio por litro
         nombreGasolinera = "Gasolinera arrandel";
         precioPorLitro = "";
 
-        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad);
+        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad, LocalDate.now());
         verify(viewMock, times(1)).showAlertDialog("Debes introducir un precio", "Error en el precio por litro");
 
         //Caso error cantidad
         precioPorLitro = "1.54";
         cantidad = "";
-        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad);
+        sut.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad, LocalDate.now());
         verify(viewMock, times(1)).showAlertDialog("Debes introducir una cantidad de combustible", "Error en la cantidad");
 
     }

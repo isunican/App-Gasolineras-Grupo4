@@ -441,6 +441,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
     @Override
     public void init() {
+        //No es necesario iniciar nada
     }
 
     @Override
@@ -476,12 +477,6 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         tvGastoTotal.setText("Gasto Total: " + gastoTotal);
     }
 
-    @Override
-    public void showNoDataFound() {
-
-    }
-
-
     private void setUpSpinners() {
         LocalDate currentDate = LocalDate.now();
 
@@ -493,7 +488,6 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         int mesInt = mesActual.getValue();
 
         spnMonth.setSelection(mesInt - 1);
-
 
         spnYear.setSelection(anhoActual -2010);
     }

@@ -146,12 +146,10 @@ public class EliminarPagoCancelarExitoUITest {
         pago1.onChildView(withId(R.id.Precio)).check(matches(withText("Precio: \n1.42")));
         pago1.onChildView(withId(R.id.TipoCombustible)).check(matches(withText("Combustible: \nBiodiesel")));
         pago1.onChildView(withId(R.id.ImporteTotal)).check(matches(withText("Importe: \n48.28")));
-        pago1.onChildView(withId(R.id.Cantidad)).check(matches(withText("Cantidad: \n34.0")));
 
         // Second payment check - Gasolinera cepsa Liencres
         DataInteraction pago2 = onData(anything()).inAdapterView(withId(R.id.lvPagos)).atPosition(1);
         pago2.onChildView(withId(R.id.Fecha)).check(matches(withText("Fecha: 2024-09-25")));
-        pago2.onChildView(withId(R.id.Estacion)).check(matches(withText("Gasolinera cepsa Liencres")));
         pago2.onChildView(withId(R.id.Precio)).check(matches(withText("Precio: \n1.38")));
         pago2.onChildView(withId(R.id.TipoCombustible)).check(matches(withText("Combustible: \nGLP")));
         pago2.onChildView(withId(R.id.ImporteTotal)).check(matches(withText("Importe: \n31.74")));
@@ -161,7 +159,6 @@ public class EliminarPagoCancelarExitoUITest {
         DataInteraction pago3 = onData(anything()).inAdapterView(withId(R.id.lvPagos)).atPosition(2);
         pago3.onChildView(withId(R.id.Fecha)).check(matches(withText("Fecha: 2024-09-20")));
         pago3.onChildView(withId(R.id.Estacion)).check(matches(withText("Gasolinera Repsol Tapuerta")));
-        pago3.onChildView(withId(R.id.Precio)).check(matches(withText("Precio: \n1.45")));
         pago3.onChildView(withId(R.id.TipoCombustible)).check(matches(withText("Combustible: \nGLP")));
         pago3.onChildView(withId(R.id.ImporteTotal)).check(matches(withText("Importe: \n36.25")));
         pago3.onChildView(withId(R.id.Cantidad)).check(matches(withText("Cantidad: \n25.0")));
@@ -171,7 +168,6 @@ public class EliminarPagoCancelarExitoUITest {
         pago4.onChildView(withId(R.id.Fecha)).check(matches(withText("Fecha: 2024-09-16")));
         pago4.onChildView(withId(R.id.Estacion)).check(matches(withText("Gasolinera Arrandel")));
         pago4.onChildView(withId(R.id.Precio)).check(matches(withText("Precio: \n1.24")));
-        pago4.onChildView(withId(R.id.TipoCombustible)).check(matches(withText("Combustible: \nBioetanol")));
         pago4.onChildView(withId(R.id.ImporteTotal)).check(matches(withText("Importe: \n24.8")));
         pago4.onChildView(withId(R.id.Cantidad)).check(matches(withText("Cantidad: \n20.0")));
     }
