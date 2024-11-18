@@ -111,9 +111,9 @@
 
     <string-array name="opcionesSpinnerGrafico">
         <item>Selecciona un gráfico</item>
-        <item>lineas</item>
-        <item>barras</item>
-        <item>queso</item>
+        <item>Gasto diario</item>
+        <item>Precio combustible diario</item>
+        <item>Porcentaje tipo combustible</item>
     </string-array>
 
 

@@ -20,11 +20,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -39,10 +37,9 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.TreeMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.MainView;
@@ -235,6 +232,18 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         lineDataSet.setCircleRadius(6f);
         lineDataSet.setLineWidth(2f);
 
+        // Establecer el color del gráfico (línea y círculos)
+        lineDataSet.setColor(Color.parseColor("#3F4FB3")); // Color para la línea
+        lineDataSet.setCircleColor(Color.parseColor("#3F4FB3")); // Color para los círculos en cada punto
+
+        // Usar un ValueFormatter para formatear los valores de los puntos con dos decimales
+        lineDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format("%.2f", value); // Formato para mostrar con dos decimales
+            }
+        });
+
         LineData lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
 
@@ -257,10 +266,12 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         // Configurar el eje Y izquierdo
         YAxis leftYAxis = lineChart.getAxisLeft();
         leftYAxis.setDrawGridLines(true);
+
+        // Usar un ValueFormatter para formatear los valores del eje Y con dos decimales
         leftYAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return String.format("$%.2f", value);
+                return String.format("%.2f €", value); // Formato para mostrar con dos decimales
             }
         });
 
@@ -279,9 +290,9 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     }
 
     @Override
-    public void showBarChart() {
-        barChart = new BarChart(this);
-        chartFrame.addView(barChart);
+    public void showLineChartPriceLitre() {
+        lineChart = new LineChart(this);
+        chartFrame.addView(lineChart);
 
         // Obtener pagos filtrados por mes y año
         String monthStr = String.format("%02d", month);
@@ -295,45 +306,70 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         int lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         // Crear las entradas del gráfico con los días con pagos
-        ArrayList<BarEntry> barEntries = new ArrayList<>();
+        ArrayList<Entry> lineEntries = new ArrayList<>();
         ArrayList<String> xLabels = new ArrayList<>();
 
-        // Agrupar pagos por día
-        TreeMap<Integer, Float> paymentsByDay = new TreeMap<>(); // Usar TreeMap para mantener el orden
+        // Agrupar pagos por día y calcular la media
+        TreeMap<Integer, ArrayList<Float>> paymentsByDay = new TreeMap<>(); // Usar TreeMap para mantener el orden
 
-        // Añadir el primer día del mes
-        paymentsByDay.put(1, 0f);
-
-        // Añadir los días con pagos
+        // Añadir pagos agrupados por día
         for (Pago pago : pagos) {
             String dayStr = pago.getDate().substring(8, 10);
             int day = Integer.parseInt(dayStr);
-            paymentsByDay.put(day, paymentsByDay.getOrDefault(day, 0f) + pago.getFinalPrice().floatValue());
+            paymentsByDay.putIfAbsent(day, new ArrayList<>());
+            paymentsByDay.get(day).add(pago.getPricePerLitre().floatValue());
         }
 
-        // Añadir el último día del mes si no está ya incluido
-        paymentsByDay.put(lastDayOfMonth, paymentsByDay.getOrDefault(lastDayOfMonth, 0f));
+        // Añadir el primer y último día del mes si no están incluidos
+        if (!paymentsByDay.containsKey(1)) paymentsByDay.put(1, new ArrayList<>());
+        if (!paymentsByDay.containsKey(lastDayOfMonth)) paymentsByDay.put(lastDayOfMonth, new ArrayList<>());
 
         // Crear las entradas para el gráfico
         float xIndex = 0;
-        for (Map.Entry<Integer, Float> entry : paymentsByDay.entrySet()) {
+        for (Map.Entry<Integer, ArrayList<Float>> entry : paymentsByDay.entrySet()) {
             int day = entry.getKey();
-            float totalPago = entry.getValue();
-            barEntries.add(new BarEntry(xIndex, totalPago));
+            ArrayList<Float> dailyPayments = entry.getValue();
+
+            // Calcular la media de los pagos del día
+            float average = 0;
+            if (!dailyPayments.isEmpty()) {
+                float sum = 0;
+                for (float payment : dailyPayments) {
+                    sum += payment;
+                }
+                average = sum / dailyPayments.size();
+            }
+
+            lineEntries.add(new Entry(xIndex, average));
             xLabels.add(String.valueOf(day));
             xIndex++;
         }
 
         // Configurar el conjunto de datos
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Pagos del mes");
-        barDataSet.setColors(Color.BLUE);
-        barDataSet.setValueTextSize(12f);
+        LineDataSet lineDataSet = new LineDataSet(lineEntries, "Promedio de Pagos del Mes");
 
-        BarData barData = new BarData(barDataSet);
-        barChart.setData(barData);
+        // Cambiar el color de la línea y los círculos
+        lineDataSet.setColor(Color.parseColor("#3F4FB3")); // Color para la línea
+        lineDataSet.setCircleColor(Color.parseColor("#3F4FB3")); // Color para los círculos de los puntos
+
+        // Otros ajustes
+        lineDataSet.setValueTextSize(12f);
+        lineDataSet.setLineWidth(2f);
+        lineDataSet.setCircleRadius(4f);
+
+        // Usar un ValueFormatter para formatear los valores de los puntos con tres decimales
+        lineDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format("%.3f", value); // Formato para mostrar con tres decimales
+            }
+        });
+
+        LineData lineData = new LineData(lineDataSet);
+        lineChart.setData(lineData);
 
         // Configurar el eje X
-        XAxis xAxis = barChart.getXAxis();
+        XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(true);
         xAxis.setGranularity(1f);
@@ -342,37 +378,35 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
         // Asegurar que se muestren todas las etiquetas
         xAxis.setAvoidFirstLastClipping(true);
-        barChart.setVisibleXRangeMaximum(xLabels.size());
+        lineChart.setVisibleXRangeMaximum(xLabels.size());
 
         // Configurar márgenes para que las etiquetas sean visibles
-        barChart.setExtraOffsets(10f, 10f, 10f, 20f);
+        lineChart.setExtraOffsets(10f, 10f, 10f, 20f);
 
         // Configurar el eje Y izquierdo
-        YAxis leftYAxis = barChart.getAxisLeft();
+        YAxis leftYAxis = lineChart.getAxisLeft();
         leftYAxis.setDrawGridLines(true);
         leftYAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return String.format("$%.2f", value);
+                return String.format("%.3f €/L", value); // Formato para mostrar con dos decimales
             }
         });
 
         // Desactivar el eje Y derecho
-        barChart.getAxisRight().setEnabled(false);
+        lineChart.getAxisRight().setEnabled(false);
 
         // Configuraciones adicionales del gráfico
-        barChart.getDescription().setEnabled(false);
-        barChart.setTouchEnabled(true);
-        barChart.setDragEnabled(true);
-        barChart.setScaleEnabled(true);
-        barChart.setPinchZoom(true);
+        lineChart.getDescription().setEnabled(false);
+        lineChart.setTouchEnabled(true);
+        lineChart.setDragEnabled(true);
+        lineChart.setScaleEnabled(true);
+        lineChart.setPinchZoom(true);
 
         // Actualizar el gráfico
-        barChart.invalidate();
+        lineChart.invalidate();
     }
 
-
-    @Override
     public void showPieChart() {
         clearContainer();
         pieChart = new PieChart(this);
@@ -383,10 +417,15 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         String yearStr = String.valueOf(year);
         List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
 
+        if (pagos.isEmpty()) {
+            pieChart.setNoDataText("No hay datos disponibles para mostrar.");
+            return;
+        }
+
         Map<String, Float> pagosPorCombustible = new HashMap<>();
 
         for (Pago pago : pagos) {
-            String tipoCombustible = pago.fuelType; // Método que retorna el tipo de combustible
+            String tipoCombustible = pago.getFuelType(); // Ajusta según cómo se obtenga el tipo
             pagosPorCombustible.put(tipoCombustible, pagosPorCombustible.getOrDefault(tipoCombustible, 0f) + 1);
         }
 
@@ -398,28 +437,42 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         // Crear las entradas para el gráfico de pastel
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
         for (Map.Entry<String, Float> entry : pagosPorCombustible.entrySet()) {
-            if(entry.getValue() > 0){
+            if (entry.getValue() > 0) {
                 pieEntries.add(new PieEntry(entry.getValue(), entry.getKey()));
             }
         }
 
-        List<Integer> colors = new ArrayList<>();
-        colors.add(Color.RED);    // Primer color
-        colors.add(Color.BLUE);   // Segundo color
-        colors.add(Color.GREEN);  // Tercer color
-        colors.add(Color.YELLOW); // Cuarto color
-        colors.add(Color.MAGENTA); // Quinto color
-        // Agregar más colores si es necesario
+        // Colores personalizados (20 colores diferentes)
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.RED);
+        colors.add(Color.GREEN);
+        colors.add(Color.BLUE);
+        colors.add(Color.YELLOW);
+        colors.add(Color.CYAN);
+        colors.add(Color.MAGENTA);
+        colors.add(Color.DKGRAY);
+        colors.add(Color.LTGRAY);
+        colors.add(Color.BLACK);
+        colors.add(Color.GRAY);
+        colors.add(Color.parseColor("#FF5722"));
+        colors.add(Color.parseColor("#4CAF50"));
+        colors.add(Color.parseColor("#2196F3"));
+        colors.add(Color.parseColor("#FFC107"));
+        colors.add(Color.parseColor("#9C27B0"));
+        colors.add(Color.parseColor("#00BCD4"));
+        colors.add(Color.parseColor("#673AB7"));
+        colors.add(Color.parseColor("#FF9800"));
+        colors.add(Color.parseColor("#8BC34A"));
+        colors.add(Color.parseColor("#E91E63"));
 
-        // Configurar el conjunto de datos
+        // Configurar colores personalizados en el gráfico
         PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
-        pieDataSet.setColors(colors); // Asignar colores personalizados
-        pieDataSet.setValueTextSize(12f);
+        pieDataSet.setColors(colors); // Usar los colores personalizados
+        pieDataSet.setValueTextSize(12f); // Tamaño ajustado para las etiquetas de porcentaje
         pieDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                // Mostrar solo el porcentaje con un formato adecuado
-                return String.format("%.1f%%", value);
+                return String.format("%.1f%%", value); // Mostrar solo porcentaje
             }
         });
 
@@ -427,13 +480,26 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
 
+        // Configuraciones de las etiquetas de los sectores
+        pieChart.setDrawEntryLabels(false); // Deshabilitar las etiquetas de los nombres
+
         // Configuraciones adicionales del gráfico
         pieChart.getDescription().setEnabled(false);
         pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleRadius(40f); // Tamaño del agujero central
-        pieChart.setTransparentCircleRadius(45f);
-        pieChart.setCenterText("Pagos por combustible");
-        pieChart.setCenterTextSize(16f);
+        pieChart.setHoleRadius(30f); // Tamaño del agujero central más pequeño (hacer el círculo más grande)
+        pieChart.setTransparentCircleRadius(35f); // Tamaño del círculo transparente (ajustar más grande si es necesario)
+        pieChart.setExtraOffsets(10f, 10f, 10f, 40f); // Márgenes adicionales (espacio optimizado)
+
+        // Configuración de la leyenda
+        Legend legend = pieChart.getLegend();
+        legend.setEnabled(true); // Activar la leyenda
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL); // Configurar orientación horizontal
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM); // Colocar debajo del gráfico
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER); // Centrado horizontal
+        legend.setDrawInside(false); // Colocar fuera del gráfico
+        legend.setWordWrapEnabled(true); // Habilitar salto de línea si es necesario
+        legend.setMaxSizePercent(0.9f); // Limitar el tamaño máximo al 90% del ancho del gráfico
+        legend.setTextSize(12f); // Tamaño del texto
 
         // Actualizar el gráfico
         pieChart.invalidate();
@@ -470,10 +536,11 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     @Override
     public void showAnalytics(Double precioCombustibleMedio, Double litrosPromedio, Double litrosTotales, Double gastoTotal) {
         // Muestra los resultados en la vista
-        tvPrecioCombustibleMedio.setText("Precio Combustible Medio: " + precioCombustibleMedio);
-        tvLitrosPromedio.setText("Litros Promedio: " + litrosPromedio);
-        tvLitrosTotales.setText("Litros Totales: " + litrosTotales);
-        tvGastoTotal.setText("Gasto Total: " + gastoTotal);
+        tvPrecioCombustibleMedio.setText("Precio Combustible Medio: " + String.format("%.3f", precioCombustibleMedio));
+        tvLitrosPromedio.setText("Litros Promedio: " + String.format("%.2f", litrosPromedio));
+        tvLitrosTotales.setText("Litros Totales: " + String.format("%.2f", litrosTotales));
+        tvGastoTotal.setText("Gasto Total: " + String.format("%.2f", gastoTotal));
+
     }
 
     @Override
