@@ -25,7 +25,6 @@ import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.discountList.DiscountListView;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.AppDatabasePayments;
@@ -52,7 +51,6 @@ public class HistoryPaymentListaVaciaUITest {
 
     private AppDatabasePayments db;
     private IPagoDAO pagoDAO;
-    private Pago p1, p2, p3, p4;
 
     @Before
     public void setUp() {

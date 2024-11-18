@@ -53,7 +53,6 @@ public class ActivarDescuentoExitoUITest {
     private Descuento d1 = new Descuento();
     private Descuento d2 = new Descuento();
     private Descuento d3 = new Descuento();
-    private View decorView;
 
     @Before
     public void setUp(){

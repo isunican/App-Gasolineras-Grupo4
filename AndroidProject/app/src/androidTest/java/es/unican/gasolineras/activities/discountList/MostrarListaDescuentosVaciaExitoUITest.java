@@ -9,8 +9,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
-import android.os.SystemClock;
-import android.view.View;
 
 import androidx.room.Room;
 import androidx.test.core.app.ActivityScenario;
@@ -26,7 +24,6 @@ import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.activities.paymentHistory.PaymentHistoryView;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.AppDatabaseDiscount;
 import es.unican.gasolineras.repository.IDescuentoDAO;
@@ -48,7 +45,6 @@ public class MostrarListaDescuentosVaciaExitoUITest {
 
     private AppDatabaseDiscount db;
     private IDescuentoDAO descuentosDAO;
-    private View decorView;
 
     @Before
     public void setUp(){
