@@ -1,14 +1,17 @@
 package es.unican.gasolineras.activities.registerPayment;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -16,6 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.paymentHistory.IPaymentHistoryContract;
@@ -54,14 +60,23 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
         // Asigna el adaptador al Spinner
         spinner.setAdapter(adaptador);
 
+        EditText fechaEditText = findViewById(R.id.tvExpiranceDate2);
+        fechaEditText.setOnClickListener(v -> mostrarDatePickerDialog());
+        fechaEditText.setFocusable(false); // Desactiva la posibilidad de enfocar
+        fechaEditText.setCursorVisible(false); // Elimina el cursor
+        fechaEditText.setKeyListener(null);
+
         Button btnRegistrarPago = findViewById(R.id.btnRegistrarPago);
         btnRegistrarPago.setOnClickListener(onClickListener -> {
             String tipoGasolina = spinner.getSelectedItem().toString();
             String nombreGasolinera = ((TextView) findViewById(R.id.etNombreGasolinera)).getText().toString();
             String precioPorLitro = ((TextView) findViewById(R.id.editTextNumberDecimal)).getText().toString();
             String cantidad = ((TextView) findViewById(R.id.editTextNumberDecimal2)).getText().toString();
-
-            presenter.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad);
+            LocalDate fecha = LocalDate.now();
+            if (!fechaEditText.getText().toString().isEmpty()) {
+                fecha = LocalDate.parse(((TextView) fechaEditText).getText().toString(), DateTimeFormatter.ofPattern("d/M/yyyy"));
+            }
+            presenter.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad, fecha);
 
         });
 
@@ -144,6 +159,29 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
     @Override
     public IPagoDAO getPagoDAO() {
         return db.pagoDAO();
+    }
+
+    private void mostrarDatePickerDialog() {
+        EditText fechaEditText = findViewById(R.id.tvExpiranceDate2);
+
+        // Obtener la fecha actual
+        final Calendar calendario = Calendar.getInstance();
+        int anho = calendario.get(Calendar.YEAR);
+        int mes = calendario.get(Calendar.MONTH);
+        int dia = calendario.get(Calendar.DAY_OF_MONTH);
+
+        // Crear y mostrar el DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                R.style.CustomDatePickerDialogTheme,
+                (view, anhoSeleccionado, mesSeleccionado, diaSeleccionado) -> {
+                    // El mes empieza desde 0, por eso sumamos 1
+                    String fechaSeleccionada = String.format("%02d", diaSeleccionado) + "/" + String.format("%02d", mesSeleccionado + 1) + "/" + anhoSeleccionado;
+                    fechaEditText.setText(fechaSeleccionada);
+                },
+                anho, mes, dia);
+
+        datePickerDialog.show();
     }
 
     @Override

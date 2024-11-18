@@ -2,6 +2,8 @@ package es.unican.gasolineras.activities.registerPayment;
 
 import android.content.Context;
 
+import java.time.LocalDate;
+
 import es.unican.gasolineras.repository.IPagoDAO;
 
 public interface IRegisterPaymentContract {
@@ -23,7 +25,7 @@ public interface IRegisterPaymentContract {
          * @param precioPorLitro A double that represents the price per litre of the fuel.
          * @param cantidad A double that represents the amount of fuel.
          */
-        public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad);
+        public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad, LocalDate fecha);
 
         /**
          * The presenter is informed that the Back Arrow item in the menu has been clicked
