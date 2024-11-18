@@ -72,7 +72,10 @@ public class RegisterPaymentView extends AppCompatActivity implements IRegisterP
             String nombreGasolinera = ((TextView) findViewById(R.id.etNombreGasolinera)).getText().toString();
             String precioPorLitro = ((TextView) findViewById(R.id.editTextNumberDecimal)).getText().toString();
             String cantidad = ((TextView) findViewById(R.id.editTextNumberDecimal2)).getText().toString();
-            LocalDate fecha = LocalDate.parse(((TextView) fechaEditText).getText().toString(), DateTimeFormatter.ofPattern("d/M/yyyy"));
+            LocalDate fecha = LocalDate.now();
+            if (!fechaEditText.getText().toString().isEmpty()) {
+                fecha = LocalDate.parse(((TextView) fechaEditText).getText().toString(), DateTimeFormatter.ofPattern("d/M/yyyy"));
+            }
             presenter.onRegisterPaymentClicked(tipoGasolina, nombreGasolinera, precioPorLitro, cantidad, fecha);
 
         });

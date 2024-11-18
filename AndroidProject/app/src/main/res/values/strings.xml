@@ -54,6 +54,7 @@
     <string name="titulo_error_fecha">Error en la fecha</string>
 
 
+
     <string-array name="opcionesSpinner">
         <item>Biodiesel</item>
         <item>Bioetanol</item>
