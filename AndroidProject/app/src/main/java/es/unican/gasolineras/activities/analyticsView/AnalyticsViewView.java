@@ -127,10 +127,6 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
             // Obtener el valor seleccionado del Spinner como String
             String selectedMonthString = spnMonth.getSelectedItem().toString();
             month = Integer.parseInt(selectedMonthString);
-
-            // Convertir el valor de int a String nuevamente
-            String monthString = String.format("%02d", (month + 1));  // Asegura que el mes tenga 2 dígitos (por ejemplo, "03")
-
             year = Integer.parseInt(spnYear.getSelectedItem().toString());
 
             // Verificamos que se haya seleccionado un mes y un año válidos

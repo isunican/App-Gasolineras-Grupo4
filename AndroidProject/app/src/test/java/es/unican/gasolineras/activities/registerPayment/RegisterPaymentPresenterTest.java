@@ -18,7 +18,6 @@ import org.robolectric.RobolectricTestRunner;
 import java.time.LocalDate;
 
 import es.unican.gasolineras.model.Pago;
-import es.unican.gasolineras.repository.AppDatabasePayments;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 @RunWith(RobolectricTestRunner.class)

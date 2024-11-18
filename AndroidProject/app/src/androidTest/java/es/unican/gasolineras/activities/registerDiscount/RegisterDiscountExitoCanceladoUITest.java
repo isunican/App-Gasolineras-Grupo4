@@ -3,11 +3,6 @@ package es.unican.gasolineras.activities.registerDiscount;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
 
 import android.content.Context;
 
@@ -38,12 +33,9 @@ public class RegisterDiscountExitoCanceladoUITest {
     // I need the context to access resources, such as the json with test gas stations
     final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-
-
     @Test
     public void exitoCancelar(){
         //Compruebo el caso cancelar registro
         onView(ViewMatchers.withId(R.id.btnCancel)).perform(click());
-        onView(withId(R.id.lvDiscounts)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
     }
 }

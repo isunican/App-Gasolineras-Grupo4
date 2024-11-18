@@ -1,8 +1,5 @@
 package es.unican.gasolineras.activities.analyticsView;
 
-import java.util.List;
-
-import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 /**

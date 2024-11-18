@@ -53,9 +53,6 @@ public class DiscountListView extends AppCompatActivity implements IDiscountList
         //Create the toolbar
         Toolbar toolbar = findViewById(R.id.toolbarDiscounts);
         setSupportActionBar(toolbar);
-
-        ListView list = findViewById(R.id.lvDiscounts);
-
     }
 
     /**

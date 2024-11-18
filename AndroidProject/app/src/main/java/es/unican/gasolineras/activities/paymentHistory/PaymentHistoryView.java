@@ -62,7 +62,7 @@ public class PaymentHistoryView extends AppCompatActivity implements IPaymentHis
 
         ListView list = findViewById(R.id.lvPagos);
         list.setOnItemClickListener((parent, view, position, id) -> {
-            Pago pago = (Pago) parent.getItemAtPosition(position);
+            parent.getItemAtPosition(position);
         });
 
 
