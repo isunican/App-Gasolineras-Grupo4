@@ -39,13 +39,13 @@ public interface IPaymentHistoryContract {
          */
         public void onDeleteConfirmed(Pago p) throws SQLiteException;
 
+        /**
+         * The presenter is informed that the Back Arrow item in the menu has been clicked
+         * Only the View should call this method
+         */
+        public void onMenuBackArrowClick();
     }
 
-    /**
-     * The presenter is informed that the Back Arrow item in the menu has been clicked
-     * Only the View should call this method
-     */
-    public void onMenuBackArrowClick();
 
     /**
      * Methods that must be implemented in the PaymentHistory View.
