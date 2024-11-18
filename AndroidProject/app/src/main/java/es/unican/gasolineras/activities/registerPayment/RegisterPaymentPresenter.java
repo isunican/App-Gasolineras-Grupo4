@@ -19,7 +19,7 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
     public void onMenuBackArrowClick() {view.showRegisterHistory();}
 
     @Override
-    public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad){
+    public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad, LocalDate fecha) {
 
         if (tipoGasolina.isEmpty()) {
             view.showAlertDialog(
@@ -41,7 +41,12 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
                     view.getContext().getString(R.string.error_cantidad_combustible),
                     view.getContext().getString(R.string.titulo_error_cantidad_combustible)
             );
-        } else {
+        } else if (fecha == null) {
+            view.showAlertDialog(
+                    view.getContext().getString(R.string.error_fecha),
+                    view.getContext().getString(R.string.titulo_error_fecha)
+            );
+        }else {
 
             //Creo el objeto de tipo Pago
             Pago pago = new Pago();
@@ -50,7 +55,7 @@ public class RegisterPaymentPresenter implements IRegisterPaymentContract.Presen
             pago.pricePerLitre = Double.parseDouble(precioPorLitro);
             pago.quantity = Double.parseDouble(cantidad);
             pago.finalPrice = Math.round(pago.pricePerLitre * pago.quantity * 100.0) / 100.0;
-            pago.date = LocalDate.now().toString();
+            pago.date = fecha.toString();
 
             //Persito el objeto en la base de datos
             IPagoDAO db = view.getPagoDAO();
