@@ -50,7 +50,7 @@ public class RegisterDiscountExito2UITest {
         onView(withId(R.id.spnCompany)).perform(click());
         onView(withText("AVIA")).perform(click());
         onView(withId(R.id.rbPercentaje)).perform(click());
-        onView(withId(R.id.etQuantity)).perform(typeText("20"), closeSoftKeyboard());
+        onView(withId(R.id.etQuantity)).perform(typeText("30"), closeSoftKeyboard());
 
         onView(withId(R.id.tvExpiranceDate)).check(matches(isDisplayed())).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2024, 11, 30));

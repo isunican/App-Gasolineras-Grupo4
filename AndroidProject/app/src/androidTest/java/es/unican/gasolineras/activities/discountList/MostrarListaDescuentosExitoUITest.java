@@ -19,7 +19,6 @@ import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
 import android.os.SystemClock;
-import android.view.View;
 
 import androidx.room.Room;
 import androidx.test.core.app.ActivityScenario;

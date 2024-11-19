@@ -26,7 +26,6 @@ import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.injection.RepositoriesModule;
-import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.AppDatabasePayments;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import es.unican.gasolineras.repository.IPagoDAO;

@@ -105,7 +105,7 @@ public class RegisterDiscountPresenterTest {
         descuento.company = "ALSA";
         descuento.discountType = "%";
         descuento.quantityDiscount = 50.0;
-        descuento.expiranceDate = "2024/11/20";
+        descuento.expiranceDate = "2024/11/30";
 
         boolean resultado = sut.hayCamposVacios(descuento);
         assertTrue("Debe haber un error", resultado);
@@ -120,7 +120,7 @@ public class RegisterDiscountPresenterTest {
         descuento.company = "";
         descuento.discountType = "%";
         descuento.quantityDiscount = 50.0;
-        descuento.expiranceDate = "2024/11/20";
+        descuento.expiranceDate = "2024/11/30";
 
         boolean resultado = sut.hayCamposVacios(descuento);
         assertTrue("Debe haber un error", resultado);
@@ -138,7 +138,7 @@ public class RegisterDiscountPresenterTest {
         descuento.company = "ALSA";
         descuento.discountType = "%";
         descuento.quantityDiscount = null;
-        descuento.expiranceDate = "2024/11/20";
+        descuento.expiranceDate = "2024/11/30";
 
         boolean resultado = sut.hayCamposVacios(descuento);
         assertTrue("Debe haber un error", resultado);
@@ -170,7 +170,7 @@ public class RegisterDiscountPresenterTest {
         descuento.company = "ALSA";
         descuento.discountType = "";
         descuento.quantityDiscount = 50.0;
-        descuento.expiranceDate = "2024/11/20";
+        descuento.expiranceDate = "2024/11/30";
 
         boolean resultado = sut.hayCamposVacios(descuento);
         assertTrue("Debe haber un error", resultado);
@@ -213,7 +213,7 @@ public class RegisterDiscountPresenterTest {
         descuentoConNombreVacio.company = "ALSA";
         descuentoConNombreVacio.discountType = "%";
         descuentoConNombreVacio.quantityDiscount = 50.0;
-        descuentoConNombreVacio.expiranceDate = "2024-11-20";
+        descuentoConNombreVacio.expiranceDate = "2024-11-30";
 
         sut.init(mockView);
         sut.onRegisterDiscountClicked(descuentoConNombreVacio);
@@ -232,7 +232,7 @@ public class RegisterDiscountPresenterTest {
         descuentoNoValido.company = "ALSA";
         descuentoNoValido.discountType = "%";
         descuentoNoValido.quantityDiscount = 0.0; //
-        descuentoNoValido.expiranceDate = "20/11/2024";
+        descuentoNoValido.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
 
@@ -269,7 +269,7 @@ public class RegisterDiscountPresenterTest {
         descuentoConCompaniaVacia.company = "";
         descuentoConCompaniaVacia.discountType = "%";
         descuentoConCompaniaVacia.quantityDiscount = 50.0;
-        descuentoConCompaniaVacia.expiranceDate = "20/11/2024";
+        descuentoConCompaniaVacia.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
         sut.onRegisterDiscountClicked(descuentoConCompaniaVacia);
@@ -289,7 +289,7 @@ public class RegisterDiscountPresenterTest {
         descuentoCantidadVacia.company = "ALSA";
         descuentoCantidadVacia.discountType = "%";
         descuentoCantidadVacia.quantityDiscount = null;
-        descuentoCantidadVacia.expiranceDate = "20/11/2024";
+        descuentoCantidadVacia.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
         sut.onRegisterDiscountClicked(descuentoCantidadVacia);
@@ -307,7 +307,7 @@ public class RegisterDiscountPresenterTest {
         descuentoTipoVacio.company = "ALSA";
         descuentoTipoVacio.discountType = "";
         descuentoTipoVacio.quantityDiscount = 50.0;
-        descuentoTipoVacio.expiranceDate = "20/11/2024";
+        descuentoTipoVacio.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
         sut.onRegisterDiscountClicked(descuentoTipoVacio);
@@ -345,7 +345,7 @@ public class RegisterDiscountPresenterTest {
         descuentoExito2.company = "ALSA";
         descuentoExito2.discountType = "%";
         descuentoExito2.quantityDiscount = 0.1;
-        descuentoExito2.expiranceDate = "20/11/2024";
+        descuentoExito2.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
         when(mockView.getDescuentoDAO()).thenReturn(mockDescuentoDAO);
@@ -363,7 +363,7 @@ public class RegisterDiscountPresenterTest {
         descuentoExito3.company = "ALSA";
         descuentoExito3.discountType = "%";
         descuentoExito3.quantityDiscount = 100.0;
-        descuentoExito3.expiranceDate = "20/11/2024";
+        descuentoExito3.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
         when(mockView.getDescuentoDAO()).thenReturn(mockDescuentoDAO);
@@ -381,7 +381,7 @@ public class RegisterDiscountPresenterTest {
         descuentoCantidadVacia.company = "ALSA";
         descuentoCantidadVacia.discountType = "€/l";
         descuentoCantidadVacia.quantityDiscount = 0.0;
-        descuentoCantidadVacia.expiranceDate = "20/11/2024";
+        descuentoCantidadVacia.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
         sut.onRegisterDiscountClicked(descuentoCantidadVacia);
@@ -398,7 +398,7 @@ public class RegisterDiscountPresenterTest {
         descuentoExito4.company = "ALSA";
         descuentoExito4.discountType = "€/l";
         descuentoExito4.quantityDiscount = 0.1;
-        descuentoExito4.expiranceDate = "20/11/2024";
+        descuentoExito4.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
         when(mockView.getDescuentoDAO()).thenReturn(mockDescuentoDAO);
@@ -415,7 +415,7 @@ public class RegisterDiscountPresenterTest {
         descuentoTipoNoValido.company = "ALSA";
         descuentoTipoNoValido.discountType = "otro";
         descuentoTipoNoValido.quantityDiscount = 50.0;
-        descuentoTipoNoValido.expiranceDate = "20/11/2024";
+        descuentoTipoNoValido.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
         when(mockView.getDescuentoDAO()).thenReturn(mockDescuentoDAO);
@@ -433,7 +433,7 @@ public class RegisterDiscountPresenterTest {
         descuentoFalloBBDD.company = "ALSA";
         descuentoFalloBBDD.discountType = "€/l,";
         descuentoFalloBBDD.quantityDiscount = 50.0;
-        descuentoFalloBBDD.expiranceDate = "20/11/2024";
+        descuentoFalloBBDD.expiranceDate = "30/11/2024";
 
         sut.init(mockView);
         when(mockView.getDescuentoDAO()).thenReturn(mockDescuentoDAO2);
