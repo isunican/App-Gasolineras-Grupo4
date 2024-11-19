@@ -51,6 +51,7 @@ import es.unican.gasolineras.repository.IPagoDAO;
 
 public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsViewContract.View {
 
+    public static final String COLOR = "#3F4FB3";
     private AppDatabasePayments db;
     private AnalyticsViewPresenter presenter;
 
@@ -67,9 +68,6 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
     private FrameLayout chartFrame;
     private LineChart lineChart;
-    private BarChart barChart;
-    private PieChart pieChart;
-    private Spinner chartTypeSpinner;
     private IPagoDAO pagosDAO;
     private int month;
     private int year;
@@ -96,7 +94,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
         // Inicializamos spinner y frame para graficas
         chartFrame = findViewById(R.id.frmGraphic);
-        chartTypeSpinner = findViewById(R.id.spnTypeGraphic);
+        Spinner chartTypeSpinner = findViewById(R.id.spnTypeGraphic);
         chartTypeSpinner.setEnabled(false);
         //Settear la toolbar correctamente
         Toolbar toolbar = findViewById(R.id.tbAnalytics);
@@ -233,8 +231,8 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         lineDataSet.setLineWidth(2f);
 
         // Establecer el color del gráfico (línea y círculos)
-        lineDataSet.setColor(Color.parseColor("#3F4FB3")); // Color para la línea
-        lineDataSet.setCircleColor(Color.parseColor("#3F4FB3")); // Color para los círculos en cada punto
+        lineDataSet.setColor(Color.parseColor(COLOR)); // Color para la línea
+        lineDataSet.setCircleColor(Color.parseColor(COLOR)); // Color para los círculos en cada punto
 
         // Usar un ValueFormatter para formatear los valores de los puntos con dos decimales
         lineDataSet.setValueFormatter(new ValueFormatter() {
@@ -348,9 +346,9 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         // Configurar el conjunto de datos
         LineDataSet lineDataSet = new LineDataSet(lineEntries, "Promedio de Pagos del Mes");
 
+        lineDataSet.setColor(Color.parseColor(COLOR)); // Color para la línea
         // Cambiar el color de la línea y los círculos
-        lineDataSet.setColor(Color.parseColor("#3F4FB3")); // Color para la línea
-        lineDataSet.setCircleColor(Color.parseColor("#3F4FB3")); // Color para los círculos de los puntos
+        lineDataSet.setCircleColor(Color.parseColor(COLOR)); // Color para los círculos de los puntos
 
         // Otros ajustes
         lineDataSet.setValueTextSize(12f);
@@ -409,7 +407,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
     public void showPieChart() {
         clearContainer();
-        pieChart = new PieChart(this);
+        PieChart pieChart = new PieChart(this);
         chartFrame.addView(pieChart);
 
         // Obtener pagos filtrados por mes y año
