@@ -86,7 +86,7 @@ public class RegisterDiscountErrorNombreRepetidoUITest {
         descuento2.company = "CEPSA";
         descuento2.discountType = "PERCENTAGE";
         descuento2.quantityDiscount = 20.0;
-        descuento2.expiranceDate = "2026-11-20";
+        descuento2.expiranceDate = "2026-11-30";
         descuento2.discountActive = false;
         descuentosDAO.insertAll(descuento2);
 
@@ -107,7 +107,7 @@ public class RegisterDiscountErrorNombreRepetidoUITest {
         onView(withId(R.id.etQuantity)).perform(typeText("50"), closeSoftKeyboard());
 
         onView(withId(R.id.tvExpiranceDate)).check(matches(isDisplayed())).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2024, 11, 20));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2024, 11, 30));
         onView(withText("OK")).perform(click());
 
         onView(withId(R.id.btnCreate)).perform(click());
