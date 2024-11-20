@@ -32,7 +32,7 @@ public interface IAnalyticsViewContract {
          * @param chartType El tipo de grafico seleccionado.
          *
          */
-        public void onChartTypeSelected(String chartType);
+        public void onChartTypeSelected(String chartType,String month, String year);
 
     }
 
@@ -92,19 +92,19 @@ public interface IAnalyticsViewContract {
          * Este metodo es llamado cuando se selecciona un grafico de tipo "Gasto diario"
          * con una serie temporal de datos.
          */
-        public void showLineChart();
+        public void showLineChart(List<Pago> pagos);
 
         /**
          * Muestra un gráfico de líneas con los datos de precio por litro de combustible.
          * Este metodo es llamado cuando se selecciona un grafico de tipo "Precio combustible diario".
          */
-        public void showLineChartPriceLitre();
+        public void showLineChartPriceLitre(List<Pago> pagos);
 
 
         /**
          * Muestra un gráfico circular (pastel) con los datos correspondientes.
          * Este metodo es llamado cuando se selecciona un grafico de tipo "Porcentaje tipo combustible".
          */
-        public void showPieChart();
+        public void showPieChart(List<Pago> pagos);
     }
 }

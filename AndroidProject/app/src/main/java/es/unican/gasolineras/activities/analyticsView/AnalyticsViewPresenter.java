@@ -44,7 +44,6 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
     public void load() {
         IPagoDAO dao = view.getPagoDAO();
         try {
-
             List<Pago> pagos = dao.getAll();
 
             calculateAnalytics(pagos);
@@ -141,17 +140,18 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
      * @param chartType El tipo de grafico seleccionado.
      *
      */
-    public void onChartTypeSelected(String chartType) {
+    public void onChartTypeSelected(String chartType,String month, String year) {
         view.clearContainer();
+        List<Pago> pagos = view.getPagoDAO().getPagosByMonthAndYear(year,month);
         switch (chartType) {
             case "Gasto diario":
-                view.showLineChart();
+                view.showLineChart(pagos);
                 break;
             case "Precio combustible diario":
-                view.showLineChartPriceLitre();
+                view.showLineChartPriceLitre(pagos);
                 break;
             case "Porcentaje tipo combustible":
-                view.showPieChart();
+                view.showPieChart(pagos);
                 break;
         }
     }

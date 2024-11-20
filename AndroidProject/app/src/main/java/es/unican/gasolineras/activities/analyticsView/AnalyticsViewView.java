@@ -74,6 +74,9 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     private int month;
     private int year;
 
+    private String monthStr;
+    private String yearStr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,7 +172,10 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     }
 
     private void updateChart() {
-        presenter.onChartTypeSelected(chartType);
+        // Obtener pagos filtrados por mes y año
+        monthStr = String.format("%02d", month);
+        yearStr = String.valueOf(year);
+        presenter.onChartTypeSelected(chartType,monthStr,yearStr);
     }
 
     /**
@@ -180,19 +186,10 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         chartFrame.removeAllViews();
     }
 
-    /**
-     * @see IAnalyticsViewContract.View#showLineChart()
-     */
     @Override
-    public void showLineChart() {
+    public void showLineChart(List<Pago> pagos) {
         lineChart = new LineChart(this);
         chartFrame.addView(lineChart);
-
-        // Obtener pagos filtrados por mes y año
-        String monthStr = String.format("%02d", month);
-        String yearStr = String.valueOf(year);
-        // Esto habra que pasarselo al presenter y sera el presenter el que devuelva la lista de pagos
-        List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
 
         // Obtener el último día del mes
         Calendar calendar = Calendar.getInstance();
@@ -280,29 +277,14 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
             }
         });
 
-        // Desactivar el eje Y derecho
-        lineChart.getAxisRight().setEnabled(false);
-
-        // Configuraciones adicionales del gráfico
-        lineChart.getDescription().setEnabled(false);
-        lineChart.setTouchEnabled(true);
-        lineChart.setDragEnabled(true);
-        lineChart.setScaleEnabled(true);
-        lineChart.setPinchZoom(true);
-
-        // Actualizar el gráfico
-        lineChart.invalidate();
+        // Configurar el grafico
+        configuracionesAdicionalesLineas();
     }
 
     @Override
-    public void showLineChartPriceLitre() {
+    public void showLineChartPriceLitre(List<Pago> pagos) {
         lineChart = new LineChart(this);
         chartFrame.addView(lineChart);
-
-        // Obtener pagos filtrados por mes y año
-        String monthStr = String.format("%02d", month);
-        String yearStr = String.valueOf(year);
-        List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
 
         // Obtener el último día del mes
         Calendar calendar = Calendar.getInstance();
@@ -398,6 +380,10 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
             }
         });
 
+        configuracionesAdicionalesLineas();
+    }
+
+    private void configuracionesAdicionalesLineas() {
         // Desactivar el eje Y derecho
         lineChart.getAxisRight().setEnabled(false);
 
@@ -412,38 +398,39 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         lineChart.invalidate();
     }
 
-    public void showPieChart() {
+    public void showPieChart(List<Pago> pagos) {
         clearContainer();
         PieChart pieChart = new PieChart(this);
         chartFrame.addView(pieChart);
-
-        // Obtener pagos filtrados por mes y año
-        String monthStr = String.format("%02d", month);
-        String yearStr = String.valueOf(year);
-        List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
 
         if (pagos.isEmpty()) {
             pieChart.setNoDataText("No hay datos disponibles para mostrar.");
             return;
         }
 
-        Map<String, Float> pagosPorCombustible = new HashMap<>();
+        Map<String, Double> pagosPorCombustible = new HashMap<>();
 
+        Double litrosTotales = 0.0;
         for (Pago pago : pagos) {
             String tipoCombustible = pago.getFuelType(); // Ajusta según cómo se obtenga el tipo
-            pagosPorCombustible.put(tipoCombustible, pagosPorCombustible.getOrDefault(tipoCombustible, 0f) + 1);
+            Double litrosRepostados = pago.getQuantity(); // Obtén los litros del pago
+            litrosTotales += litrosRepostados;
+
+            // Sumar los litros repostados para el tipo de combustible correspondiente
+            pagosPorCombustible.put(tipoCombustible,
+                    (pagosPorCombustible.getOrDefault(tipoCombustible, 0.0) + litrosRepostados));
         }
 
-        for (Map.Entry<String, Float> entry : pagosPorCombustible.entrySet()) {
-            float porcentaje = (entry.getValue() / pagos.size()) * 100;
+        for (Map.Entry<String, Double> entry : pagosPorCombustible.entrySet()) {
+            Double porcentaje = (entry.getValue() / litrosTotales) * 100;
             pagosPorCombustible.put(entry.getKey(), porcentaje);
         }
 
         // Crear las entradas para el gráfico de pastel
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
-        for (Map.Entry<String, Float> entry : pagosPorCombustible.entrySet()) {
+        for (Map.Entry<String, Double> entry : pagosPorCombustible.entrySet()) {
             if (entry.getValue() > 0) {
-                pieEntries.add(new PieEntry(entry.getValue(), entry.getKey()));
+                pieEntries.add(new PieEntry(entry.getValue().floatValue(), entry.getKey()));
             }
         }
 
