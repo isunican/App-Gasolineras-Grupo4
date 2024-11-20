@@ -25,6 +25,13 @@ public interface IAnalyticsViewContract {
          */
         public void init(View view);
 
+        /**
+         * Maneja la selección del tipo de grafico a mostrar en la vista.
+         * Dependiendo del tipo de grafico seleccionado, se limpia el contenedor de la vista
+         * y se muestra el grafico correspondiente.
+         * @param chartType El tipo de grafico seleccionado.
+         *
+         */
         public void onChartTypeSelected(String chartType);
 
 
@@ -80,12 +87,31 @@ public interface IAnalyticsViewContract {
          */
         public void showNoDataFound();
 
+        /**
+         * Limpia el contenedor de la vista, eliminando cualquier grafico o contenido previo.
+         * Este metodo es llamado antes de mostrar un nuevo grafico o contenido.
+         *
+         */
         void clearContainer();
 
+        /**
+         * Muestra un gráfico de líneas con los datos correspondientes.
+         * Este metodo es llamado cuando se selecciona un grafico de tipo "Gasto diario"
+         * con una serie temporal de datos.
+         */
         public void showLineChart();
 
+        /**
+         * Muestra un gráfico de líneas con los datos de precio por litro de combustible.
+         * Este metodo es llamado cuando se selecciona un grafico de tipo "Precio combustible diario".
+         */
         public void showLineChartPriceLitre();
 
+
+        /**
+         * Muestra un gráfico circular (pastel) con los datos correspondientes.
+         * Este metodo es llamado cuando se selecciona un grafico de tipo "Porcentaje tipo combustible".
+         */
         public void showPieChart();
     }
 }
