@@ -115,7 +115,7 @@ public class AnalyticsViewPresenteronClickTickButtomTest {
         verify(mockAnalyticsView3,times(2)).getPagoDAO();
         verify(mockPaymentDAO3,times(2)).getAll();
         verify(mockAnalyticsView3,times(0)).showAnalytics(0.0,0.0,0.0,0.0);
-
     }
+
 
 }

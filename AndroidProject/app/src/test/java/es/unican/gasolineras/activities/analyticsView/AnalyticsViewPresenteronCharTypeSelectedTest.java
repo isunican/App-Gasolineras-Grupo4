@@ -59,11 +59,11 @@ public class AnalyticsViewPresenteronCharTypeSelectedTest {
         pagos.add(p2);
 
         // Prepare the return of the mocks
-       // when(mockAnalyticsView.getPagoDAO()).thenReturn(mockPaymentDAO);
+        when(mockAnalyticsView.getPagoDAO()).thenReturn(mockPaymentDAO);
         //when(mockAnalyticsView2.getPagoDAO()).thenReturn(mockPaymentDAO2);
         //when(mockAnalyticsView3.getPagoDAO()).thenReturn(mockPaymentDAO3);
-        when(mockAnalyticsView.getPagoDAO().getPagosByMonthAndYear("11","2024")).thenReturn(pagos);
-        //when(mockPaymentDAO.getAll()).thenReturn(pagos);
+        when(mockPaymentDAO.getAll()).thenReturn(pagos);
+        when(mockPaymentDAO.getPagosByMonthAndYear("2024","11")).thenReturn(pagos);
         //when(mockPaymentDAO2.getAll()).thenReturn(pagosVacio);
         //when(mockPaymentDAO3.getAll()).thenThrow(SQLiteException.class);
 
@@ -74,9 +74,49 @@ public class AnalyticsViewPresenteronCharTypeSelectedTest {
     @Test
     public void testAnalyticsViewPresenteronCharTypeSelectedGastoDiario(){
         sut.init(mockAnalyticsView);
-        sut.onChartTypeSelected("Gasto Diario","11","2024");
+        sut.onChartTypeSelected("Gasto diario","11","2024");
         verify(mockAnalyticsView,times(1)).clearContainer();
-        verify(mockAnalyticsView,times(2)).getPagoDAO().getPagosByMonthAndYear("11","2024");
+        verify(mockAnalyticsView,times(2)).getPagoDAO();
+        verify(mockPaymentDAO,times(1)).getPagosByMonthAndYear("2024","11");
         verify(mockAnalyticsView,times(1)).showLineChart(pagos);
+        verify(mockAnalyticsView,times(0)).showLineChartPriceLitre(pagos);
+        verify(mockAnalyticsView,times(0)).showPieChart(pagos);
     }
+
+    @Test
+    public void testAnalyticsViewPresenteronCharTypeSelectedPrecioCombustibleDiario(){
+        sut.init(mockAnalyticsView);
+        sut.onChartTypeSelected("Precio combustible diario","11","2024");
+        verify(mockAnalyticsView,times(1)).clearContainer();
+        verify(mockAnalyticsView,times(2)).getPagoDAO();
+        verify(mockPaymentDAO,times(1)).getPagosByMonthAndYear("2024","11");
+        verify(mockAnalyticsView,times(0)).showLineChart(pagos);
+        verify(mockAnalyticsView,times(1)).showLineChartPriceLitre(pagos);
+        verify(mockAnalyticsView,times(0)).showPieChart(pagos);
+    }
+
+    @Test
+    public void testAnalyticsViewPresenteronCharTypeSelectedPorcentajeTipoCombustible(){
+        sut.init(mockAnalyticsView);
+        sut.onChartTypeSelected("Porcentaje tipo combustible","11","2024");
+        verify(mockAnalyticsView,times(1)).clearContainer();
+        verify(mockAnalyticsView,times(2)).getPagoDAO();
+        verify(mockPaymentDAO,times(1)).getPagosByMonthAndYear("2024","11");
+        verify(mockAnalyticsView,times(0)).showLineChart(pagos);
+        verify(mockAnalyticsView,times(0)).showLineChartPriceLitre(pagos);
+        verify(mockAnalyticsView,times(1)).showPieChart(pagos);
+    }
+
+    @Test
+    public void testAnalyticsViewPresenteronCharTypeSelectedNoSeleccionado(){
+        sut.init(mockAnalyticsView);
+        sut.onChartTypeSelected("","11","2024");
+        verify(mockAnalyticsView,times(1)).clearContainer();
+        verify(mockAnalyticsView,times(2)).getPagoDAO();
+        verify(mockPaymentDAO,times(1)).getPagosByMonthAndYear("2024","11");
+        verify(mockAnalyticsView,times(0)).showLineChart(pagos);
+        verify(mockAnalyticsView,times(0)).showLineChartPriceLitre(pagos);
+        verify(mockAnalyticsView,times(0)).showPieChart(pagos);
+    }
+
 }
