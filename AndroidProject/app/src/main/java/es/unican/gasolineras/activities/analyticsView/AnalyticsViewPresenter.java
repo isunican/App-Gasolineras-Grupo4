@@ -144,6 +144,7 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
             case "Porcentaje tipo combustible":
                 view.showPieChart(pagos);
                 break;
+            default:
         }
     }
 
