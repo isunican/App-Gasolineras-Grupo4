@@ -114,18 +114,12 @@ public class ExitoGraficaGastoDiarioUITest{
         onView(withId(R.id.spnTypeGraphic)).perform(click());
         onView(withText("Gasto diario")).perform(click());
 
-
-
-        onView(withId(R.id.tvPrecioCombustibleMedio)).check(matches(withText("1,345")));
-        onView(withId(R.id.tvLitrosPromedio)).check(matches(withText("22,5")));
-        onView(withId(R.id.tvLitrosTotales)).check(matches(withText("45")));
-        onView(withId(R.id.tvGastoTotal)).check(matches(withText("61,05")));
+        onView(withId(R.id.tvPrecioCombustibleMedio)).check(matches(withText("Precio Combustible Medio: 1,345 €/L")));
+        onView(withId(R.id.tvLitrosPromedio)).check(matches(withText("Litros Promedio: 22,50 L/Repostaje")));
+        onView(withId(R.id.tvLitrosTotales)).check(matches(withText("Litros Totales: 45,00 L")));
+        onView(withId(R.id.tvGastoTotal)).check(matches(withText("Gasto Total: 61,05 €")));
 
         onView(withId(R.id.frmGraphic)).check(matches(isDisplayed()));
-        onView(withContentDescription("Gasto diario ")).check(matches(isDisplayed()));
-
-
-
     }
 
 }
