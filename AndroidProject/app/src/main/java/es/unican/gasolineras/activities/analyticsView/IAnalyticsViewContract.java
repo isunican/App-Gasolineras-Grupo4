@@ -34,6 +34,13 @@ public interface IAnalyticsViewContract {
          */
         public void onChartTypeSelected(String chartType,String month, String year);
 
+
+        /**
+         * metodo que carga en la vista los calculos estadisticos referentes a un mes y anho dado
+         * @param month mes que se desea analizar
+         * @param year anho que se desea analizar
+         */
+        public void onClickTickButtom(int month, int year);
     }
 
     /**
@@ -41,12 +48,6 @@ public interface IAnalyticsViewContract {
      * Only the Presenter should call these methods, not the View itself.
      */
     public interface View {
-
-        /**
-         * Initializes the view. Typically, this should initialize all listeners and UI elements.
-         * Only the Presenter should call this method.
-         */
-        public void init();
 
         /**
          * Returns the interface to interact with the PagoDAO (data access object).

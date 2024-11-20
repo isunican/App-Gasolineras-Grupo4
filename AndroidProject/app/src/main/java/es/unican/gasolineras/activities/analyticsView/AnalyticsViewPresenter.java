@@ -32,11 +32,8 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
     @Override
     public void init(IAnalyticsViewContract.View view) {
         this.view = view;
-        //this.view.init();
         load();
     }
-
-
 
     /**
      * Carga la lista de pagos de la base del repositorio
@@ -45,8 +42,6 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
         IPagoDAO dao = view.getPagoDAO();
         try {
             List<Pago> pagos = dao.getAll();
-
-            calculateAnalytics(pagos);
 
         } catch (SQLiteException e) {
             view.showErrorBD();
@@ -84,12 +79,8 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
         gastoTotal = totalGasto;
     }
 
-    /**
-     * metodo que carga en la vista los calculos estadisticos referentes a un mes y anho dado
-     * @param month mes que se desea analizar
-     * @param year anho que se desea analizar
-     */
-    public void loadForMonthYear(int month, int year) {
+    @Override
+    public void onClickTickButtom(int month, int year) {
         IPagoDAO dao = view.getPagoDAO();
         try {
 

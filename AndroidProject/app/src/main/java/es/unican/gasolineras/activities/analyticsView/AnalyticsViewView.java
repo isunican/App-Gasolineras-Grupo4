@@ -143,7 +143,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
             }
 
             // Llamamos al método para cargar los pagos y calcular las estadísticas
-            presenter.loadForMonthYear(month, year);
+            presenter.onClickTickButtom(month, year);
 
             updateChart();
         });
@@ -505,10 +505,6 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         colors.add(Color.parseColor("#8BC34A"));
         colors.add(Color.parseColor("#E91E63"));
         return colors;
-    }
-
-    @Override
-    public void init() {
     }
 
     @Override
