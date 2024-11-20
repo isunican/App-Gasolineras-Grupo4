@@ -53,7 +53,7 @@ public class RegisterDiscountErrorCantidadNoValidaUITest {
         onView(withId(R.id.rbFixed)).perform(click());
         onView(withId(R.id.etQuantity)).perform(typeText("0"), closeSoftKeyboard());
         onView(withId(R.id.tvExpiranceDate)).check(matches(isDisplayed())).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2024, 11, 20));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2024, 11, 30));
         onView(withText("OK")).perform(click());
         onView(ViewMatchers.withId(R.id.btnCreate)).perform(click());
         onView(withText("Error")).inRoot(isDialog()).check(matches(isDisplayed()));
