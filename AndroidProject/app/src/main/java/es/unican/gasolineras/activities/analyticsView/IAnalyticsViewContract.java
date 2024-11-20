@@ -34,7 +34,6 @@ public interface IAnalyticsViewContract {
          */
         public void onChartTypeSelected(String chartType);
 
-
     }
 
     /**
@@ -80,12 +79,6 @@ public interface IAnalyticsViewContract {
          * @param gastoTotal the total amount spent on fuel
          */
         public void showAnalytics(Double precioCombustibleMedio, Double litrosPromedio, Double litrosTotales, Double gastoTotal);
-
-        /**
-         * Displays a message when no data is found for the selected month/year.
-         * This method is called by the Presenter if no data is available for the period.
-         */
-        public void showNoDataFound();
 
         /**
          * Limpia el contenedor de la vista, eliminando cualquier grafico o contenido previo.

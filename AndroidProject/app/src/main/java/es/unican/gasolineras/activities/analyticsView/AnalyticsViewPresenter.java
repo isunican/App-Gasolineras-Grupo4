@@ -32,7 +32,7 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
     @Override
     public void init(IAnalyticsViewContract.View view) {
         this.view = view;
-        this.view.init();
+        //this.view.init();
         load();
     }
 
@@ -96,12 +96,9 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
 
             List<Pago> pagos = dao.getAll();
 
-
             List<Pago> filteredPagos = filterPagosByMonthYear(pagos, month, year);
 
-
             calculateAnalytics(filteredPagos);
-
 
             view.showAnalytics(precioCombustibleMedio, litrosPromedio, litrosTotales, gastoTotal);
         } catch (SQLiteException e) {
@@ -126,14 +123,8 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
 
             LocalDate fechaLocalDate = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-
             int pagoYear = fechaLocalDate.getYear();
             int pagoMonth = fechaLocalDate.getMonthValue();
-
-            //String[] fechaParts = fecha.split("-");
-            //int pagoYear = Integer.parseInt(fechaParts[0]); // Año
-            //int pagoMonth = Integer.parseInt(fechaParts[1]); // Mes
-
 
             if (pagoMonth == month && pagoYear == year) {
                 filteredPagos.add(pago);

@@ -30,7 +30,7 @@
 
     <Spinner
         android:id="@+id/spnYear"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:textSize="20sp"
@@ -39,14 +39,16 @@
 
     <ImageButton
         android:id="@+id/imgBtnTick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:contentDescription="Boton de aceptar"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/spnYear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/spnYear"
         app:layout_constraintTop_toTopOf="@+id/spnYear"
-        app:srcCompat="@android:drawable/ic_menu_search" />
+        app:srcCompat="@drawable/_3281" />
+
 
 
     <FrameLayout
@@ -58,7 +60,9 @@
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnTypeGraphic" />
+        app:layout_constraintTop_toBottomOf="@+id/spnTypeGraphic" >
+
+    </FrameLayout>
 
     <Spinner
         android:id="@+id/spnTypeGraphic"
