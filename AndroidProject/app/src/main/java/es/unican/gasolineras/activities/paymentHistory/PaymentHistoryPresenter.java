@@ -36,14 +36,14 @@ public class PaymentHistoryPresenter implements IPaymentHistoryContract.Presente
         IPagoDAO dao = view.getPagoDAO();
         try {
             dao.delete(p);
+            load();
+            view.showAlertDialog("Éxito eliminación", "El pago ha sido eliminado de manera exitosa de la base de datos");
         } catch (SQLiteException e) {
             view.showErrorBD();
         } catch (NullPointerException e) {
             //Caso de null pointer exception, no se hace nada pero
             // no se recarga la vista ni se muestra mensaje de exito
         }
-        load();
-        view.showAlertDialog("Éxito eliminación", "El pago ha sido eliminado de manera exitosa de la base de datos");
     }
 
     /**
