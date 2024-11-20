@@ -6,6 +6,7 @@
         android:id="@+id/menuItemEstadistica"
         android:icon="@drawable/icono_estadistica"
         android:iconTint="@color/black"
+        android:iconTintMode="src_in"
         android:title="Estadistica"
         app:showAsAction="always" />
     <item
