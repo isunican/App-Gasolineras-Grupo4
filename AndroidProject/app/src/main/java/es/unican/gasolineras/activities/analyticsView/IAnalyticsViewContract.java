@@ -86,7 +86,7 @@ public interface IAnalyticsViewContract {
          * Este metodo es llamado antes de mostrar un nuevo grafico o contenido.
          *
          */
-        void clearContainer();
+        public void clearContainer();
 
         /**
          * Muestra un gráfico de líneas con los datos correspondientes.
@@ -100,7 +100,6 @@ public interface IAnalyticsViewContract {
          * Este metodo es llamado cuando se selecciona un grafico de tipo "Precio combustible diario".
          */
         public void showLineChartPriceLitre(List<Pago> pagos);
-
 
         /**
          * Muestra un gráfico circular (pastel) con los datos correspondientes.

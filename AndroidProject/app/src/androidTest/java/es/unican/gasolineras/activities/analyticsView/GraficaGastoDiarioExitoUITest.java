@@ -29,7 +29,7 @@ import es.unican.gasolineras.repository.IPagoDAO;
 
 
 @HiltAndroidTest
-public class ExitoGraficaGastoDiarioUITest{
+public class GraficaGastoDiarioExitoUITest{
 
     @Rule(order = 0)  // the Hilt rule must execute first
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
@@ -57,8 +57,8 @@ public class ExitoGraficaGastoDiarioUITest{
      * A1.a caso exito donde se muestra la grafica de gasto diario
      */
     @Test
-    public void exitoGraficaGastoDIarioTest() {
-
+    public void exitoGraficaGastoDiarioTest() {
+        pagoDAO.vaciaBD();
         //el estado inicial esta detallado en el plan de pruebas
         // First payment
         p1 = new Pago();
@@ -114,10 +114,10 @@ public class ExitoGraficaGastoDiarioUITest{
         onView(withId(R.id.spnTypeGraphic)).perform(click());
         onView(withText("Gasto diario")).perform(click());
 
-        onView(withId(R.id.tvPrecioCombustibleMedio)).check(matches(withText("Precio Combustible Medio: 1,345 €/L")));
-        onView(withId(R.id.tvLitrosPromedio)).check(matches(withText("Litros Promedio: 22,50 L/Repostaje")));
-        onView(withId(R.id.tvLitrosTotales)).check(matches(withText("Litros Totales: 45,00 L")));
-        onView(withId(R.id.tvGastoTotal)).check(matches(withText("Gasto Total: 61,05 €")));
+        onView(withId(R.id.tvPrecioCombustibleMedio)).check(matches(withText("Precio Combustible Medio: 1.345 €/L")));
+        onView(withId(R.id.tvLitrosPromedio)).check(matches(withText("Litros Promedio: 22.50 L/Repostaje")));
+        onView(withId(R.id.tvLitrosTotales)).check(matches(withText("Litros Totales: 45.00 L")));
+        onView(withId(R.id.tvGastoTotal)).check(matches(withText("Gasto Total: 61.05 €")));
 
         onView(withId(R.id.frmGraphic)).check(matches(isDisplayed()));
     }
