@@ -1,5 +1,6 @@
 package es.unican.gasolineras.activities.paymentHistory;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,8 +20,6 @@ import java.util.LinkedList;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
-/** TEST REALIZADO POR
- * ALEJANDRO ACEBO**/
 @RunWith(RobolectricTestRunner.class)
 public class HistoryPaymentPresenterTest {
 
@@ -34,6 +33,9 @@ public class HistoryPaymentPresenterTest {
     PaymentHistoryView mockPaymentView3;
 
     @Mock
+    PaymentHistoryView mockPaymentView4;
+
+    @Mock
     IPagoDAO mockPaymentDAO;
 
     @Mock
@@ -41,6 +43,9 @@ public class HistoryPaymentPresenterTest {
 
     @Mock
     IPagoDAO mockPaymentDAO3;
+
+    @Mock
+    IPagoDAO mockPaymentDAO4;
 
     private PaymentHistoryPresenter sut;
 
@@ -62,12 +67,12 @@ public class HistoryPaymentPresenterTest {
         p.setFinalPrice(20.0);
 
         // Example payment 2
-        p.stationName="Avia";
-        p.date= String.valueOf(LocalDate.now());
-        p.fuelType="Biodiesel";
-        p.quantity=20.0;
-        p.pricePerLitre=1.50;
-        p.finalPrice=30.0;
+        p2.stationName="Avia";
+        p2.date= String.valueOf(LocalDate.now());
+        p2.fuelType="Biodiesel";
+        p2.quantity=20.0;
+        p2.pricePerLitre=1.50;
+        p2.finalPrice=30.0;
 
         // Initialize the lists of payments
         pagos = new LinkedList<Pago>();
@@ -84,7 +89,8 @@ public class HistoryPaymentPresenterTest {
         when(mockPaymentView.getPagoDAO()).thenReturn(mockPaymentDAO);
         when(mockPaymentView2.getPagoDAO()).thenReturn(mockPaymentDAO2);
         when(mockPaymentView3.getPagoDAO()).thenReturn(mockPaymentDAO3);
-
+        when(mockPaymentView4.getPagoDAO()).thenReturn(mockPaymentDAO4);
+        doThrow(new SQLiteException()).when(mockPaymentDAO4).delete(p2);
         // Create the sut
         sut = new PaymentHistoryPresenter();
     }
@@ -131,18 +137,19 @@ public class HistoryPaymentPresenterTest {
     @Test
     public void testOnDeleteConfirmedBDError() {
         // caso 2 error BD
-        sut.init(mockPaymentView3);
+        sut.init(mockPaymentView4);
         sut.onDeleteConfirmed(p2);
-
-        verify(mockPaymentView3, times(1)).showErrorBD();
+        verify(mockPaymentDAO4, times(1)).delete(p2);
+        verify(mockPaymentView4, times(1)).showErrorBD();
+        verify(mockPaymentView4, times(0)).showAlertDialog("Éxito eliminación", "El pago ha sido eliminado de manera exitosa de la base de datos");
     }
+
     /**
      *
      *  @Test
-     *     public void testOnDeleteConfirmedNullPago() {
-     *         // caso 3 , el pago que recibe el metodo es nulo
-     *         este escenario es imposible y por lo tanto no se implementa
-     *
-     *     }
+     *  public void testOnDeleteConfirmedNullPago() {
+     *      // caso 3 , el pago que recibe el metodo es nulo
+     *      este escenario es imposible y por lo tanto no se implementa
+     *  }
      */
 }
