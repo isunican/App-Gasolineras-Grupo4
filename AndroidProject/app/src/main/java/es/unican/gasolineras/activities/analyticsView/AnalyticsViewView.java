@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -43,6 +44,7 @@ import java.util.TreeMap;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.MainView;
+import es.unican.gasolineras.activities.paymentHistory.IPaymentHistoryContract;
 import es.unican.gasolineras.common.Utils;
 import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.AppDatabasePayments;
@@ -71,6 +73,9 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     private IPagoDAO pagosDAO;
     private int month;
     private int year;
+
+    private String monthStr;
+    private String yearStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +130,10 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
             // Obtener el valor seleccionado del Spinner como String
             String selectedMonthString = spnMonth.getSelectedItem().toString();
             month = Integer.parseInt(selectedMonthString);
+
+            // Convertir el valor de int a String nuevamente
+            String monthString = String.format("%02d", (month + 1));
+
             year = Integer.parseInt(spnYear.getSelectedItem().toString());
 
             // Verificamos que se haya seleccionado un mes y un año válidos
@@ -134,7 +143,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
             }
 
             // Llamamos al método para cargar los pagos y calcular las estadísticas
-            presenter.loadForMonthYear(month, year);
+            presenter.onClickTickButtom(month, year);
 
             updateChart();
         });
@@ -163,26 +172,25 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     }
 
     private void updateChart() {
-        presenter.onChartTypeSelected(chartType);
+        // Obtener pagos filtrados por mes y año
+        monthStr = String.format("%02d", month);
+        yearStr = String.valueOf(year);
+        presenter.onChartTypeSelected(chartType,monthStr,yearStr);
     }
 
+    /**
+     * @see IAnalyticsViewContract.View#clearContainer()
+     */
     @Override
     public void clearContainer() {
-        // Limpia el contenedor antes de agregar un nuevo gráfico
         chartFrame.removeAllViews();
     }
 
-    // Métodos de ChartView para mostrar cada tipo de gráfico
     @Override
-    public void showLineChart() {
+    public void showLineChart(List<Pago> pagos) {
         lineChart = new LineChart(this);
         chartFrame.addView(lineChart);
-
-        // Obtener pagos filtrados por mes y año
-        String monthStr = String.format("%02d", month);
-        String yearStr = String.valueOf(year);
-        List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
-
+        
         // Obtener el último día del mes
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, Integer.parseInt(yearStr));
@@ -220,7 +228,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         }
 
         // Configurar el conjunto de datos
-        LineDataSet lineDataSet = new LineDataSet(lineEntries, "Pagos del mes");
+        LineDataSet lineDataSet = new LineDataSet(lineEntries, "Dinero repostado");
         lineDataSet.setDrawValues(true);
         lineDataSet.setValueTextSize(12f);
         lineDataSet.setCircleRadius(6f);
@@ -269,29 +277,14 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
             }
         });
 
-        // Desactivar el eje Y derecho
-        lineChart.getAxisRight().setEnabled(false);
-
-        // Configuraciones adicionales del gráfico
-        lineChart.getDescription().setEnabled(false);
-        lineChart.setTouchEnabled(true);
-        lineChart.setDragEnabled(true);
-        lineChart.setScaleEnabled(true);
-        lineChart.setPinchZoom(true);
-
-        // Actualizar el gráfico
-        lineChart.invalidate();
+        // Configurar el grafico
+        configuracionesAdicionalesLineas();
     }
 
     @Override
-    public void showLineChartPriceLitre() {
+    public void showLineChartPriceLitre(List<Pago> pagos) {
         lineChart = new LineChart(this);
         chartFrame.addView(lineChart);
-
-        // Obtener pagos filtrados por mes y año
-        String monthStr = String.format("%02d", month);
-        String yearStr = String.valueOf(year);
-        List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
 
         // Obtener el último día del mes
         Calendar calendar = Calendar.getInstance();
@@ -340,7 +333,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         }
 
         // Configurar el conjunto de datos
-        LineDataSet lineDataSet = new LineDataSet(lineEntries, "Promedio de Pagos del Mes");
+        LineDataSet lineDataSet = new LineDataSet(lineEntries, "Precio repostado");
 
         lineDataSet.setColor(Color.parseColor(COLOR)); // Color para la línea
         // Cambiar el color de la línea y los círculos
@@ -387,6 +380,10 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
             }
         });
 
+        configuracionesAdicionalesLineas();
+    }
+
+    private void configuracionesAdicionalesLineas() {
         // Desactivar el eje Y derecho
         lineChart.getAxisRight().setEnabled(false);
 
@@ -401,63 +398,44 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         lineChart.invalidate();
     }
 
-    public void showPieChart() {
+    public void showPieChart(List<Pago> pagos) {
         clearContainer();
         PieChart pieChart = new PieChart(this);
         chartFrame.addView(pieChart);
-
-        // Obtener pagos filtrados por mes y año
-        String monthStr = String.format("%02d", month);
-        String yearStr = String.valueOf(year);
-        List<Pago> pagos = pagosDAO.getPagosByMonthAndYear(yearStr, monthStr);
 
         if (pagos.isEmpty()) {
             pieChart.setNoDataText("No hay datos disponibles para mostrar.");
             return;
         }
 
-        Map<String, Float> pagosPorCombustible = new HashMap<>();
+        Map<String, Double> pagosPorCombustible = new HashMap<>();
 
+        Double litrosTotales = 0.0;
         for (Pago pago : pagos) {
             String tipoCombustible = pago.getFuelType(); // Ajusta según cómo se obtenga el tipo
-            pagosPorCombustible.put(tipoCombustible, pagosPorCombustible.getOrDefault(tipoCombustible, 0f) + 1);
+            Double litrosRepostados = pago.getQuantity(); // Obtén los litros del pago
+            litrosTotales += litrosRepostados;
+
+            // Sumar los litros repostados para el tipo de combustible correspondiente
+            pagosPorCombustible.put(tipoCombustible,
+                    (pagosPorCombustible.getOrDefault(tipoCombustible, 0.0) + litrosRepostados));
         }
 
-        for (Map.Entry<String, Float> entry : pagosPorCombustible.entrySet()) {
-            float porcentaje = (entry.getValue() / pagos.size()) * 100;
+        for (Map.Entry<String, Double> entry : pagosPorCombustible.entrySet()) {
+            Double porcentaje = (entry.getValue() / litrosTotales) * 100;
             pagosPorCombustible.put(entry.getKey(), porcentaje);
         }
 
         // Crear las entradas para el gráfico de pastel
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
-        for (Map.Entry<String, Float> entry : pagosPorCombustible.entrySet()) {
+        for (Map.Entry<String, Double> entry : pagosPorCombustible.entrySet()) {
             if (entry.getValue() > 0) {
-                pieEntries.add(new PieEntry(entry.getValue(), entry.getKey()));
+                pieEntries.add(new PieEntry(entry.getValue().floatValue(), entry.getKey()));
             }
         }
 
         // Colores personalizados (20 colores diferentes)
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.RED);
-        colors.add(Color.GREEN);
-        colors.add(Color.BLUE);
-        colors.add(Color.YELLOW);
-        colors.add(Color.CYAN);
-        colors.add(Color.MAGENTA);
-        colors.add(Color.DKGRAY);
-        colors.add(Color.LTGRAY);
-        colors.add(Color.BLACK);
-        colors.add(Color.GRAY);
-        colors.add(Color.parseColor("#FF5722"));
-        colors.add(Color.parseColor("#4CAF50"));
-        colors.add(Color.parseColor("#2196F3"));
-        colors.add(Color.parseColor("#FFC107"));
-        colors.add(Color.parseColor("#9C27B0"));
-        colors.add(Color.parseColor("#00BCD4"));
-        colors.add(Color.parseColor("#673AB7"));
-        colors.add(Color.parseColor("#FF9800"));
-        colors.add(Color.parseColor("#8BC34A"));
-        colors.add(Color.parseColor("#E91E63"));
+        ArrayList<Integer> colors = getColors();
 
         // Configurar colores personalizados en el gráfico
         PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
@@ -499,9 +477,34 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         pieChart.invalidate();
     }
 
-    @Override
-    public void init() {
-        //No es necesario iniciar nada
+    /**
+     * Declaración de un arraylist con 20 colores, para evitar sobrecargar de codigo el metodo de
+     * la gráfica del queso
+     * @return Arraylist con todos los colores que puede tener el gráfico del "queso"
+     */
+    private static @NonNull ArrayList<Integer> getColors() {
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.RED);
+        colors.add(Color.GREEN);
+        colors.add(Color.BLUE);
+        colors.add(Color.YELLOW);
+        colors.add(Color.CYAN);
+        colors.add(Color.MAGENTA);
+        colors.add(Color.DKGRAY);
+        colors.add(Color.LTGRAY);
+        colors.add(Color.BLACK);
+        colors.add(Color.GRAY);
+        colors.add(Color.parseColor("#FF5722"));
+        colors.add(Color.parseColor("#4CAF50"));
+        colors.add(Color.parseColor("#2196F3"));
+        colors.add(Color.parseColor("#FFC107"));
+        colors.add(Color.parseColor("#9C27B0"));
+        colors.add(Color.parseColor("#00BCD4"));
+        colors.add(Color.parseColor("#673AB7"));
+        colors.add(Color.parseColor("#FF9800"));
+        colors.add(Color.parseColor("#8BC34A"));
+        colors.add(Color.parseColor("#E91E63"));
+        return colors;
     }
 
     @Override
@@ -513,9 +516,7 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
 
     @Override
-    public IPagoDAO getPagoDAO() {
-        return db.pagoDAO();
-    }
+    public IPagoDAO getPagoDAO() {return db.pagoDAO();}
 
     @Override
     public void showMainActivity() {
@@ -531,25 +532,21 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
     @Override
     public void showAnalytics(Double precioCombustibleMedio, Double litrosPromedio, Double litrosTotales, Double gastoTotal) {
         // Muestra los resultados en la vista
-        tvPrecioCombustibleMedio.setText("Precio Combustible Medio: " + String.format("%.3f", precioCombustibleMedio));
-        tvLitrosPromedio.setText("Litros Promedio: " + String.format("%.2f", litrosPromedio));
-        tvLitrosTotales.setText("Litros Totales: " + String.format("%.2f", litrosTotales));
-        tvGastoTotal.setText("Gasto Total: " + String.format("%.2f", gastoTotal));
-
+        tvPrecioCombustibleMedio.setText("Precio Combustible Medio: " + String.format("%.3f €/L", precioCombustibleMedio));
+        tvLitrosPromedio.setText("Litros Promedio: " + String.format("%.2f L/Repostaje", litrosPromedio));
+        tvLitrosTotales.setText("Litros Totales: " + String.format("%.2f L", litrosTotales));
+        tvGastoTotal.setText("Gasto Total: " + String.format("%.2f €", gastoTotal));
     }
 
+    /**
+     * Este metodo recoge los datos según la fecha seleccionada
+     */
     private void setUpSpinners() {
         LocalDate currentDate = LocalDate.now();
-
         int anhoActual = currentDate.getYear();
-
-
         Month mesActual = currentDate.getMonth();
-
         int mesInt = mesActual.getValue();
-
         spnMonth.setSelection(mesInt - 1);
-
         spnYear.setSelection(anhoActual -2010);
     }
 }

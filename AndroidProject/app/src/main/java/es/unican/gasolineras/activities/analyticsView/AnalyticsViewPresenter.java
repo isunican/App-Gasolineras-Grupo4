@@ -31,31 +31,25 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
     @Override
     public void init(IAnalyticsViewContract.View view) {
         this.view = view;
-        this.view.init();
         load();
     }
 
-
-
     /**
-     * Loads the payments from the database and performs calculations
+     * Carga la lista de pagos de la base del repositorio
      */
     public void load() {
         IPagoDAO dao = view.getPagoDAO();
         try {
-            // Recuperamos todos los pagos
             List<Pago> pagos = dao.getAll();
-            // Llamamos al método para hacer los cálculos
-            calculateAnalytics(pagos);
-            // Mostramos los resultados en la vista
+
         } catch (SQLiteException e) {
             view.showErrorBD();
         }
     }
 
     /**
-     * Perform calculations on the list of payments
-     * @param pagos List of Pago objects
+     * Realiza los calculos y operaciones necesarias para realizar mostrar en la analitica de datos
+     * @param pagos lista de pagos con la que se realizan los calculos
      */
     private void calculateAnalytics(List<Pago> pagos) {
         if (pagos == null || pagos.isEmpty()) {
@@ -84,26 +78,31 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
         gastoTotal = totalGasto;
     }
 
-    public void loadForMonthYear(int month, int year) {
-        IPagoDAO dao = view.getPagoDAO(); // Obtener el DAO para interactuar con la base de datos
+    @Override
+    public void onClickTickButtom(int month, int year) {
+        IPagoDAO dao = view.getPagoDAO();
         try {
-            // Obtener todos los pagos de la base de datos
+
             List<Pago> pagos = dao.getAll();
 
-            // Filtramos los pagos según el mes y el año
             List<Pago> filteredPagos = filterPagosByMonthYear(pagos, month, year);
 
-            // Llamamos al método para calcular las estadísticas a partir de los pagos filtrados
             calculateAnalytics(filteredPagos);
 
-            // Mostramos los resultados en la vista
             view.showAnalytics(precioCombustibleMedio, litrosPromedio, litrosTotales, gastoTotal);
         } catch (SQLiteException e) {
-            // Si ocurre un error al acceder a la base de datos, mostramos un mensaje de error
+
             view.showErrorBD();
         }
     }
 
+    /**
+     * metodo que extrae los pagos de un mes y anho dado
+     * @param pagos lista de pagos a filtrar
+     * @param month mes del anho que se desea analizar
+     * @param year anho a analizar
+     * @return lista de pagos del anho y mes indicados
+     */
     private List<Pago> filterPagosByMonthYear(List<Pago> pagos, int month, int year) {
         List<Pago> filteredPagos = new ArrayList<>();
 
@@ -116,6 +115,11 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
             // Extrae el año y el mes
             int pagoYear = fechaLocalDate.getYear();
             int pagoMonth = fechaLocalDate.getMonthValue();
+            // Extraemos el mes y el año de la fecha del pago
+            //String[] fechaParts = fecha.split("-");
+            //int pagoYear = Integer.parseInt(fechaParts[0]); // Año
+            //int pagoMonth = Integer.parseInt(fechaParts[1]); // Mes
+
             // Comparamos el mes y año del pago con el mes y año seleccionados
             if (pagoMonth == month && pagoYear == year) {
                 filteredPagos.add(pago);
@@ -125,20 +129,27 @@ public class AnalyticsViewPresenter implements IAnalyticsViewContract.Presenter 
         return filteredPagos;
     }
 
-    public void onChartTypeSelected(String chartType) {
+    /**
+     * Maneja la selección del tipo de gráfico a mostrar en la vista.
+     * Dependiendo del tipo de grafico seleccionado, se limpia el contenedor de la vista
+     * y se muestra el grafico correspondiente.
+     * @param chartType El tipo de grafico seleccionado.
+     *
+     */
+    public void onChartTypeSelected(String chartType,String month, String year) {
         view.clearContainer();
+        List<Pago> pagos = view.getPagoDAO().getPagosByMonthAndYear(year,month);
         switch (chartType) {
             case "Gasto diario":
-                view.showLineChart();
+                view.showLineChart(pagos);
                 break;
             case "Precio combustible diario":
-                view.showLineChartPriceLitre();
+                view.showLineChartPriceLitre(pagos);
                 break;
             case "Porcentaje tipo combustible":
-                view.showPieChart();
+                view.showPieChart(pagos);
                 break;
             default:
-                view.showLineChart();
         }
     }
 

@@ -1,5 +1,8 @@
 package es.unican.gasolineras.activities.analyticsView;
 
+import java.util.List;
+
+import es.unican.gasolineras.model.Pago;
 import es.unican.gasolineras.repository.IPagoDAO;
 
 /**
@@ -22,9 +25,22 @@ public interface IAnalyticsViewContract {
          */
         public void init(View view);
 
-        public void onChartTypeSelected(String chartType);
+        /**
+         * Maneja la selección del tipo de grafico a mostrar en la vista.
+         * Dependiendo del tipo de grafico seleccionado, se limpia el contenedor de la vista
+         * y se muestra el grafico correspondiente.
+         * @param chartType El tipo de grafico seleccionado.
+         *
+         */
+        public void onChartTypeSelected(String chartType,String month, String year);
 
 
+        /**
+         * metodo que carga en la vista los calculos estadisticos referentes a un mes y anho dado
+         * @param month mes que se desea analizar
+         * @param year anho que se desea analizar
+         */
+        public void onClickTickButtom(int month, int year);
     }
 
     /**
@@ -32,12 +48,6 @@ public interface IAnalyticsViewContract {
      * Only the Presenter should call these methods, not the View itself.
      */
     public interface View {
-
-        /**
-         * Initializes the view. Typically, this should initialize all listeners and UI elements.
-         * Only the Presenter should call this method.
-         */
-        public void init();
 
         /**
          * Returns the interface to interact with the PagoDAO (data access object).
@@ -71,12 +81,31 @@ public interface IAnalyticsViewContract {
          */
         public void showAnalytics(Double precioCombustibleMedio, Double litrosPromedio, Double litrosTotales, Double gastoTotal);
 
+        /**
+         * Limpia el contenedor de la vista, eliminando cualquier grafico o contenido previo.
+         * Este metodo es llamado antes de mostrar un nuevo grafico o contenido.
+         *
+         */
         void clearContainer();
 
-        public void showLineChart();
+        /**
+         * Muestra un gráfico de líneas con los datos correspondientes.
+         * Este metodo es llamado cuando se selecciona un grafico de tipo "Gasto diario"
+         * con una serie temporal de datos.
+         */
+        public void showLineChart(List<Pago> pagos);
 
-        public void showLineChartPriceLitre();
+        /**
+         * Muestra un gráfico de líneas con los datos de precio por litro de combustible.
+         * Este metodo es llamado cuando se selecciona un grafico de tipo "Precio combustible diario".
+         */
+        public void showLineChartPriceLitre(List<Pago> pagos);
 
-        public void showPieChart();
+
+        /**
+         * Muestra un gráfico circular (pastel) con los datos correspondientes.
+         * Este metodo es llamado cuando se selecciona un grafico de tipo "Porcentaje tipo combustible".
+         */
+        public void showPieChart(List<Pago> pagos);
     }
 }
