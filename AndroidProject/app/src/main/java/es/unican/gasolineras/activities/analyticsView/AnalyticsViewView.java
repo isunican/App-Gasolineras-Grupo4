@@ -51,6 +51,9 @@ import es.unican.gasolineras.repository.AppDatabasePayments;
 import es.unican.gasolineras.repository.DataBase;
 import es.unican.gasolineras.repository.IPagoDAO;
 
+/**
+ * View of the Analitycs  View. It shows graphs of the payments register in the app
+ */
 public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsViewContract.View {
 
     public static final String COLOR = "#3F4FB3";
@@ -171,6 +174,9 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
 
     }
 
+    /**
+     * Transformar los meses y anhos a string
+     */
     private void updateChart() {
         // Obtener pagos filtrados por mes y año
         monthStr = String.format("%02d", month);
@@ -383,6 +389,9 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         configuracionesAdicionalesLineas();
     }
 
+    /**
+     * Configurar el formato del gráfico
+     */
     private void configuracionesAdicionalesLineas() {
         // Desactivar el eje Y derecho
         lineChart.getAxisRight().setEnabled(false);
@@ -398,6 +407,10 @@ public class AnalyticsViewView extends AppCompatActivity implements IAnalyticsVi
         lineChart.invalidate();
     }
 
+    /**
+     * Muestra el gráfico redondo de combustible/litros repostados
+     * @param pagos Listado de pagos
+     */
     public void showPieChart(List<Pago> pagos) {
         clearContainer();
         PieChart pieChart = new PieChart(this);

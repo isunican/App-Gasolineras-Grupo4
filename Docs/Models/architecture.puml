@@ -45,18 +45,18 @@ AnalyticsViewView-right0)- AnalyticsViewPresenter: AnalyticsViewPresenter.View
 
 interface IAnalyticsViewContract#Presenter {
     + init()
-    + onChartTypeSelected(String chartType)
+    + onChartTypeSelected(String chartType,String month, String year);
+    + onClickTickButtom(int month, int year)
 }
 
 interface IAnalyticsViewContract#View {
-    + init()
     + getPagoDAO() : IPagoDAO
     + showMainActivity()
     + showErrorBD( )
     + showAnalytics(Double precioCombustibleMedio, Double litrosPromedio, Double litrosTotales, Double gastoTotal)
     + clearContainer()
-    + showLineChart()
-    + showLineChartPriceLitre()
+    + showLineChart(List<Pago> pagos)
+    + showLineChartPriceLitre(List<Pago> pagos)
     + showPieChart()
 }
 
