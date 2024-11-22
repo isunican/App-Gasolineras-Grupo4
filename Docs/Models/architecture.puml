@@ -14,6 +14,7 @@ MainView -up..-> PaymentHistoryView : <<use>>
 MainView -up..-> RegisterPaymentView: <<use>>
 MainView -up..-> DiscountListView: <<use>>
 MainView -up..-> RegisterDiscountView: <<use>>
+MainView -up..-> AnalyticsViewView: <<use>>
 
 
 FiltrosView -right(0- FiltrosPresenter: IFiltrosContract.Presenter
@@ -38,7 +39,26 @@ DiscountListPresenter -right(0- LibreriaRoom: IDescuentoDAO
 RegisterDiscountView-right(0- RegisterDiscountPresenter: IRegisterDiscountContract.Presenter
 RegisterDiscountView-right0)- RegisterDiscountPresenter: IRegisterDiscountContract.View
 
+AnalyticsViewView -right(0- AnalyticsViewPresenter : AnalyticsViewPresenter.Presenter
+AnalyticsViewView-right0)- AnalyticsViewPresenter: AnalyticsViewPresenter.View
 
+
+interface IAnalyticsViewContract#Presenter {
+    + init()
+    + onChartTypeSelected(String chartType,String month, String year);
+    + onClickTickButtom(int month, int year)
+}
+
+interface IAnalyticsViewContract#View {
+    + getPagoDAO() : IPagoDAO
+    + showMainActivity()
+    + showErrorBD( )
+    + showAnalytics(Double precioCombustibleMedio, Double litrosPromedio, Double litrosTotales, Double gastoTotal)
+    + clearContainer()
+    + showLineChart(List<Pago> pagos)
+    + showLineChartPriceLitre(List<Pago> pagos)
+    + showPieChart()
+}
 
 interface ICombustileContract#Presenter {
     + init(View view, TipoCombustible tipoCombustible)
@@ -110,7 +130,8 @@ interface IMainContract#View {
 
 interface IPaymentHistoryContract#Presenter {
     + init(View view)
-    + onMenuBackArrowClick()
+    + onDeleteButtonClicked(Pago pago)
+    + onDeleteConfirmed(Pago p)
 }
 
 interface IPaymentHistoryContract#View {
@@ -119,13 +140,14 @@ interface IPaymentHistoryContract#View {
     + showPagos(List<Pagos> pagos)
     + showMainActivity()
     + showErrorBD()
+    + showAlertDialogEliminarPago(Pago pago)
+    + showAlertDialog(String titulo, String mensaje)
 }
 
 interface IRegisterDiscountContract#Presenter {
     + init(VIew view)
     + onRegisterDiscountClicked(Descuento descuento)
     + onCancelRegistryClicked()
-    + hayCamposVacios(Descuento d)
 }
 
 interface IRegisterDiscountContract#View {
@@ -138,7 +160,7 @@ interface IRegisterDiscountContract#View {
 
 }
 
-interface IRegisterPaymentContract#Presneter {
+interface IRegisterPaymentContract#Presenter {
     + init(View view)
     + onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad)
     + onMenuBackArrowClick()
@@ -152,10 +174,6 @@ interface IRegisterPaymentContract#View {
     + showSuccesDialog()
     + getContext()
 }
-
-
-
-
 
 interface IGasolinerasRepository {
     + requestGasolineras(ICallBack cb, String ccaa)
@@ -191,5 +209,4 @@ interface IGasolinerasAPI {
     + gasolineras(String ccaa)
     + gasolinerasCombustible(String ccaa, String combustible)
 }
-
 @enduml

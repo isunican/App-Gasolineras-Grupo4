@@ -53,9 +53,6 @@ public class DiscountListView extends AppCompatActivity implements IDiscountList
         //Create the toolbar
         Toolbar toolbar = findViewById(R.id.toolbarDiscounts);
         setSupportActionBar(toolbar);
-
-        ListView list = findViewById(R.id.lvDiscounts);
-
     }
 
     /**
@@ -67,7 +64,7 @@ public class DiscountListView extends AppCompatActivity implements IDiscountList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_history, menu);
+        menuInflater.inflate(R.menu.menu_discounts, menu);
         return true;
     }
 

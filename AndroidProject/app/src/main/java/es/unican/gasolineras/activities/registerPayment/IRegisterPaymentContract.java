@@ -2,6 +2,8 @@ package es.unican.gasolineras.activities.registerPayment;
 
 import android.content.Context;
 
+import java.time.LocalDate;
+
 import es.unican.gasolineras.repository.IPagoDAO;
 
 public interface IRegisterPaymentContract {
@@ -23,7 +25,7 @@ public interface IRegisterPaymentContract {
          * @param precioPorLitro A double that represents the price per litre of the fuel.
          * @param cantidad A double that represents the amount of fuel.
          */
-        public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad);
+        public void onRegisterPaymentClicked(String tipoGasolina, String nombreGasolinera, String precioPorLitro, String cantidad, LocalDate fecha);
 
         /**
          * The presenter is informed that the Back Arrow item in the menu has been clicked
@@ -45,12 +47,28 @@ public interface IRegisterPaymentContract {
          */
         public void showRegisterHistory();
 
+        /**
+         * Metodo que retorna el objeto de tipo IPagoDAO que es necesario para interactuar con la base de datos.
+         * @return una instancia de IPagoDAO
+         */
         public IPagoDAO getPagoDAO();
-        
+
+        /**
+         * Metodo el cual es encargado de crear AlertDialogs con el titulo y mensaje indiciado.
+         * @param message Mensaje del alertDialog
+         * @param title Titulo del alertDialog
+         */
         public void showAlertDialog(String message, String title);
 
+        /**
+         * Metodo encargado de mostrar el alertDialog de exito.
+         */
         public void showSuccesDialog();
 
+        /**
+         * Metodo que retorna el contexto de la vista, para que el presenter pueda acceder a sus recursos.
+         * @return el contexto de la vista
+         */
         public Context getContext();
     }
 }

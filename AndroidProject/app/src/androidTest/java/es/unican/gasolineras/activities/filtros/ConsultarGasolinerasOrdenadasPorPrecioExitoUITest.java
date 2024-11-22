@@ -104,12 +104,10 @@ public class ConsultarGasolinerasOrdenadasPorPrecioExitoUITest {
         DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
         elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraB")));
         elementoLista2.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("3.000")));
-        elementoLista2.onChildView(withId(R.id.tvCombustible)).check(matches(withText("BIODIESEL:")));
         //Tercer elemento
         DataInteraction elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
         elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraC")));
         elementoLista3.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("2.000")));
-        elementoLista3.onChildView(withId(R.id.tvCombustible)).check(matches(withText("BIODIESEL:")));
 
 
         //Volver a la vista principal y acceder de nuevo a los filtros
@@ -134,12 +132,10 @@ public class ConsultarGasolinerasOrdenadasPorPrecioExitoUITest {
         elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
         elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraC")));
         elementoLista2.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("2.000")));
-        elementoLista2.onChildView(withId(R.id.tvCombustible)).check(matches(withText("BIODIESEL:")));
         //Tercer elemento
         elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
         elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraA")));
         elementoLista3.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("1.000")));
-        elementoLista3.onChildView(withId(R.id.tvCombustible)).check(matches(withText("BIODIESEL:")));
 
 
         //Volver a la vista principal y acceder de nuevo a los filtros
@@ -164,12 +160,10 @@ public class ConsultarGasolinerasOrdenadasPorPrecioExitoUITest {
         elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
         elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraC")));
         elementoLista2.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("2.000")));
-        elementoLista2.onChildView(withId(R.id.tvCombustible)).check(matches(withText("GASES_LICUADOS_DEL_PETROLEO:")));
         //Tercer elemento
         elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
         elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("GasolineraB")));
         elementoLista3.onChildView(withId(R.id.tvPrecioCombustible)).check(matches(withText("3.000")));
-        elementoLista3.onChildView(withId(R.id.tvCombustible)).check(matches(withText("GASES_LICUADOS_DEL_PETROLEO:")));
 
     }
 

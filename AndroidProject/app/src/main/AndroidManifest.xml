@@ -37,6 +37,10 @@
         <activity
             android:name=".activities.discountList.DiscountListView"
             android:exported="false" />
+
+        <activity
+            android:name=".activities.analyticsView.AnalyticsViewView"
+            android:exported="false"/>
         <!--
         -->
         <activity

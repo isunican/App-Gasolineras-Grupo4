@@ -63,14 +63,13 @@ public class DetailsView extends AppCompatActivity {
 
         // Set Texts
         tvRotulo.setText(gasolinera.getRotulo());
-        tvMunicipio.setText("Municipio : " + gasolinera.getMunicipio());
-        tvDireccion.setText("Direccion : " + gasolinera.getDireccion());
-        tvHorario.setText("Horario: " + gasolinera.getHorario());
-        tvPrecio95.setText("Gasolina95 : " + String.format("%.2f",gasolinera.getGasolina95E5()));
-        tvPrecioDiesel.setText("Diesel : " + String.format("%.2f", gasolinera.getGasoleoA()));
-        tvPrecioSumario.setText("PrecioSumario : " + gasolinera.getPrecioSumario());
-
-
+        tvMunicipio.setText(gasolinera.getMunicipio());
+        tvDireccion.setText(gasolinera.getDireccion());
+        tvHorario.setText(gasolinera.getHorario());
+        String moneda = " Euros/litro";
+        tvPrecio95.setText("Gasolina95 : " + String.format("%.2f",gasolinera.getGasolina95E5()) + moneda);
+        tvPrecioDiesel.setText("Diesel : " + String.format("%.2f", gasolinera.getGasoleoA()) + moneda);
+        tvPrecioSumario.setText("PrecioSumario : " + gasolinera.getPrecioSumario() + moneda);
     }
 
     /**

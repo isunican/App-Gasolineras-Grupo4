@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -32,9 +34,12 @@ public class PagosArrayAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {return position;}
 
-    public PagosArrayAdapter(Context context, List<Pago> pagos){
+    private IPaymentHistoryContract.Presenter presenter;
+
+    public PagosArrayAdapter(Context context, List<Pago> pagos, IPaymentHistoryContract.Presenter presenter){
         this.pagos = pagos;
         this.context = context;
+        this.presenter = presenter;
     }
 
     @Override
@@ -45,6 +50,11 @@ public class PagosArrayAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context)
                     .inflate(R.layout.activity_payment_history_list_item, parent, false);
         }
+        ImageButton btnEliminar = convertView.findViewById(R.id.btnEliminar);
+        btnEliminar.setOnClickListener(v -> {
+            presenter.onDeleteButtonClicked(pago);
+        });
+
         convertView = linkTextView(convertView, pago);
 
         return convertView;
@@ -56,13 +66,13 @@ public class PagosArrayAdapter extends BaseAdapter {
         // Nombre
         setTextView(convertView,R.id.Estacion,pago.getStationName());
         // Tipo combustible
-        setTextView(convertView,R.id.TipoCombustible,"Combustible: " + pago.getFuelType());
+        setTextView(convertView,R.id.TipoCombustible,"Combustible: \n" + pago.getFuelType());
         // Cantidad
-        setTextView(convertView,R.id.Cantidad,"Cantidad: " + String.valueOf(pago.getQuantity()));
+        setTextView(convertView,R.id.Cantidad,"Cantidad: \n" + String.valueOf(pago.getQuantity()));
         // Importe total
-        setTextView(convertView,R.id.ImporteTotal,"Importe: " + String.valueOf(pago.getFinalPrice()));
+        setTextView(convertView,R.id.ImporteTotal,"Importe: \n" + String.valueOf(pago.getFinalPrice()));
         // Precio
-        setTextView(convertView,R.id.Precio,"Precio: " + String.valueOf(pago.pricePerLitre));
+        setTextView(convertView,R.id.Precio,"Precio: \n" + String.valueOf(pago.pricePerLitre));
         return convertView;
     }
 

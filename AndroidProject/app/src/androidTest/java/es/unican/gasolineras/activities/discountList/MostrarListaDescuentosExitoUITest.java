@@ -19,7 +19,6 @@ import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
 import android.os.SystemClock;
-import android.view.View;
 
 import androidx.room.Room;
 import androidx.test.core.app.ActivityScenario;
@@ -61,7 +60,6 @@ public class MostrarListaDescuentosExitoUITest {
     private Descuento d1 = new Descuento();
     private Descuento d2 = new Descuento();
     private Descuento d3 = new Descuento();
-    private View decorView;
 
     @Before
     public void setUp(){
